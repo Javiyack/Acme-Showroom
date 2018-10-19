@@ -1,2 +1,2 @@
 # Acme-Showroom
-D&T subject. December evaluation project.
+Sistemas y Gestión Informatica. Web application for systems and computer management support. 

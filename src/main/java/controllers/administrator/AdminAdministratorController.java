@@ -1,0 +1,128 @@
+
+package controllers.administrator;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import controllers.AbstractController;
+import domain.Actor;
+import forms.ActorForm;
+import security.Authority;
+import services.ActorService;
+
+@Controller
+@RequestMapping("/admin/administrator")
+public class AdminAdministratorController extends AbstractController {
+
+    // Supporting services -----------------------------------------------------
+    @Autowired
+    protected ActorService actorService;
+
+    // Constructors -----------------------------------------------------------
+
+    public AdminAdministratorController() {
+        super();
+    }
+    
+
+    // Create ---------------------------------------------------------------
+
+    @RequestMapping("/create")
+    public ModelAndView create() {
+        ModelAndView result;
+        final ActorForm registerForm = new ActorForm();
+        result = this.createEditModelAndView(registerForm);
+        return result;
+    }
+
+    // Edit ---------------------------------------------------------------
+
+    @RequestMapping("/edit")
+    public ModelAndView edit() {
+        ModelAndView result;
+        ActorForm model;
+
+        try {
+            final Actor actor = this.actorService.findByPrincipal();
+            model = new ActorForm(actor);
+            result = this.createEditModelAndView(model, null);
+        } catch (Throwable oops) {
+            if (oops.getMessage().startsWith("msg.")) {
+                return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+            } else {
+                return this.createMessageModelAndView("panic.message.text", "/");
+            }
+        }
+
+        return result;
+    }
+
+    // Save mediante Post ---------------------------------------------------
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+    public ModelAndView save(final ActorForm actorForm, final BindingResult binding) {
+        ModelAndView result;
+        Actor actor;
+
+        try {
+            actor = this.actorService.reconstruct(actorForm, binding);
+            if (binding.hasErrors())
+                result = this.createEditModelAndView(actorForm);
+            else
+                try {
+                    this.actorService.save(actor);
+                    result = new ModelAndView("redirect:/");
+                } catch (final Throwable oops) {
+                    if (oops.getCause().getCause() != null
+                            && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+                        result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
+                    else
+                        result = this.createEditModelAndView(actorForm, "msg.commit.error");
+                }
+
+        } catch (final Throwable oops) {
+            if (oops.getLocalizedMessage().startsWith("msg."))
+                result = this.createEditModelAndView(actorForm, oops.getLocalizedMessage());
+            else if (oops.getCause().getCause() != null
+                    && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+                result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
+            else
+                result = this.createEditModelAndView(actorForm, "actor.reconstruct.error");
+        }
+
+        return result;
+    }
+
+    // Auxiliary methods -----------------------------------------------------
+    protected ModelAndView createEditModelAndView(final ActorForm model) {
+        final ModelAndView result;
+        result = this.createEditModelAndView(model, null);
+        return result;
+    }
+
+    protected ModelAndView createEditModelAndView(final ActorForm model, final String message) {
+        final ModelAndView result;
+        final Collection<Authority> permisos = Authority.listAuthorities();
+        final Authority authority = new Authority();
+        authority.setAuthority(Authority.ADMINISTRATOR);
+        permisos.remove(authority);
+        result = new ModelAndView("admin/create");
+        result.addObject("actorForm", model);
+        result.addObject("requestUri", "admin/administrator/create.do");
+        result.addObject("edition", true);
+        result.addObject("creation", model.getId() == 0);
+        result.addObject("message", message);
+
+        return result;
+
+    }
+
+
+
+}

@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * PopulateDatabase.xml * * Copyright (C) 2017 Universidad de Sevilla 
+	* * The use of this project is hereby consipained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Admin accounts -->
+
+	<bean id="userAccountAdmin" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password"
+			value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+		<property name="active" value="true" />
+	</bean>
+
+	<!-- User accounts -->
+
+	<bean id="userAccountUser1" class="security.UserAccount">
+		<property name="username" value="user1" />
+		<property name="password"
+			value="24c9e15e52afc47c225b757e7bee1f9d" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+		<property name="active" value="true" />
+	</bean>
+
+	<bean id="userAccountUser2" class="security.UserAccount">
+		<property name="username" value="user2" />
+		<property name="password"
+			value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+		<property name="active" value="true" />
+	</bean>
+
+
+	<bean id="userAccountUser3" class="security.UserAccount">
+		<property name="username" value="user3" />
+		<property name="password"
+			value="7e58d63b60197ceb55a1c487989a3720" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="USER" />
+				</bean>
+			</list>
+		</property>
+		<property name="active" value="true" />
+	</bean>
+
+
+	<!-- Others accounts -->
+
+	<!-- Administrators Actors -->
+	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Javier" />
+		<property name="surname" value="Llach" />
+		<property name="email" value="javillach@gmail.com" />
+		<property name="phone" value="658357522" />
+		<property name="address" value="C/ Amargura 55" />
+		<property name="userAccount" ref="userAccountAdmin" />
+	</bean>
+
+	<!-- Users Actors-->
+
+	<bean id="user1" class="domain.User">
+		<property name="name" value="Nombre usuario 1" />
+		<property name="surname" value="Apellidos usuario 1" />
+		<property name="email" value="usuario1@gmail.com" />
+		<property name="phone" value="666999666" />
+		<property name="photo" value="https://image.shutterstock.com/image-vector/cool-dude-monkey-glasses-headphones-260nw-574759426.jpg" />
+		<property name="birthdate" value="1972/06/15" />
+		<property name="genere" value="FEMALE" />
+		<property name="address" value="C/ Calvario 66" />
+		<property name="userAccount" ref="userAccountUser1" />
+	</bean>
+
+	<bean id="user2" class="domain.User">
+		<property name="name" value="Nombre usuario 2" />
+		<property name="surname" value="Apellidos usuario 2" />
+		<property name="email" value="usuario2@gmail.com" />
+		<property name="phone" value="618399522" />
+		<property name="photo" value="https://bloximages.newyork1.vip.townnews.com/stltoday.com/content/tncms/assets/v3/editorial/5/ca/5ca00daf-81a6-5e26-bff3-25ea003d8f4e/4f9054fbddfae.image.jpg" />
+		<property name="birthdate" value="1992/09/01" />
+		<property name="genere" value="UNDEFINED" />
+		<property name="address" value="C/ Suplicio 77" />
+		<property name="userAccount" ref="userAccountUser2" />
+	</bean>
+	
+	<bean id="user3" class="domain.User">
+		<property name="name" value="Javi" />
+		<property name="surname" value="Chiquichancla" />
+		<property name="email" value="chiquichancla@ecotono.org" />
+		<property name="phone" value="618399522" />
+		<property name="photo" value="https://fotki.yandex.ru/get/15523/197059212.12/0_14541b_f067d910_orig.jpg" />
+		<property name="birthdate" value="1985/03/21" />
+		<property name="genere" value="MALE" />
+		<property name="address" value="C/ Suplicio 77" />
+		<property name="userAccount" ref="userAccountUser3" />
+
+	</bean>
+
+	
+	
+
+	<!-- Others Actors -->
+	
+	<!-- Incidences -->
+
+	<!-- user1 folders -->
+	<bean id="inbox1" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user1" />
+	</bean>
+
+	<bean id="outbox1" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user1" />
+	</bean>
+
+	<bean id="notificationbox1" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user1" />
+	</bean>
+
+	<bean id="spambox1" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user1" />
+	</bean>
+
+	<bean id="trashbox1" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user1" />
+	</bean>
+
+	<bean id="custombox1" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox1" />
+		<property name="actor" ref="user1" />
+	</bean>
+
+	<!-- user2 folders -->
+	<bean id="inbox2" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user2" />
+	</bean>
+
+	<bean id="outbox2" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user2" />
+	</bean>
+
+	<bean id="notificationbox2" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user2" />
+	</bean>
+
+	<bean id="spambox2" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user2" />
+	</bean>
+
+	<bean id="trashbox2" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user2" />
+	</bean>
+
+	<bean id="custombox2" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox2" />
+		<property name="actor" ref="user2" />
+	</bean>
+
+	
+	<!-- user3 folders -->
+	<bean id="inbox11" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="outbox11" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="notificationbox11" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="spambox11" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="trashbox11" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="custombox11" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox11" />
+		<property name="actor" ref="user3" />
+	</bean>
+	<!-- admin folders -->
+	<bean id="inbox9" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="outbox9" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="notificationbox9" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="spambox9" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="trashbox9" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+
+	<bean id="custombox9" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox9" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+
+	<!-- TabooWords -->
+
+	<bean id="tabooWord1" class="domain.TabooWord">
+		<property name="text" value="sex" />
+	</bean>
+
+	<bean id="tabooWord2" class="domain.TabooWord">
+		<property name="text" value="sexo" />
+	</bean>
+
+	<bean id="tabooWord3" class="domain.TabooWord">
+		<property name="text" value="viagra" />
+	</bean>
+
+	<bean id="tabooWord4" class="domain.TabooWord">
+		<property name="text" value="cialis" />
+	</bean>
+
+	<bean id="tabooWord5" class="domain.TabooWord">
+		<property name="text" value="jes extender" />
+	</bean>
+
+	<!-- CONFIGURATION -->
+	<bean id="configuration" class="domain.Configuration">
+		<property name="companyName" value="Acme Showroom" />
+		<property name="passKey" value="CUS-010100-00000001" />
+		<property name="logo" value="images/logo.png" />
+		<property name="defaultCurrency" value="EUR" />
+		<property name="welcomeMessageEs"
+			value="Pruebalo!" />
+		<property name="welcomeMessageEn"
+			value="Check it out!" />
+		<property name="iva" value="21" />
+		<property name="hourPrice" value="28" />
+		<property name="folderNames">
+			<list>
+				<value>inbox</value>
+				<value>outbox</value>
+				<value>notification</value>
+				<value>spambox</value>
+				<value>trash</value>
+			</list>
+
+		</property>
+		<property name="difficultyLevels">
+			<list>
+				<value>EASY</value>
+				<value>MEDIUM</value>
+				<value>DIFFICULT</value>
+			</list>
+
+		</property>
+	</bean>
+
+	<!-- Showrooms -->
+
+	<bean id="showroom1" class="domain.Showroom">
+		<property name="name" value="El Escaparate" />
+		<property name="description" value="De las maravillas" />
+		<property name="length" value="00325.500" />
+		<property name="pictures">
+			<list>
+				<value></value>
+			</list>
+		</property>
+		<property name="user" ref="user1" />
+	</bean>
+
+	<bean id="showroom2" class="domain.Showroom">
+		<property name="name" value="De escaparate a rota" />
+		<property name="description" value="Urta a la roteña" />
+		<property name="length" value="00420.110" />
+		<property name="pictures">
+			<list>
+				<value></value>
+			</list>
+		</property>
+		<property name="user" ref="user1" />
+	</bean>
+
+	<bean id="showroom3" class="domain.Showroom">
+		<property name="name" value="Sigueme" />
+		<property name="description" value="Si puedes... si, puedes." />
+		<property name="length" value="00155.760" />
+		<property name="pictures">
+			<list>
+				<value></value>
+			</list>
+		</property>
+		<property name="user" ref="user2" />
+	</bean>
+
+	<bean id="showroom4" class="domain.Showroom">
+		<property name="name" value="Tolfrio" />
+		<property name="description" value="Pa mi" />
+		<property name="length" value="00652.735" />
+		<property name="user" ref="user2" />
+		<property name="pictures">
+			<list>
+				<value></value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
