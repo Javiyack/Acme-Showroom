@@ -46,7 +46,7 @@
                 <acme:column property="${row.userAccount.username}" title="label.user" sortable="true"
                              rowUrl="${url}"/>
                 <acme:column property="${row.surname}, ${row.name}" title="label.name" sortable="true" rowUrl="${url}"/>
-                <acme:column property="birthdate" title="label.date" sortable="true" format="moment.format"/>
+                <acme:column property="birthdate" title="label.birthdate" sortable="true" format="date.format"/>
                 <security:authorize access="hasRole('USER')">
                     <jstl:if test="${!userIsFollowedMap[row]}">
                         <acme:column property=" " title="label.follow" sortable="true"

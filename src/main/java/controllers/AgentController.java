@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.User;
-import domain.User;
-import forms.UserForm;
-import forms.UserForm;
+import domain.Agent;
+import domain.Agent;
+import forms.AgentForm;
+import forms.AgentForm;
 import security.Authority;
 import services.ActorService;
-import services.UserService;
+import services.AgentService;
 
 @Controller
-@RequestMapping("/user")
-public class UserController extends AbstractController {
+@RequestMapping("/agent")
+public class AgentController extends AbstractController {
 
 	// Supporting services -----------------------------------------------------
 
 	@Autowired
 	private ActorService actorService;
 	@Autowired
-	private UserService userService;
+	private AgentService agentService;
 
 
 	// Constructors -----------------------------------------------------------
 
-	public UserController() {
+	public AgentController() {
 		super();
 	}
 
@@ -44,30 +44,24 @@ public class UserController extends AbstractController {
 	public ModelAndView list(final Integer pageSize) {
 		ModelAndView result;
 
-		final Collection<User> users = this.userService.findAllActive();
-		final Collection<User> followeds = this.userService.findFollowedUsers();
-		Map<User,Boolean> userIsFollowedMap = new HashMap<>();
-		for (User user:users) {
-			userIsFollowedMap.put(user,followeds.contains(user));
-		}
+		final Collection<Agent> agents = this.agentService.findAllActive();
 		result = new ModelAndView("actor/list");
-		result.addObject("legend", "label.users");
-		result.addObject("actors", users);
-		result.addObject("userIsFollowedMap", userIsFollowedMap);
-		result.addObject("requestUri", "user/list.do");
+		result.addObject("legend", "label.agents");
+		result.addObject("actors", agents);
+		result.addObject("requestUri", "agent/list.do");
 		result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
 		return result;
 	}
 
-	// Display user -----------------------------------------------------------
+	// Display agent -----------------------------------------------------------
 		@RequestMapping(value = "/display", method = RequestMethod.GET)
-		public ModelAndView display(@RequestParam final int userId) {
+		public ModelAndView display(@RequestParam final int agentId) {
 			ModelAndView result;
 
-			final User user = this.userService.findOne(userId);
+			final Agent agent = this.agentService.findOne(agentId);
 			result = new ModelAndView("actor/display");
-			result.addObject("userForm", user);
-			result.addObject("modelName", "userForm");
+			result.addObject("agentForm", agent);
+			result.addObject("modelName", "agentForm");
 			result.addObject("display", true);
 			return result;
 		}
@@ -77,7 +71,7 @@ public class UserController extends AbstractController {
 	    @RequestMapping("/create")
 	    public ModelAndView create() {
 	        ModelAndView result;
-	        final UserForm registerForm = new UserForm();
+	        final AgentForm registerForm = new AgentForm();
 	        result = this.createEditModelAndView(registerForm, null);
 	        return result;
 	    }
@@ -87,11 +81,11 @@ public class UserController extends AbstractController {
 	    @RequestMapping("/edit")
 	    public ModelAndView edit() {
 	        ModelAndView result;
-	        UserForm model;
+	        AgentForm model;
 
 	        try {
-	            final User user = (User) this.actorService.findByPrincipal();
-	            model = new UserForm(user);
+	            final Agent agent = (Agent) this.actorService.findByPrincipal();
+	            model = new AgentForm(agent);
 	            result = this.createEditModelAndView(model, null);
 	        } catch (Throwable oops) {
 	            if (oops.getMessage().startsWith("msg.")) {
@@ -107,50 +101,51 @@ public class UserController extends AbstractController {
 	    // Save mediante Post ---------------------------------------------------
 
 	    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	    public ModelAndView save(final UserForm userForm, final BindingResult binding) {
+	    public ModelAndView save(final AgentForm agentForm, final BindingResult binding) {
 	        ModelAndView result;
-	        User user;
+	        Agent agent;
+
 	        try {
-	            user = this.userService.reconstruct(userForm, binding);
+	            agent = this.agentService.reconstruct(agentForm, binding);
 	            if (binding.hasErrors())
-	                result = this.createEditModelAndView(userForm);
+	                result = this.createEditModelAndView(agentForm);
 	            else
 	                try {
-	                    this.actorService.save(user);
+	                    this.actorService.save(agent);
 	                    result = new ModelAndView("redirect:/");
 	                } catch (final Throwable oops) {
 	                    if (oops.getCause().getCause() != null
 	                            && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-	                        result = this.createEditModelAndView(userForm, "msg.duplicate.username");
+	                        result = this.createEditModelAndView(agentForm, "msg.duplicate.agentname");
 	                    else
-	                        result = this.createEditModelAndView(userForm, "msg.commit.error");
+	                        result = this.createEditModelAndView(agentForm, "msg.commit.error");
 	                }
 
 	        } catch (final Throwable oops) {
 	            if (oops.getLocalizedMessage().startsWith("msg."))
-	                result = this.createEditModelAndView(userForm, oops.getLocalizedMessage());
+	                result = this.createEditModelAndView(agentForm, oops.getLocalizedMessage());
 	            else if (oops.getCause().getCause() != null
 	                    && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-	                result = this.createEditModelAndView(userForm, "msg.duplicate.username");
+	                result = this.createEditModelAndView(agentForm, "msg.duplicate.agentname");
 	            else
-	                result = this.createEditModelAndView(userForm, "user.reconstruct.error");
+	                result = this.createEditModelAndView(agentForm, "agent.reconstruct.error");
 	        }
 
 	        return result;
 	    }
 	    // Auxiliary methods -----------------------------------------------------
-	    protected ModelAndView createEditModelAndView(final UserForm model) {
+	    protected ModelAndView createEditModelAndView(final AgentForm model) {
 	        final ModelAndView result;
 	        result = this.createEditModelAndView(model, null);
 	        return result;
 	    }
 
-	    protected ModelAndView createEditModelAndView(final UserForm model, final String message) {
+	    protected ModelAndView createEditModelAndView(final AgentForm model, final String message) {
 			final ModelAndView result;
 			result = new ModelAndView("actor/create");
-	        result.addObject("userForm", model);
-			result.addObject("modelName", "userForm");
-	        result.addObject("requestUri", "user/create.do");
+	        result.addObject("agentForm", model);
+	        result.addObject("modelName", "agentForm");
+	        result.addObject("requestUri", "agent/create.do");
 	        result.addObject("edition", true);
 	        result.addObject("creation", model.getId() == 0);
 	        result.addObject("message", message);

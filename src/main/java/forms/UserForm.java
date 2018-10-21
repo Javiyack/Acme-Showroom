@@ -9,15 +9,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import domain.Actor;
 import domain.User;
+import security.Authority;
 
 public class UserForm extends ActorForm{
 
@@ -30,6 +29,7 @@ public class UserForm extends ActorForm{
 
 	public UserForm() {
 		super();
+		this.getAccount().setAuthority(Authority.USER);
 	}
 
 	public UserForm(final User user) {
@@ -62,6 +62,7 @@ public class UserForm extends ActorForm{
 		this.genere = genere;
 	}
 	
+	@NotBlank
 	@URL
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getPhoto() {

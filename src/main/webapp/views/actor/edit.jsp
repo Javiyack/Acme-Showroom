@@ -12,7 +12,7 @@
 
 <div class="form">
 
-	<form:form action="${requestUri}" modelAttribute="actorForm">
+	<form:form action="${requestUri}" modelAttribute="${modelName}">
 		<form:hidden path="id" />
 		<br>
 		<!-- Datos -->
@@ -49,35 +49,35 @@
 						</div>
 					</div>
 
-					<div class="row">
-						<div class="col-100">
-							<acme:textbox code="actor.address" path="address"
-								readonly="${!edition}" />
-						</div>
-					</div>
-					<div class="row" id="companyData">
-						<div class="col-100">
-							<acme:textbox code="label.company" path="username" id="Company" />
-						</div>
-					</div>
-					<div id="userData">
-						<div class="row">
-							<div class="col-50">
-								<acme:date code="label.birthdate" path="birthdate"
-									readonly="${!edition}" id="birthdate" />
-							</div>
-							<div class="col-50">
-								<acme:textbox code="label.genere" path="genere"
-									readonly="${!edition}" id="genere" />
-							</div>
-						</div>
-						<div class="row">
+					<jstl:if
+						test="${modelName=='agentForm' or modelName=='auditortForm'  }">
+						<div class="row" id="companyData">
 							<div class="col-100">
-								<acme:textbox code="label.photo" path="photo"
-									readonly="${!edition}" id="photo" />
+								<acme:textbox code="label.company" path="company" id="Company" />
 							</div>
 						</div>
-					</div>
+					</jstl:if>
+					<jstl:if test="${modelName eq 'userForm'}">
+						<div id="userData">
+							<div class="row">
+								<div class="col-50">
+									<acme:date code="label.birthdate" path="birthdate"
+										readonly="${!edition}" id="birthdate" />
+								</div>
+								<div class="col-50">
+									<acme:textbox code="label.genere" path="genere"
+										readonly="${!edition}" id="genere" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-100">
+									<acme:textbox code="label.photo" path="photo"
+										readonly="${!edition}" id="photo" />
+								</div>
+							</div>
+						</div>
+					</jstl:if>
+
 				</div>
 
 				<jstl:if test="${display}">
@@ -86,11 +86,11 @@
 							<spring:message code="label.photo" />
 						</legend>
 						<div class="w3-card-4" Style="margin-top: 2em;">
-							<img src="${actorForm.photo}" alt="${actorForm.photo}"
+							<img src="${modelAttribute.photo}" alt="${modelAttribute.photo}"
 								Style="width: 100%">
 							<div class="w3-container">
 								<h4>
-									<b>${actorForm.userAccount.username}</b>
+									<b>${modelAttribute.userAccount.username}</b>
 								</h4>
 							</div>
 						</div>
@@ -109,17 +109,7 @@
 							<acme:password code="label.userAccount.repeatPassword"
 								path="confirmPassword" id="confirm_password"
 								onkeyup="javascript: checkPassword();" />
-							<form:label path="${path}">
-								<spring:message code="label.authority" />
-							</form:label>
-							<select id="authority" name="authority" class="w3-text-black"
-								onchange="javascript:selectedCheck(this)">
-								<jstl:forEach items="${permisos}" var="permiso">
-									<option value="${permiso}" id="${permiso}">
-										<spring:message code="actor.authority.${permiso}" />
-									</option>
-								</jstl:forEach>
-							</select>
+							
 
 						</jstl:if>
 						<jstl:if test="${!creation}">
@@ -129,16 +119,16 @@
 								onmouseleave="overEffect(this);" class="iButton">
 								<i class="fa fa-eye fa-fw"></i> 
 								<spring:message
-									code="actor.authority.${actorForm.account.authority}" />
+									code="actor.authority.${modelAttribute.account.authority}" />
 							</legend>
 							<div id="photoCard">
 								<div class="col-40">
 									<div class="w3-card-4" Style="margin-top: 2em;">
-										<img src="${actorForm.photo}" alt="${actorForm.photo}"
+										<img src="${modelAttribute.photo}" alt="${actorForm.photo}"
 											Style="width: 100%">
 										<div class="w3-container">
 											<h4>
-												<b>${actorForm.username}</b>
+												<b>${modelAttribute.username}</b>
 											</h4>
 										</div>
 									</div>
@@ -167,7 +157,7 @@
 		<jstl:if test="${display}">
 			<!-- Showrooms -->
 
-			<jstl:set value="${actorForm.id}" var="userId" />
+			<jstl:set value="${modelAttribute.id}" var="userId" />
 			<%@ include file="/views/showroom/list.jsp"%>
 		</jstl:if>
 
@@ -209,8 +199,3 @@
 	</form:form>
 
 </div>
-<script>
-	$(document).ready(function() {
-		selectedCheck(document.getElementById("authority"));
-	});
-</script>

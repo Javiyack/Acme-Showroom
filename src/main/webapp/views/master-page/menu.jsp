@@ -67,6 +67,9 @@
 							<p>
 								<button onclick="relativeRedir('/agent/create.do')">Agente</button>
 							</p>
+							<p>
+								<button onclick="relativeRedir('/admin/create.do')">Administrador</button>
+							</p>
 						</div>
 						<div class="modal-footer">
 							<h3>Modal Footer</h3>

@@ -1,22 +1,17 @@
 
 package domain;
 
-import java.util.Date;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
 
@@ -28,8 +23,7 @@ public abstract class Actor extends DomainEntity {
 	private String 		name;
 	private String 		surname;
 	private String 		email;
-	private String 		phone; 			// Optional
-	private String 		address; 		// Optional
+	private String 		phone; 		
 	//Relationships
 	private UserAccount userAccount;
 	
@@ -72,13 +66,6 @@ public abstract class Actor extends DomainEntity {
 		this.phone = phone;
 	}
 
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(final String address) {
-		this.address = address;
-	}
 
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)

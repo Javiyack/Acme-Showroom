@@ -3,10 +3,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
-import domain.Agent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,8 +15,10 @@ import org.springframework.validation.Validator;
 
 import domain.Actor;
 import domain.Administrator;
+import domain.Agent;
 import domain.User;
 import forms.ActorForm;
+import forms.AdminForm;
 import forms.AgentForm;
 import forms.UserForm;
 import repositories.ActorRepository;
@@ -42,6 +42,8 @@ public class ActorService {
 	private UserService userService;
 	@Autowired
 	private AgentService agentService;
+	@Autowired
+	private AdministratorService adminService;
 
 	@Autowired
 	private Validator validator;
@@ -154,73 +156,54 @@ public class ActorService {
 		return result;
 	}
 
-	public String getType(final UserAccount userAccount) {
-
-		final List<Authority> authorities = new ArrayList<Authority>(userAccount.getAuthorities());
-
-		return authorities.get(0).getAuthority();
-	}
-
-	public Actor reconstruct(final ActorForm actorForm, final BindingResult binding) {
-		Actor logedActor = null;
-		switch (actorForm.getAccount().getAuthority()) {
-		case Authority.ADMINISTRATOR:
-			logedActor = this.reconstructAdmin(actorForm, binding);
-			break;
-		case Authority.USER:
-			logedActor = userService.reconstruct((UserForm) actorForm, binding);
-			break;
-		case Authority.AGENT:
-			logedActor = agentService.reconstruct((AgentForm) actorForm, binding);
-			break;
-		default:
-			break;
-		}
-		return logedActor;
-	}
-	public Actor reconstructAdmin(final ActorForm actorForm, final BindingResult binding) {
-		Actor logedActor = null;
+	public Actor reconstruct(ActorForm actorForm, BindingResult binding) {
+		Actor actor = null;
 
 		UserAccount useraccount = null;
 		final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		if (actorForm.getId() == 0) {
+			this.validator.validate(actorForm.getAccount(), binding);
+
 			actorForm.getAccount().setNewPassword(actorForm.getAccount().getPassword());
 			useraccount = new UserAccount();
-			logedActor = new Administrator();
-			
-			useraccount = this.userAccountService.create(actorForm.getAccount().getAuthority());
-			logedActor.setUserAccount(useraccount);
-
-			logedActor.getUserAccount().setUsername(actorForm.getAccount().getUsername());
-			logedActor.getUserAccount().setPassword(actorForm.getAccount().getPassword());
-			logedActor.setName(actorForm.getName());
-			logedActor.setSurname(actorForm.getSurname());
-			logedActor.setEmail(actorForm.getEmail());
-			logedActor.setAddress(actorForm.getAddress());
-			logedActor.setPhone(actorForm.getPhone());
-			this.validator.validate(actorForm, binding);
-			this.validator.validate(actorForm.getAccount(), binding);
-			if (!binding.hasErrors()) {
-				Assert.isTrue(actorForm.getAccount().getPassword().equals(actorForm.getAccount().getConfirmPassword()),
-						"msg.userAccount.repeatPassword.mismatch");
-				logedActor.getUserAccount()
-						.setPassword(encoder.encodePassword(actorForm.getAccount().getPassword(), null));
-				Assert.isTrue(actorForm.isAgree(), "msg.not.terms.agree.block");
+			if (actorForm instanceof UserForm) {
+				actor = new User();
+				
+			} else if (actorForm instanceof AgentForm) {
+				actor = new Agent();				
 			}
-		} else {
-			this.validator.validate(actorForm, binding);
-			final String formPass = encoder.encodePassword(actorForm.getAccount().getPassword(), null);
-			logedActor = this.findByPrincipal();
-			Assert.notNull(logedActor, "msg.not.logged.block");
-			if (!binding.hasErrors()) {
-				logedActor.setName(actorForm.getName());
-				logedActor.setSurname(actorForm.getSurname());
-				logedActor.setEmail(actorForm.getEmail());
-				logedActor.setAddress(actorForm.getAddress());
-				logedActor.setPhone(actorForm.getPhone());
-			} // Si ha cambiado algún parámetro del Authority (Usuario, password)
-			if (!actorForm.getAccount().getUsername().equals(logedActor.getUserAccount().getUsername())) {
+			else {
+				actor = new Administrator();
+			}
+			useraccount = this.userAccountService.create(actorForm.getAccount().getAuthority());
+			actor.setUserAccount(useraccount);
 
+			actor.getUserAccount().setUsername(actorForm.getAccount().getUsername());
+			actor.getUserAccount().setPassword(actorForm.getAccount().getPassword());
+			actor.setName(actorForm.getName());
+			actor.setSurname(actorForm.getSurname());
+			actor.setEmail(actorForm.getEmail());
+			actor.setPhone(actorForm.getPhone());
+
+			Assert.isTrue(actorForm.getAccount().getPassword().equals(actorForm.getAccount().getConfirmPassword()),
+					"msg.userAccount.repeatPassword.mismatch");
+			actor.getUserAccount().setPassword(encoder.encodePassword(actorForm.getAccount().getPassword(), null));
+			Assert.isTrue(actorForm.isAgree(), "msg.not.terms.agree.block");
+
+		} else {
+			final String formPass = encoder.encodePassword(actorForm.getAccount().getPassword(), null);
+			actor = (User) this.findByPrincipal();
+			Assert.notNull(actor, "msg.not.logged.block");
+			if (!binding.hasErrors()) {
+				actor.setName(actorForm.getName());
+				actor.setSurname(actorForm.getSurname());
+				actor.setEmail(actorForm.getEmail());
+				actor.setPhone(actorForm.getPhone());
+
+			}
+			// Si ha cambiado algún parámetro del Authority (Usuario, password)
+			// Si ha cambiado el nombre de usuario
+			if (!actorForm.getAccount().getUsername().equals(actor.getUserAccount().getUsername())) {
 				if (!actorForm.getAccount().getNewPassword().isEmpty()) {
 					// Valida el la cuenta de usuario
 					this.validator.validate(actorForm.getAccount(), binding);
@@ -229,9 +212,9 @@ public class ActorService {
 							"msg.userAccount.repeatPassword.mismatch");
 					// Cambia la contraseña
 					// Comprueba la contraseña y la cambia si todo ha ido bien
-					Assert.isTrue(formPass.equals(logedActor.getUserAccount().getPassword()), "msg.wrong.password");
+					Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
 					Assert.isTrue(checkLength(actorForm.getAccount().getNewPassword()), "msg.password.length");
-					logedActor.getUserAccount()
+					actor.getUserAccount()
 							.setPassword(encoder.encodePassword(actorForm.getAccount().getNewPassword(), null));
 				} else {
 					actorForm.setNewPassword(null);
@@ -239,34 +222,30 @@ public class ActorService {
 					// Valida el la cuenta de usuario
 					this.validator.validate(actorForm.getAccount(), binding);
 					// Comprueba la contraseña
-					Assert.isTrue(formPass.equals(logedActor.getUserAccount().getPassword()), "msg.wrong.password");
+					Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
 
 				}
 
 				// Cambia el nombre de usuario
-				logedActor.getUserAccount().setUsername(actorForm.getAccount().getUsername());
+				actor.getUserAccount().setUsername(actorForm.getAccount().getUsername());
 
-			} else {
+			} else { // Si NO ha cambiado el nombre se usuario
 				if (!actorForm.getAccount().getPassword().isEmpty()) {
 					if (!actorForm.getAccount().getNewPassword().isEmpty()) {
-						// Valida el la cuenta de usuario
-						this.validator.validate(actorForm, binding);
 						Assert.isTrue(
 								actorForm.getAccount().getNewPassword()
 										.equals(actorForm.getAccount().getConfirmPassword()),
 								"msg.userAccount.repeatPassword.mismatch");
 						// Comprueba la contraseña
-						Assert.isTrue(formPass.equals(logedActor.getUserAccount().getPassword()), "msg.wrong.password");
+						Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
 						Assert.isTrue(checkLength(actorForm.getAccount().getNewPassword()), "msg.password.length");
-						logedActor.getUserAccount()
+						actor.getUserAccount()
 								.setPassword(encoder.encodePassword(actorForm.getAccount().getNewPassword(), null));
 					} else {
 						actorForm.getAccount().setNewPassword("XXXXX");
 						actorForm.getAccount().setConfirmPassword("XXXXX");
-						// Valida el la cuenta de usuario
-						this.validator.validate(actorForm, binding);
 						// Comprueba la contraseña
-						Assert.isTrue(formPass.equals(logedActor.getUserAccount().getPassword()), "msg.wrong.password");
+						Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
 					}
 
 				} else {
@@ -280,15 +259,26 @@ public class ActorService {
 				}
 			}
 		}
-		return logedActor;
+		return actor;
 	}
 
 	private boolean checkLength(String newPassword) {
 		return newPassword.length() > 4 && newPassword.length() < 33;
 	}
 
+	public String getType(final UserAccount userAccount) {
+
+		final List<Authority> authorities = new ArrayList<Authority>(userAccount.getAuthorities());
+
+		return authorities.get(0).getAuthority();
+	}
+
 	public void flush() {
 		this.actorRepository.flush();
 
+	}
+
+	public Collection<Administrator> findAllAdministrators() {
+		return adminService.findAll();
 	}
 }

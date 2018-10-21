@@ -12,6 +12,6 @@ import domain.Agent;
 @Repository
 public interface AgentRepository extends JpaRepository<Agent, Integer> {
 
-    @Query("select u from User u where u.userAccount.active=true")
+    @Query("select a from Agent a where a.userAccount.active=true")
     Collection<Agent> findAllActive();
 }
