@@ -7,12 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
+import domain.Administrator;
+import domain.Agent;
+import domain.TabooWord;
+import forms.ActorForm;
+import forms.AdminForm;
 import repositories.AdministratorRepository;
 import security.LoginService;
 import security.UserAccount;
-import domain.Administrator;
-import domain.TabooWord;
+import security.UserAccountService;
 
 @Service
 @Transactional
@@ -20,14 +26,18 @@ public class AdministratorService {
 
 	// Managed repositories ------------------------------------------------
 	@Autowired
-	private AdministratorRepository	administratorRepository;
+	private AdministratorRepository administratorRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ActorService			actorService;
+	private ActorService actorService;
 	@Autowired
-	private TabooWordService		tabooWordService;
-
+	private TabooWordService tabooWordService;
+	@Autowired
+	private UserAccountService userAccountService;
+	@Autowired
+	private Validator validator;
+	
 
 	// Constructor ----------------------------------------------------------
 	public AdministratorService() {
@@ -96,6 +106,15 @@ public class AdministratorService {
 		}
 
 		return isSpam;
+	}
+
+	public Administrator reconstruct(final AdminForm adminForm, final BindingResult binding) {
+		Administrator admin = null;
+
+		this.validator.validate(adminForm, binding);
+		admin = (Administrator) actorService.reconstruct((ActorForm) adminForm, binding);
+		
+		return admin;
 	}
 
 }

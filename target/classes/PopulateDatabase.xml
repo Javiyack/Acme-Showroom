@@ -81,7 +81,6 @@
 		<property name="surname" value="Llach" />
 		<property name="email" value="javillach@gmail.com" />
 		<property name="phone" value="658357522" />
-		<property name="address" value="C/ Amargura 55" />
 		<property name="userAccount" ref="userAccountAdmin" />
 	</bean>
 
@@ -95,7 +94,6 @@
 		<property name="photo" value="https://image.shutterstock.com/image-vector/cool-dude-monkey-glasses-headphones-260nw-574759426.jpg" />
 		<property name="birthdate" value="1972/06/15" />
 		<property name="genere" value="FEMALE" />
-		<property name="address" value="C/ Calvario 66" />
 		<property name="userAccount" ref="userAccountUser1" />
 	</bean>
 
@@ -107,7 +105,6 @@
 		<property name="photo" value="https://bloximages.newyork1.vip.townnews.com/stltoday.com/content/tncms/assets/v3/editorial/5/ca/5ca00daf-81a6-5e26-bff3-25ea003d8f4e/4f9054fbddfae.image.jpg" />
 		<property name="birthdate" value="1992/09/01" />
 		<property name="genere" value="UNDEFINED" />
-		<property name="address" value="C/ Suplicio 77" />
 		<property name="userAccount" ref="userAccountUser2" />
 	</bean>
 	
@@ -119,7 +116,6 @@
 		<property name="photo" value="https://fotki.yandex.ru/get/15523/197059212.12/0_14541b_f067d910_orig.jpg" />
 		<property name="birthdate" value="1985/03/21" />
 		<property name="genere" value="MALE" />
-		<property name="address" value="C/ Suplicio 77" />
 		<property name="userAccount" ref="userAccountUser3" />
 
 	</bean>

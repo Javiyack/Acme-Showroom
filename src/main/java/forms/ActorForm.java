@@ -1,41 +1,27 @@
 
 package forms;
 
-import java.util.Date;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.hibernate.validator.constraints.URL;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import domain.Actor;
-import domain.Agent;
-import domain.User;
 
 public class ActorForm {
 
 	private String name;
 	private String surname;
 	private String email;
-	private String phone; // Optional
-	private String address; // Optional
+	private String phone; 
 	private String username;
 	private String password;
 	private String newPassword;
 	private String confirmPassword;
 	private String authority;
-	private String photo; // User
-	private Date birthdate; // User
-	private String genere; // User
-	private String 		company;	
 	
 	private boolean agree;
 	private AccountForm account;
@@ -58,50 +44,13 @@ public class ActorForm {
 		this.setSurname(actor.getSurname());
 		this.setEmail(actor.getEmail());
 		this.setPhone(actor.getPhone());
-		this.setAddress(actor.getAddress());
 		
 		this.setAccount(new AccountForm(actor));
 		this.setAuthority(this.getAccount().getAuthority());
 		this.setUsername(actor.getUserAccount().getUsername());
 		
-		this.setPhoto(((User) actor).getPhoto());
-		this.setBirthdate(((User) actor).getBirthdate());
-		this.setGenere(((User) actor).getGenere());
-		
-		this.setCompany(((Agent) actor).getCompany());
-		
-		
 		
 
-	}
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getCompany() {
-		return company;
-	}
-
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	@Past
-	@NotNull
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	public Date getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(Date bithdate) {
-		this.birthdate = bithdate;
-	}
-
-	@Pattern(regexp = "MALE|FEMALE|UNDEFINED")
-	public String getGenere() {
-		return genere;
-	}
-
-	public void setGenere(String genere) {
-		this.genere = genere;
 	}
 
 	public String getAuthority() {
@@ -197,6 +146,7 @@ public class ActorForm {
 		this.email = email;
 	}
 
+	@NotBlank
 	@Pattern(regexp = "()|^[6,7]\\d{8}$")
 	public String getPhone() {
 		return this.phone;
@@ -206,14 +156,6 @@ public class ActorForm {
 		this.phone = phone;
 	}
 
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getAddress() {
-		return this.address;
-	}
-
-	public void setAddress(final String address) {
-		this.address = address;
-	}
 
 	public int getId() {
 		return this.id;
@@ -231,13 +173,4 @@ public class ActorForm {
 		this.version = version;
 	}
 
-	@URL
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
 }

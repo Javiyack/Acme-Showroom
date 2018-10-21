@@ -12,6 +12,8 @@ package security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -76,6 +78,29 @@ public class Authority implements GrantedAuthority {
 		authority = new Authority();
 		authority.setAuthority(Authority.AGENT);
 		result.add(authority);
+
+
+		return result;
+	}
+	
+	public static Map<String, Authority> mapAuthorities() {
+		Map<String, Authority> result;
+		Authority authority;
+
+		result = new HashMap();
+
+		authority = new Authority();
+		authority.setAuthority(Authority.ADMINISTRATOR);
+		result.put(Authority.ADMINISTRATOR, authority);
+
+
+		authority = new Authority();
+		authority.setAuthority(Authority.USER);
+		result.put(Authority.USER, authority);
+
+		authority = new Authority();
+		authority.setAuthority(Authority.AGENT);
+		result.put(Authority.AGENT, authority);
 
 
 		return result;
