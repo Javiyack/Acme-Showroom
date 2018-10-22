@@ -43,6 +43,7 @@ public class ActorController extends AbstractController {
         final Collection<Actor> actors = this.actorService.findAll();
 
         result = new ModelAndView("actor/list");
+        result.addObject("legend", "label.all.accounts");
         result.addObject("actors", actors);
         result.addObject("requestUri", "actor/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
@@ -59,6 +60,8 @@ public class ActorController extends AbstractController {
         Collection<Showroom> showrooms = showroomService.findByUserId(actorId);
         result = new ModelAndView("actor/display");
         result.addObject("actorForm", actor);
+        result.addObject("modelName", "actorForm");
+        result.addObject("display", true);
         result.addObject("showrooms", showrooms);
         result.addObject("display", true);
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);

@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ import services.ActorService;
 import services.AdministratorService;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/administrator")
 public class AdminController extends AbstractController {
 
 	// Supporting services -----------------------------------------------------
@@ -100,7 +101,7 @@ public class AdminController extends AbstractController {
 	// Save mediante Post ---------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final AdminForm adminForm, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("actorForm") final AdminForm adminForm, final BindingResult binding) {
 		ModelAndView result;
 		Administrator actor;
 
@@ -142,15 +143,10 @@ public class AdminController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final ActorForm model, final String message) {
 		final ModelAndView result;
-		final Collection<Authority> permisos = Authority.listAuthorities();
-		final Authority authority = new Authority();
-		authority.setAuthority(Authority.ADMINISTRATOR);
-		permisos.remove(authority);
 		result = new ModelAndView("actor/create");
-		result.addObject("adminForm", model);
+		result.addObject("actorForm", model);
 		result.addObject("modelName", "adminForm");
 		result.addObject("requestUri", "admin/create.do");
-		result.addObject("permisos", permisos);
 		result.addObject("edition", true);
 		result.addObject("creation", model.getId() == 0);
 		result.addObject("message", message);

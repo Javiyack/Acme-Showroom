@@ -43,11 +43,11 @@
                         <div class="w3-col m12">
                             <acme:checkBox code="label.notification" path="broadcast"
                                            css="w3-check"
-                                           onclick="javascript:toggleVisible('recipients')"/>
+                                           onclick="javascript:toggleVisible('recipients')" id="notificationCheck"/>
                         </div>
                     </security:authorize>
                     <div class="w3-col w3-rest">
-                        <div id="recipients">
+                        <div id="recipients" style="">
                             <jstl:if test="${requestUri eq 'message/edit.do'}">
                                 <acme:select items="${actors}" itemLabel="userAccount.username"
                                              code="ms.recipient" path="recipient" css="formInput w3-text-black"/>
@@ -76,3 +76,10 @@
         </div>
     </form:form>
 </div>
+
+<script>
+    $(document).ready(function () {
+        setVisibility(document.getElementById("recipients"), document.getElementById("notificationCheck").value);
+    });
+
+</script>

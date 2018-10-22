@@ -25,8 +25,11 @@
 		<value>/views/security/messages</value>		
 		<value>/views/welcome/messages</value>
 		<value>/views/term/messages</value>
-		<value>/views/actor/messages</value>			
-		
+		<value>/views/actor/messages</value>
+		<value>/views/admin/messages</value>
+		<value>/views/user/messages</value>
+		<value>/views/agent/messages</value>
+
 		<value>/views/folder/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/configuration/messages</value>

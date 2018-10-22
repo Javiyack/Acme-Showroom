@@ -25,6 +25,7 @@
 <%@ attribute name="path" required="true"%>
 <%@ attribute name="code" required="true"%>
 
+<%@ attribute name="id" required="false"%>
 <%@ attribute name="value" required="false"%>
 <%@ attribute name="readonly" required="false"%>
 <%@ attribute name="css" required="false"%>
@@ -32,6 +33,10 @@
 
 <jstl:if test="${value == null}">
 	<jstl:set var="value" value="false" />
+</jstl:if>
+
+<jstl:if test="${id == null}">
+	<jstl:set var="value" value="check" />
 </jstl:if>
 
 <jstl:if test="${readonly == null}">
@@ -44,7 +49,7 @@
 <%-- Definition --%>
 
 <spring:message code="${code}" var="title" />
-<form:checkbox id="check" path="${path}" disabled="${readonly}" onclick="${onclick}"
+<form:checkbox id="${id}" path="${path}" disabled="${readonly}" onclick="${onclick}"
 	placeholder="${placeholder}" class="${css}" value="true" />
 <form:label for="check" path="${path}" cssStyle="display:inline; margin:0.5em;" >
 		<jstl:out value="${title}"/>

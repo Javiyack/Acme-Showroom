@@ -143,7 +143,7 @@ public class AgentController extends AbstractController {
 	    protected ModelAndView createEditModelAndView(final AgentForm model, final String message) {
 			final ModelAndView result;
 			result = new ModelAndView("actor/create");
-	        result.addObject("agentForm", model);
+	        result.addObject("actorForm", model);
 	        result.addObject("modelName", "agentForm");
 	        result.addObject("requestUri", "agent/create.do");
 	        result.addObject("edition", true);

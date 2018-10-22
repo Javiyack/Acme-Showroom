@@ -54,18 +54,23 @@
 					<acme:column property="genere" title="label.genere" sortable="true" />
 				</jstl:if>
 				<jstl:if
-					test="${legend eq 'label.agents' or legend eq 'label.auditors'}">
+						test="${legend eq 'label.agents' or legend eq 'label.auditors'}">
 					<acme:column property="company" title="label.company"
-						sortable="true"/>
+								 sortable="true"/>
+				</jstl:if>
+				<jstl:if
+						test="${legend eq 'label.all.accounts'}">
+					<acme:column property="userAccount.authorities[0]" title="label.authority"
+								 sortable="true"/>
 				</jstl:if>
 				<security:authorize access="hasRole('USER')">
 					<jstl:if test="${!userIsFollowedMap[row]}">
-						<acme:column property=" " title="label.follow" sortable="true"
+						<acme:column property=" " title="label.chirp.subscription" sortable="true"
 							rowUrl="follow/user/follow.do?userId=${row.id}"
 							icon="fa fa-check w3-xlarge w3-text-gray css-uncheck" />
 					</jstl:if>
 					<jstl:if test="${userIsFollowedMap[row]}">
-						<acme:column property=" " title="label.follow" sortable="true"
+						<acme:column property=" " title="label.chirp.subscription" sortable="true"
 							rowUrl="follow/user/follow.do?userId=${row.id}"
 							icon="fa fa-check w3-xlarge w3-text-green" />
 					</jstl:if>
@@ -93,7 +98,7 @@
 
 		<div class="seccion w3-light-grey ">
 			<legend>
-				<spring:message code="label.followeds" />
+				<spring:message code="label.chirp.subscription" />
 			</legend>
 			<div style="overflow-x: auto;">
 
@@ -103,7 +108,7 @@
 						<th><spring:message code="label.user" /></th>
 						<th><spring:message code="label.name" /></th>
 						<th><spring:message code="label.birthdate" /></th>
-						<th><spring:message code="label.follow" /></th>
+						<th><spring:message code="label.chirp.subscription" /></th>
 					</tr>
 
 					<jstl:forEach items="${userIsFollowedMap}" var="entry">

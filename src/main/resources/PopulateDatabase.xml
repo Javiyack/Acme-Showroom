@@ -319,9 +319,9 @@
 			<list>
 				<value>inbox</value>
 				<value>outbox</value>
-				<value>notification</value>
+				<value>notificationbox</value>
 				<value>spambox</value>
-				<value>trash</value>
+				<value>trashbox</value>
 			</list>
 
 		</property>

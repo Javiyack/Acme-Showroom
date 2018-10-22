@@ -8,16 +8,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.User;
-import domain.User;
 import forms.UserForm;
-import forms.UserForm;
-import security.Authority;
 import services.ActorService;
 import services.UserService;
 
@@ -107,7 +105,7 @@ public class UserController extends AbstractController {
 	    // Save mediante Post ---------------------------------------------------
 
 	    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	    public ModelAndView save(final UserForm userForm, final BindingResult binding) {
+	    public ModelAndView save(@ModelAttribute("actorForm") final UserForm userForm, final BindingResult binding) {
 	        ModelAndView result;
 	        User user;
 	        try {
@@ -148,7 +146,7 @@ public class UserController extends AbstractController {
 	    protected ModelAndView createEditModelAndView(final UserForm model, final String message) {
 			final ModelAndView result;
 			result = new ModelAndView("actor/create");
-	        result.addObject("userForm", model);
+	        result.addObject("actorForm", model);
 			result.addObject("modelName", "userForm");
 	        result.addObject("requestUri", "user/create.do");
 	        result.addObject("edition", true);

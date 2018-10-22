@@ -106,6 +106,14 @@ function toggleVisible(element) {
 	}
 }
 
+function setVisibility(element, visibility){
+	var status='none';
+	if (visibility===true){
+        status='block';
+	}
+	element.style.display = status;
+	alert(status);
+}
 // Toggle between showing and hiding the sidebar, and add overlay effect
 function w3_open() {
 	if (mySidebar.style.display === 'block') {

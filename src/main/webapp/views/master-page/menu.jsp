@@ -80,7 +80,7 @@
 			</security:authorize>
 			
 			<security:authorize access="isAuthenticated()">
-				<a href="actor/edit.do"><i
+				<a href="${rol}/edit.do"><i
 					class="fa fa-user w3-bar-item w3-large"></i></a>
 				<a href="folder/list.do"><i
 				class="fa fa-envelope w3-bar-item w3-large"></i></a>
