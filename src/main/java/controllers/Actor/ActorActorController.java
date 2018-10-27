@@ -56,7 +56,7 @@ public class ActorActorController extends AbstractController {
         result.addObject("legend", "label.actors");
         result.addObject("actors", users);
         result.addObject("userIsFollowedMap", userIsFollowedMap);
-        result.addObject("requestUri", "user/list.do");
+        result.addObject("requestUri", "actor/actor/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }

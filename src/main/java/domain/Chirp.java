@@ -57,8 +57,8 @@ public class Chirp extends DomainEntity {
         return actor;
     }
 
-    public void setActor(User showroom) {
-        this.actor = showroom;
+    public void setActor(Actor actor) {
+        this.actor = actor;
     }
 
 

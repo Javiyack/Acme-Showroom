@@ -73,15 +73,20 @@ public class SubscriptionService {
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
         return subscriptionRepository.findBySubscribed((actor!=null)?actor.getId():-1);
     }
-    public Collection<Actor> findUserSubscriptions() {
+    public Collection<Actor> findSubscribedActors() {
 
         final Actor actor = this.actorService.findByPrincipal();
         return subscriptionRepository.findSubscribedActorsBySubscriberId((actor!=null)?actor.getId():-1);
     }
 
-    public Collection<Subscription> findFolloweds() {
+    public Collection<Subscription> findByLogedActor() {
         final Actor actor = this.actorService.findByPrincipal();
         return subscriptionRepository.findBySubscriber((actor!=null)?actor.getId():-1);
+    }
+
+    public Collection<Subscription> findTopicSubscriptions() {
+        final Actor actor = this.actorService.findByPrincipal();
+        return subscriptionRepository.findTopicSubscriptions((actor!=null)?actor.getId():-1);
     }
 
     public void follow(int userId) {

@@ -12,5 +12,5 @@ import java.util.Collection;
 @Repository
 public interface ChirpRepository extends JpaRepository<Chirp, Integer> {
     @Query("select c from Chirp c where c.actor.id=?1")
-    Collection<Chirp> findByUser(int user);
+    Collection<Chirp> findByActor(int user);
 }

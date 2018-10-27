@@ -17,6 +17,8 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 
     @Query("select s from Subscription s where s.topic.id=?1 and s.subscribedActor.userAccount.active=true and  s.subscriber.userAccount.active=true ")
     Collection<Subscription> findByTopic(int id);
+    @Query("select s from Subscription s where s.subscriber.id=?1 and s.subscribedActor.userAccount.active=true and  s.subscriber.userAccount.active=true ")
+    Collection<Subscription> findTopicSubscriptions(int ActorId);
     @Query("select s from Subscription s where s.subscribedActor.id=?1 and s.subscribedActor.userAccount.active=true and  s.subscriber.userAccount.active=true ")
     Collection<Subscription> findBySubscribed(int id);
     @Query("select s from Subscription s where s.subscriber.id=?1 and s.subscribedActor.userAccount.active=true and  s.subscriber.userAccount.active=true ")
@@ -25,6 +27,5 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
     Collection<Actor> findSubscriberActorsBySubscribedId(int id);
     @Query("select s.subscribedActor from Subscription s where s.subscriber.id=?1 and s.subscribedActor.userAccount.active=true and  s.subscriber.userAccount.active=true ")
     Collection<Actor> findSubscribedActorsBySubscriberId(int id);
-    @Query("select s.subscribedActor from Subscription s where s.topic.id=?1 and s.subscribedActor.userAccount.active=true and  s.subscriber.userAccount.active=true ")
-    Collection<Actor> findTopicSubscriptions(int id);
+
 }

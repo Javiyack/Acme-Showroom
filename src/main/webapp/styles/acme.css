@@ -62,7 +62,7 @@ li.menuItem:hover{
 
 .top-menu {
 	background-color: #f1f1f1;
-	padding: 10 10 10 10;
+	padding: 10px;
 	position: fixed;
 	top: 0;
 	width: 100%;

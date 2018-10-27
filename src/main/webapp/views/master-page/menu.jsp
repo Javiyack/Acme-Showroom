@@ -112,11 +112,11 @@
 					class="fa fa-assistive-listening-systems fa-fw"></i>  <spring:message
 					code="label.subscriptions" />
 			</a>
-			<a href="chirp/user/list.do"
+			<a href="chirp/actor/list.do"
 			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 					class="fa fa-podcast fa-fw"></i>  <spring:message code="label.chirp" />
 			</a>
-			<a href="chirp/user/stream.do"
+			<a href="chirp/actor/stream.do"
 			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 					class="fa fa-bell-o fa-fw"></i>  <spring:message code="label.chirp" />
 			</a>

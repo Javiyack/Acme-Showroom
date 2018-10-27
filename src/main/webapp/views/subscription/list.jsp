@@ -23,10 +23,10 @@
 <spring:message code="msg.delete.confirmation" var="deleteConfirmation"/>
 <div class="seccion w3-light-grey ">
     <legend>
-        <spring:message code="label.users"/>
+        <spring:message code="label.subscriptions"/>
     </legend>
     <div style="overflow-x:auto;">
-        <jstl:if test="${!actors.isEmpty()}">
+        <jstl:if test="${!subscriptions.isEmpty()}">
             <form:form action="${requestUri}" method="GET">
                 <spring:message code="pagination.size"/>
                 <input hidden="true" name="word" value="${word}">
@@ -38,26 +38,25 @@
         </jstl:if>
 
         <display:table pagesize="${pageSize}"
-                       class="flat-table flat-table-1 w3-light-grey" name="actors"
+                       class="flat-table flat-table-1 w3-light-grey" name="subscribedActors"
                        requestURI="${requestUri}" id="row">
-            <jstl:set var="activateUrl" value="actor/activate.do?actorId=${row.id}&pageSize=${pageSize}"/>
-            <jstl:set var="url" value="actor/display.do?actorId=${row.id}"/>
+            <jstl:set var="url" value="chirp/actor/list.do?subscriptionId=${row.id}"/>
             <acme:column property="${row.userAccount.username}" title="actor.username" sortable="true" rowUrl="${url}"/>
             <acme:column property="${row.surname}, ${row.name}" title="label.name" sortable="true" rowUrl="${url}"/>
-            <acme:column property="${row.registrationMoment}" title="label.date" sortable="true" rowUrl="${url}"
-                         format="moment.format"/>
-            <security:authorize access="hasRole('ADMINISTRATOR')">
-                <jstl:if test="${!row.userAccount.active}">
-                    <acme:column property=" " title="label.activation" sortable="true"
-                                 rowUrl="${activateUrl}"
-                                 icon="fa fa-toggle-off w3-xlarge w3-text-grey w3-opacity"/>
-                </jstl:if>
-                <jstl:if test="${row.userAccount.active}">
-                    <acme:column property=" " title="label.activation" sortable="true"
-                                 rowUrl="${activateUrl}"
-                                 icon="fa fa-toggle-on w3-xlarge w3-text-green"/>
-                </jstl:if>
-            </security:authorize>
+
+            <acme:column property=" " title="label.chirp.subscription"
+                         rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
+                         icon="fa fa-check w3-xlarge w3-text-green"/>
+        </display:table>
+        <display:table pagesize="${pageSize}"
+                       class="flat-table flat-table-1 w3-light-grey" name="topicSubscriptions"
+                       requestURI="${requestUri}" id="row">
+            <jstl:set var="url" value="chirp/actor/list.do?subscriptionId=${row.id}"/>
+            <acme:column property="${row.topic.name}" title="label.topic" sortable="true" rowUrl="${url}"/>
+
+            <acme:column property=" " title="label.chirp.subscription"
+                         rowUrl="subscription/actor/topic/subcribe.do?topicId=${row.id}"
+                         icon="fa fa-check w3-xlarge w3-text-green"/>
         </display:table>
     </div>
 </div>

@@ -64,7 +64,7 @@ public class UserService {
 	}
 
 	public Collection<Actor> findActorSubscriptions() {
-		return subscriptionService.findUserSubscriptions();
+		return subscriptionService.findSubscribedActors();
 	}
 
 	public Collection<Actor> findFolloweds() {

@@ -35,57 +35,51 @@
         <spring:message code="label.chirps"/>
     </legend>
 
-            <jstl:if test="${pageSize == null}">
-                <jstl:set value="20" var="pageSize"/>
-            </jstl:if>
-            <jstl:if test="${!chirps.isEmpty()}">
+    <jstl:if test="${pageSize == null}">
+        <jstl:set value="20" var="pageSize"/>
+    </jstl:if>
+    <jstl:if test="${!chirps.isEmpty()}">
 
-                <form:form action="${requestUri}" method="GET">
-                    <spring:message code="pagination.size"/>
-                    <input hidden="true" name="word" value="${word}">
-                    <input hidden="true" name="showroomId" value="${showroom.id}">
-                    <input type="number" name="pageSize" min="1" max="100"
-                           value="${pageSize}">
-                    <input type="submit" value=">">
-                </form:form>
-            </jstl:if>
-            <div style="overflow-x:auto;">
+        <form:form action="${requestUri}" method="GET">
+            <spring:message code="pagination.size"/>
+            <input hidden="true" name="word" value="${word}">
+            <input hidden="true" name="showroomId" value="${showroom.id}">
+            <input type="number" name="pageSize" min="1" max="100"
+                   value="${pageSize}">
+            <input type="submit" value=">">
+        </form:form>
+    </jstl:if>
+    <div style="overflow-x:auto;">
 
-                <display:table pagesize="${pageSize}"
-                               class="flat-table flat-table-1 w3-light-grey" name="chirps"
-                               requestURI="${requestUri}" id="row">
-                    <jstl:set var="owns"
-                              value="${logedActor.id==row.actor.userAccount.id}"/>
-                    <jstl:if test="${owns}">
-                        <jstl:set var="url" value="chirp/user/edit.do?chirpId=${row.id}"/>
-                        <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
-                    </jstl:if>
-                    <jstl:if test="${!owns}">
-                        <jstl:set var="url" value="chirp/user/display.do?chirpId=${row.id}"/>
-                        <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
-                    </jstl:if>
+        <display:table pagesize="${pageSize}"
+                       class="flat-table flat-table-1 w3-light-grey" name="chirps"
+                       requestURI="${requestUri}" id="row">
 
-                    <acme:column property="${row.actor.userAccount.username}" title="label.user" rowUrl="${url}"/>
-                    <acme:column property="${row.title}" title="label.title" rowUrl="${url}"/>
-                    <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
-                    <acme:column property="${row.moment}" title="label.moment" rowUrl="${url}"/>
-                    <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
+            <jstl:set var="url" value="chirp/user/display.do?chirpId=${row.id}"/>
+            <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
-                </display:table>
-            </div>
-            <jstl:if test="${showroom==null}">
-                <acme:backButton text="label.back" css="formButton toLeft"/>
-                <acme:button text="label.new" url="/chirp/user/create.do"/>
-            </jstl:if>
-            <jstl:if test="${showroom!=null}">
-                <spring:message var="msg" code="msg.save.first"/>
-                <jstl:set var="url"
-                          value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
-                <p>
-                    <i class="fa fa-plus-square w3-xlarge"
-                       onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
-                </p>
 
-            </jstl:if>
-            <br/>
+            <acme:column property="${row.actor.userAccount.username}" title="label.user" rowUrl="${url}"/>
+            <acme:column property="${row.title}" title="label.title" rowUrl="${url}"/>
+            <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
+            <acme:column property="${row.moment}" title="label.moment" rowUrl="${url}"/>
+            <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
+
+        </display:table>
+    </div>
+    <jstl:if test="${showroom==null}">
+        <acme:backButton text="label.back" css="formButton toLeft"/>
+        <acme:button text="label.new" url="/chirp/user/create.do"/>
+    </jstl:if>
+    <jstl:if test="${showroom!=null}">
+        <spring:message var="msg" code="msg.save.first"/>
+        <jstl:set var="url"
+                  value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
+        <p>
+            <i class="fa fa-plus-square w3-xlarge"
+               onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+        </p>
+
+    </jstl:if>
+    <br/>
 </div>

@@ -3,6 +3,7 @@ package controllers.Actor;
 
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,6 @@ import services.ActorService;
 import services.SubscriptionService;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/subscription/actor")
@@ -50,14 +49,12 @@ public class SubscriptionActorController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView followers(final Integer pageSize) {
 		ModelAndView result;
-		final Collection<Actor> users = this.actorService.findActorSubscriptions();
-		Map<Actor,Boolean> userIsFollowedMap = new HashMap<>();
-		for (Actor user:users) {
-			userIsFollowedMap.put(user,true);
-		}
-		result = new ModelAndView("actor/list");
-		result.addObject("userIsFollowedMap", userIsFollowedMap);
-		result.addObject("requestUri", "subscription/list.do");
+		final Collection<Actor> subscribedActors = this.subscriptionService.findSubscribedActors();
+		final Collection<Subscription> topicSubscriptions = this.subscriptionService.findTopicSubscriptions();
+		result = new ModelAndView("subscription/actor/list");
+		result.addObject("subscribedActors", subscribedActors);
+		result.addObject("topicSubscriptions", topicSubscriptions);
+		result.addObject("requestUri", "subscription/actor/list.do");
 		result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
 		return result;
 	}

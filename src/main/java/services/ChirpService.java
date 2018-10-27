@@ -39,8 +39,7 @@ public class ChirpService {
         Assert.notNull(chirp, "msg.commit.error");
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
-        Assert.isTrue(actor instanceof User, "msg.not.user.block");
-        chirp.setActor((User) actor);
+        chirp.setActor(actor);
         if(chirp.getId()==0)
             chirp = chirpRepository.save(chirp);
         return chirp;
@@ -57,9 +56,9 @@ public class ChirpService {
     public Collection<Chirp> findByLoggedActor() {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
-        return chirpRepository.findByUser(actor.getId());
+        return chirpRepository.findByActor(actor.getId());
     }
     public Collection<Chirp> findByUserId(Integer UserId) {
-        return chirpRepository.findByUser(UserId);
+        return chirpRepository.findByActor(UserId);
     }
 }

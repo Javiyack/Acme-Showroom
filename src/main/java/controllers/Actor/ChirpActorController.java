@@ -42,9 +42,9 @@ public class ChirpActorController extends AbstractController {
         ModelAndView result;
         final Collection<Chirp> chirps;
         chirps = this.chirpService.findByLoggedActor();
-        result = new ModelAndView("chirp/user/list");
+        result = new ModelAndView("chirp/actor/list");
         result.addObject("chirps", chirps);
-        result.addObject("requestUri", "chirp/user/list.do");
+        result.addObject("requestUri", "chirp/actor/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
@@ -54,13 +54,13 @@ public class ChirpActorController extends AbstractController {
     public ModelAndView stream(final Integer pageSize) {
         ModelAndView result;
         final Collection<Chirp> chirps = new ArrayList<Chirp>();
-        final Collection<Subscription> follows = subscriptionService.findFolloweds();
+        final Collection<Subscription> follows = subscriptionService.findByLogedActor();
         for (Subscription followed: follows) {
             chirps.addAll(chirpService.findByUserId(followed.getSubscribedActor().getId()));
         }
-        result = new ModelAndView("chirp/user/stream");
+        result = new ModelAndView("chirp/actor/stream");
         result.addObject("chirps", chirps);
-        result.addObject("requestUri", "chirp/user/stream.do");
+        result.addObject("requestUri", "chirp/actor/stream.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
@@ -72,7 +72,7 @@ public class ChirpActorController extends AbstractController {
         try {
             final Chirp chirp = this.chirpService.findOne(showroomId);
             Assert.notNull(chirp, "msg.not.found.resource");
-            result = new ModelAndView("chirp/user/display");
+            result = new ModelAndView("chirp/actor/display");
             result.addObject("chirp", chirp);
             result.addObject("display", true);
         } catch (Throwable oops) {
@@ -95,28 +95,6 @@ public class ChirpActorController extends AbstractController {
         return result;
     }
 
-    // Edit  -----------------------------------------------------------
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView edit(@RequestParam final int chirpId) {
-        ModelAndView result;
-
-        try {
-            final Chirp chirp = this.chirpService.findOne(chirpId);
-            Assert.notNull(chirp, "msg.not.found.resource");
-            result = new ModelAndView("chirp/user/edit");
-            result.addObject("chirp", chirp);
-            result.addObject("display", false);
-        } catch (Throwable oops) {
-            if (oops.getMessage().startsWith("msg.")) {
-                return createMessageModelAndView(oops.getLocalizedMessage(), "/");
-            } else {
-                return this.createMessageModelAndView("panic.message.text", "/");
-            }
-        }
-        return result;
-    }
-
-
     // Save mediante Post ---------------------------------------------------
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
@@ -127,13 +105,13 @@ public class ChirpActorController extends AbstractController {
         else
             try {
                 this.chirpService.save(chirp);
-                result = new ModelAndView("redirect:/chirp/user/list.do");
+                result = new ModelAndView("redirect:/chirp/actor/list.do");
             } catch (final Throwable oops) {
-                if (oops.getCause().getCause() != null
-                        && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-                    result = this.createEditModelAndView(chirp, "msg.duplicate.username");
-                else
-                    result = this.createEditModelAndView(chirp, "msg.commit.error");
+                if (oops.getMessage().startsWith("msg.")) {
+                    return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+                } else {
+                    return this.createMessageModelAndView("panic.message.text", "/");
+                }
             }
         return result;
     }
@@ -147,9 +125,9 @@ public class ChirpActorController extends AbstractController {
 
     protected ModelAndView createEditModelAndView(final Chirp model, final String message) {
         final ModelAndView result;
-        result = new ModelAndView("chirp/user/create");
+        result = new ModelAndView("chirp/actor/create");
         result.addObject("chirp", model);
-        result.addObject("requestUri", "chirp/user/create.do");
+        result.addObject("requestUri", "chirp/actor/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);
         result.addObject("message", message);
