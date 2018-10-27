@@ -38,6 +38,7 @@
 		<value>/views/showroom/messages</value>
 		<value>/views/item/messages</value>
 		<value>/views/chirp/messages</value>
+		<value>/views/subscription/messages</value>
 		<value>/views/comment/messages</value>
 
 
