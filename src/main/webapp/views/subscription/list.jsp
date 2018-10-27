@@ -36,6 +36,9 @@
                 <input type="submit" value=">">
             </form:form>
         </jstl:if>
+        <legend>
+            <spring:message code="label.actors"/>
+        </legend>
 
         <display:table pagesize="${pageSize}"
                        class="flat-table flat-table-1 w3-light-grey" name="subscribedActors"
@@ -48,14 +51,17 @@
                          rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
                          icon="fa fa-check w3-xlarge w3-text-green"/>
         </display:table>
+        <legend>
+            <spring:message code="label.topics"/>
+        </legend>
         <display:table pagesize="${pageSize}"
                        class="flat-table flat-table-1 w3-light-grey" name="topicSubscriptions"
-                       requestURI="${requestUri}" id="row">
-            <jstl:set var="url" value="chirp/actor/list.do?subscriptionId=${row.id}"/>
-            <acme:column property="${row.topic.name}" title="label.topic" sortable="true" rowUrl="${url}"/>
+                       requestURI="${requestUri}" id="row2">
+            <jstl:set var="url" value="chirp/actor/list.do?subscriptionId=${row2.id}"/>
+            <acme:column property="${row2.topic.name}" title="label.topic" sortable="true" rowUrl="${url}"/>
 
             <acme:column property=" " title="label.chirp.subscription"
-                         rowUrl="subscription/actor/topic/subcribe.do?topicId=${row.id}"
+                         rowUrl="subscription/actor/topic/subcribe.do?topicId=${row2.id}"
                          icon="fa fa-check w3-xlarge w3-text-green"/>
         </display:table>
     </div>

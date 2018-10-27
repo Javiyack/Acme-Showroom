@@ -67,12 +67,12 @@ public class ChirpActorController extends AbstractController {
 
     // Display user -----------------------------------------------------------
     @RequestMapping(value = "/display", method = RequestMethod.GET)
-    public ModelAndView display(@RequestParam final int showroomId) {
+    public ModelAndView display(@RequestParam final int chirpId) {
         ModelAndView result;
         try {
-            final Chirp chirp = this.chirpService.findOne(showroomId);
+            final Chirp chirp = this.chirpService.findOne(chirpId);
             Assert.notNull(chirp, "msg.not.found.resource");
-            result = new ModelAndView("chirp/actor/display");
+            result = new ModelAndView("chirp/actor/create");
             result.addObject("chirp", chirp);
             result.addObject("display", true);
         } catch (Throwable oops) {

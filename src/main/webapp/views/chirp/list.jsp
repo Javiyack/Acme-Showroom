@@ -55,7 +55,7 @@
                        class="flat-table flat-table-1 w3-light-grey" name="chirps"
                        requestURI="${requestUri}" id="row">
 
-            <jstl:set var="url" value="chirp/user/display.do?chirpId=${row.id}"/>
+            <jstl:set var="url" value="chirp/actor/display.do?chirpId=${row.id}"/>
             <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
 
@@ -67,19 +67,8 @@
 
         </display:table>
     </div>
-    <jstl:if test="${showroom==null}">
-        <acme:backButton text="label.back" css="formButton toLeft"/>
-        <acme:button text="label.new" url="/chirp/user/create.do"/>
-    </jstl:if>
-    <jstl:if test="${showroom!=null}">
-        <spring:message var="msg" code="msg.save.first"/>
-        <jstl:set var="url"
-                  value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
-        <p>
-            <i class="fa fa-plus-square w3-xlarge"
-               onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
-        </p>
 
-    </jstl:if>
+    <acme:button text="label.new" url="/chirp/actor/create.do"/>
+
     <br/>
 </div>
