@@ -103,7 +103,7 @@
 							<form:label path="${path}">
 								<spring:message code="label.authority" />
 							</form:label>
-							<select id="authority" name="authority" class="w3-text-black" onchange="javascript:selectedCheck(this)">
+							<select id="authority" name="authority" class="w3-text-black" onchange="selectedCheck(this)">
 								<jstl:forEach items="${permisos}" var="permiso">
 									<option value="${permiso}" id="${permiso}">
 										<spring:message code="actor.authority.${permiso}" />
@@ -114,7 +114,7 @@
 						</jstl:if>
 						<jstl:if test="${!creation}">
 							<form:hidden path="authority" />
-							<legend onclick="javascript: showUserAccount();" onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"
+							<legend onclick="showUserAccount();" onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"
 							 class="iButton">
 								<i class="fa fa-eye fa-fw"></i>�
 								<spring:message code="actor.authority.${actorForm.account.authority}" />
@@ -165,7 +165,7 @@
 				<div class="row">
 					<div class="col-50">
 						<input type="submit" name="save" id="save" value='<spring:message code="actor.save"/>' class="formButton toLeft" />&nbsp;
-						<input type="button" name="cancel" value='<spring:message code="actor.cancel" />' onclick="javascript: relativeRedir('/');"
+						<input type="button" name="cancel" value='<spring:message code="actor.cancel" />' onclick="relativeRedir('/');"
 						 class="formButton toLeft" />
 					</div>
 				</div>

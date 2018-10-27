@@ -83,7 +83,7 @@ public class ShowroomUserController extends AbstractController {
         try {
             Showroom showroom = this.showroomService.findOne(showroomId);
             Assert.notNull(showroom, "msg.not.found.resource");
-            Assert.notNull(showroom.getUser().equals((User)actorService.findByPrincipal()), "msg.not.owned.block");
+            Assert.notNull(showroom.getUser().equals(actorService.findByPrincipal()), "msg.not.owned.block");
             result = this.createEditModelAndView(showroom);
             result.addObject("display", false);
             result.addObject("pageSize", (pageSize != null) ? pageSize : 5);

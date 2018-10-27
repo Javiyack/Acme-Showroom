@@ -80,7 +80,7 @@ public class ItemUserController extends AbstractController {
         try {
              Item item = this.itemService.findOne(itemId);
             Assert.notNull(item, "msg.not.found.resource");
-            Assert.notNull(item.getShowroom().getUser().equals((User) actorService.findByPrincipal()), "msg.not.owned.block");
+            Assert.notNull(item.getShowroom().getUser().equals(actorService.findByPrincipal()), "msg.not.owned.block");
             result = this.createEditModelAndView(item);
             result.addObject("display", false);
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,19 +54,6 @@ public class AgentController extends AbstractController {
 		return result;
 	}
 
-	// Display agent -----------------------------------------------------------
-		@RequestMapping(value = "/display", method = RequestMethod.GET)
-		public ModelAndView display(@RequestParam final int agentId) {
-			ModelAndView result;
-
-			final Agent agent = this.agentService.findOne(agentId);
-			result = new ModelAndView("actor/display");
-			result.addObject("agentForm", agent);
-			result.addObject("modelName", "agentForm");
-			result.addObject("display", true);
-			return result;
-		}
-		
 		 // Create ---------------------------------------------------------------
 
 	    @RequestMapping("/create")
@@ -97,42 +85,42 @@ public class AgentController extends AbstractController {
 
 	        return result;
 	    }
+	// Save mediante Post ---------------------------------------------------
 
-	    // Save mediante Post ---------------------------------------------------
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@ModelAttribute("actorForm") final AgentForm agentForm, final BindingResult binding) {
+		ModelAndView result;
+		Agent agent;
 
-	    @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	    public ModelAndView save(final AgentForm agentForm, final BindingResult binding) {
-	        ModelAndView result;
-	        Agent agent;
+		try {
+			agent = this.agentService.reconstruct(agentForm, binding);
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(agentForm);
+			else
+				try {
+					this.actorService.save(agent);
+					result = new ModelAndView("redirect:/");
+				} catch (final Throwable oops) {
+					if (oops.getCause().getCause() != null
+							&& oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+						result = this.createEditModelAndView(agentForm, "msg.duplicate.agentname");
+					else
+						result = this.createEditModelAndView(agentForm, "msg.commit.error");
+				}
 
-	        try {
-	            agent = this.agentService.reconstruct(agentForm, binding);
-	            if (binding.hasErrors())
-	                result = this.createEditModelAndView(agentForm);
-	            else
-	                try {
-	                    this.actorService.save(agent);
-	                    result = new ModelAndView("redirect:/");
-	                } catch (final Throwable oops) {
-	                    if (oops.getCause().getCause() != null
-	                            && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-	                        result = this.createEditModelAndView(agentForm, "msg.duplicate.agentname");
-	                    else
-	                        result = this.createEditModelAndView(agentForm, "msg.commit.error");
-	                }
+		} catch (final Throwable oops) {
+			if (oops.getLocalizedMessage().startsWith("msg."))
+				result = this.createEditModelAndView(agentForm, oops.getLocalizedMessage());
+			else if (oops.getCause().getCause() != null
+					&& oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+				result = this.createEditModelAndView(agentForm, "msg.duplicate.agentname");
+			else
+				result = this.createEditModelAndView(agentForm, "agent.reconstructActor.error");
+		}
 
-	        } catch (final Throwable oops) {
-	            if (oops.getLocalizedMessage().startsWith("msg."))
-	                result = this.createEditModelAndView(agentForm, oops.getLocalizedMessage());
-	            else if (oops.getCause().getCause() != null
-	                    && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-	                result = this.createEditModelAndView(agentForm, "msg.duplicate.agentname");
-	            else
-	                result = this.createEditModelAndView(agentForm, "agent.reconstruct.error");
-	        }
+		return result;
+	}
 
-	        return result;
-	    }
 	    // Auxiliary methods -----------------------------------------------------
 	    protected ModelAndView createEditModelAndView(final AgentForm model) {
 	        final ModelAndView result;
@@ -144,7 +132,7 @@ public class AgentController extends AbstractController {
 			final ModelAndView result;
 			result = new ModelAndView("actor/create");
 	        result.addObject("actorForm", model);
-	        result.addObject("modelName", "agentForm");
+	        result.addObject("actorAuthority", Authority.AGENT);
 	        result.addObject("requestUri", "agent/create.do");
 	        result.addObject("edition", true);
 	        result.addObject("creation", model.getId() == 0);

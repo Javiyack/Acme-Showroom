@@ -62,13 +62,12 @@
 						</div>
 						<div class="modal-body">
 							<p>
-								<button onclick="relativeRedir('/user/create.do')">User</button>
+								<button onclick="relativeRedir('/user/create.do')"><spring:message
+										code="actor.authority.USER" /></button>
 							</p>
 							<p>
-								<button onclick="relativeRedir('/agent/create.do')">Agente</button>
-							</p>
-							<p>
-								<button onclick="relativeRedir('/admin/create.do')">Administrador</button>
+								<button onclick="relativeRedir('/agent/create.do')"><spring:message
+										code="actor.authority.AGENT" /></button>
 							</p>
 						</div>
 						<div class="modal-footer">
@@ -94,36 +93,37 @@
 	<div class="w3-bar-block" style="padding-bottom: 60px">
 
 		<a href="showroom/list.do"
-			class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-diamond fa-fw"></i>  <spring:message
+		   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+				class="fa fa-diamond fa-fw"></i>  <spring:message
 				code="label.showrooms" />
 		</a>
-		<security:authorize access="isAnonymous()">
-			<a href="user/list.do"
-				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-users fa-fw"></i>  <spring:message code="label.users" />
+		<a href="item/list.do"
+		   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+				class="fa fa-diamond fa-fw"></i>  <spring:message
+				code="label.items" />
+		</a>
+		<security:authorize access="isAuthenticated()">
+			<a href="actor/actor/list.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-users fa-fw"></i>  <spring:message code="label.users" />
+			</a>
+			<a href="subscription/actor/list.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-assistive-listening-systems fa-fw"></i>  <spring:message
+					code="label.subscriptions" />
+			</a>
+			<a href="chirp/user/list.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-podcast fa-fw"></i>  <spring:message code="label.chirp" />
+			</a>
+			<a href="chirp/user/stream.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-bell-o fa-fw"></i>  <spring:message code="label.chirp" />
 			</a>
 		</security:authorize>
 
 		<security:authorize access="hasRole('USER')">
-			<a href="user/list.do"
-				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-users fa-fw"></i>  <spring:message code="label.users" />
-			</a>
 
-			<a href="showroom/user/list.do"
-				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-blind fa-fw w3-xxlarge"></i> <spring:message
-					code="label.my.showrooms" />
-			</a>
-			<a href="chirp/user/list.do"
-				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-podcast fa-fw"></i>  <spring:message code="label.chirp" />
-			</a>
-			<a href="chirp/user/stream.do"
-				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-bell-o fa-fw"></i>  <spring:message code="label.chirp" />
-			</a>
 		</security:authorize>
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 			<a href="configuration/administrator/edit.do"
@@ -152,10 +152,11 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							<button onclick="relativeRedir('/user/create.do')">User</button>
+							<button onclick="">Auditor</button>
 						</p>
 						<p>
-							<button onclick="relativeRedir('/agent/create.do')">Agente</button>
+							<button onclick="relativeRedir('admin/administrator/create.do')"><spring:message
+									code="actor.authority.ADMINISTRATOR" /></button>
 						</p>
 					</div>
 					<div class="modal-footer">
@@ -166,7 +167,7 @@
 			</div>
 		</security:authorize>
 		<security:authorize access="hasRole('AGENT')">
-			<a href="/inn/agent/list.do"
+			<a href="inn/agent/list.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 				class="fa fa-home fa-fw"></i>  <spring:message code="label.inns" />
 			</a>
@@ -195,19 +196,19 @@
 	// When the user clicks the button, open the modal 
 	btn.onclick = function() {
 		modal.style.display = "block";
-	}
+	};
 
 	// When the user clicks on <span> (x), close the modal
 	span.onclick = function() {
 		modal.style.display = "none";
-	}
+	};
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
 		if (event.target == modal) {
 			modal.style.display = "none";
 		}
-	}
+	};
 	var mySidebar = document.getElementById("mySidebar");
 
 	//Get the DIV with overlay effect

@@ -3,9 +3,12 @@ package controllers.administrator;
 
 import java.util.Collection;
 
+import domain.Administrator;
+import forms.AdminForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +18,7 @@ import domain.Actor;
 import forms.ActorForm;
 import security.Authority;
 import services.ActorService;
+import services.AdministratorService;
 
 @Controller
 @RequestMapping("/admin/administrator")
@@ -23,21 +27,23 @@ public class AdminAdministratorController extends AbstractController {
     // Supporting services -----------------------------------------------------
     @Autowired
     protected ActorService actorService;
+    @Autowired
+    protected AdministratorService adminService;
 
     // Constructors -----------------------------------------------------------
 
     public AdminAdministratorController() {
         super();
     }
-    
+
 
     // Create ---------------------------------------------------------------
 
     @RequestMapping("/create")
     public ModelAndView create() {
         ModelAndView result;
-        final ActorForm registerForm = new ActorForm();
-        result = this.createEditModelAndView(registerForm);
+        final AdminForm registerForm = new AdminForm();
+        result = this.createEditModelAndView(registerForm, null);
         return result;
     }
 
@@ -50,7 +56,7 @@ public class AdminAdministratorController extends AbstractController {
 
         try {
             final Actor actor = this.actorService.findByPrincipal();
-            model = new ActorForm(actor);
+            model = new AdminForm(actor);
             result = this.createEditModelAndView(model, null);
         } catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
@@ -66,14 +72,14 @@ public class AdminAdministratorController extends AbstractController {
     // Save mediante Post ---------------------------------------------------
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(final ActorForm actorForm, final BindingResult binding) {
+    public ModelAndView save(@ModelAttribute("actorForm") final AdminForm adminForm, final BindingResult binding) {
         ModelAndView result;
-        Actor actor;
+        Administrator actor;
 
         try {
-            actor = this.actorService.reconstruct(actorForm, binding);
+            actor = this.adminService.reconstruct(adminForm, binding);
             if (binding.hasErrors())
-                result = this.createEditModelAndView(actorForm);
+                result = this.createEditModelAndView(adminForm);
             else
                 try {
                     this.actorService.save(actor);
@@ -81,23 +87,25 @@ public class AdminAdministratorController extends AbstractController {
                 } catch (final Throwable oops) {
                     if (oops.getCause().getCause() != null
                             && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-                        result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
+                        result = this.createEditModelAndView(adminForm, "msg.duplicate.username");
                     else
-                        result = this.createEditModelAndView(actorForm, "msg.commit.error");
+                        result = this.createEditModelAndView(adminForm, "msg.commit.error");
                 }
 
         } catch (final Throwable oops) {
             if (oops.getLocalizedMessage().startsWith("msg."))
-                result = this.createEditModelAndView(actorForm, oops.getLocalizedMessage());
+                result = this.createEditModelAndView(adminForm, oops.getLocalizedMessage());
             else if (oops.getCause().getCause() != null
                     && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-                result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
+                result = this.createEditModelAndView(adminForm, "msg.duplicate.username");
             else
-                result = this.createEditModelAndView(actorForm, "actor.reconstruct.error");
+                result = this.createEditModelAndView(adminForm, "actor.reconstruct.error");
         }
 
         return result;
     }
+
+
 
     // Auxiliary methods -----------------------------------------------------
     protected ModelAndView createEditModelAndView(final ActorForm model) {
@@ -108,12 +116,9 @@ public class AdminAdministratorController extends AbstractController {
 
     protected ModelAndView createEditModelAndView(final ActorForm model, final String message) {
         final ModelAndView result;
-        final Collection<Authority> permisos = Authority.listAuthorities();
-        final Authority authority = new Authority();
-        authority.setAuthority(Authority.ADMINISTRATOR);
-        permisos.remove(authority);
-        result = new ModelAndView("admin/create");
+        result = new ModelAndView("actor/create");
         result.addObject("actorForm", model);
+        result.addObject("actorAuthority", Authority.ADMINISTRATOR);
         result.addObject("requestUri", "admin/administrator/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);

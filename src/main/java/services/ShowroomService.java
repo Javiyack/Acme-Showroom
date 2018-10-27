@@ -84,7 +84,7 @@ public class ShowroomService {
 
     public void delete(Showroom showroom) {
         Assert.notNull(showroom, "msg.not.found.resource");
-        Assert.notNull(showroom.getUser().equals((User)actorService.findByPrincipal()), "msg.not.owned.block");
+        Assert.notNull(showroom.getUser().equals(actorService.findByPrincipal()), "msg.not.owned.block");
         Collection<Item> Items = itemRepository.findByShowroomId(showroom.getId());
         for (Item item:Items) {
             itemRepository.delete(item);
@@ -94,7 +94,7 @@ public class ShowroomService {
     public void delete(int showroomId) {
         Showroom showroom = showroomRepository.findOne(showroomId);
         Assert.notNull(showroom, "msg.not.found.resource");
-        Assert.isTrue(showroom.getUser().equals((User)actorService.findByPrincipal()), "msg.not.owned.block");
+        Assert.isTrue(showroom.getUser().equals(actorService.findByPrincipal()), "msg.not.owned.block");
         Collection<Item> items = itemRepository.findByShowroomId(showroomId);
         itemRepository.deleteInBatch(items);
         showroomRepository.delete(showroomId);

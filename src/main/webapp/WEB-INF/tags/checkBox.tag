@@ -50,7 +50,7 @@
 
 <spring:message code="${code}" var="title" />
 <form:checkbox id="${id}" path="${path}" disabled="${readonly}" onclick="${onclick}"
-	placeholder="${placeholder}" class="${css}" value="true" />
+	placeholder="${placeholder}" class="${css}" />
 <form:label for="check" path="${path}" cssStyle="display:inline; margin:0.5em;" >
 		<jstl:out value="${title}"/>
 	</form:label>	

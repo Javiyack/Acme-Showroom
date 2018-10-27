@@ -110,7 +110,7 @@
 					value="/labor/create.do?incidenceId=${incidenceForm.id}"></jstl:set>
 				<p>
 					<i class="fa fa-plus-square w3-xlarge"
-						onclick="javascript: showConditionalAlert('${msg}','${incidenceForm.id}','${url}');"></i>
+						onclick="showConditionalAlert('${msg}','${incidenceForm.id}','${url}');"></i>
 				</p>
 
 			</jstl:if>

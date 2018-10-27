@@ -2,7 +2,6 @@ package services;
 
 import domain.Actor;
 import domain.Chirp;
-import domain.Comment;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +40,7 @@ public class ChirpService {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
-        chirp.setUser((User) actor);
+        chirp.setActor((User) actor);
         if(chirp.getId()==0)
             chirp = chirpRepository.save(chirp);
         return chirp;
@@ -55,10 +54,9 @@ public class ChirpService {
         return chirpRepository.findOne(chirpId);
     }
 
-    public Collection<Chirp> findByLoggedUser() {
+    public Collection<Chirp> findByLoggedActor() {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
-        Assert.isTrue(actor instanceof User, "msg.not.user.block");
         return chirpRepository.findByUser(actor.getId());
     }
     public Collection<Chirp> findByUserId(Integer UserId) {

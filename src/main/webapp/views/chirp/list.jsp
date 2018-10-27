@@ -55,7 +55,7 @@
                                class="flat-table flat-table-1 w3-light-grey" name="chirps"
                                requestURI="${requestUri}" id="row">
                     <jstl:set var="owns"
-                              value="${logedActor.id==row.user.userAccount.id}"/>
+                              value="${logedActor.id==row.actor.userAccount.id}"/>
                     <jstl:if test="${owns}">
                         <jstl:set var="url" value="chirp/user/edit.do?chirpId=${row.id}"/>
                         <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
@@ -65,7 +65,8 @@
                         <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
                     </jstl:if>
 
-                    <acme:column property="${row.user.userAccount.username}" title="label.user" rowUrl="${url}"/>
+                    <acme:column property="${row.actor.userAccount.username}" title="label.user" rowUrl="${url}"/>
+                    <acme:column property="${row.title}" title="label.title" rowUrl="${url}"/>
                     <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
                     <acme:column property="${row.moment}" title="label.moment" rowUrl="${url}"/>
                     <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
@@ -82,7 +83,7 @@
                           value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
                 <p>
                     <i class="fa fa-plus-square w3-xlarge"
-                       onclick="javascript: showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+                       onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
                 </p>
 
             </jstl:if>

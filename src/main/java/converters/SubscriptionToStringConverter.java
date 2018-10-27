@@ -1,18 +1,17 @@
 
 package converters;
 
-import domain.Follow;
-import domain.TabooWord;
+import domain.Subscription;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
-public class FollowToStringConverter implements Converter<Follow, String> {
+public class SubscriptionToStringConverter implements Converter<Subscription, String> {
 
 	@Override
-	public String convert(final Follow data) {
+	public String convert(final Subscription data) {
 		String result;
 
 		if (data == null)

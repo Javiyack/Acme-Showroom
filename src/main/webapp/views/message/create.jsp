@@ -43,7 +43,8 @@
                         <div class="w3-col m12">
                             <acme:checkBox code="label.notification" path="broadcast"
                                            css="w3-check"
-                                           onclick="javascript:toggleVisible('recipients')" id="notificationCheck"/>
+                                           onclick="javascript:setVisibility('recipients', !this.checked);" id="notificationCheck"/>
+
                         </div>
                     </security:authorize>
                     <div class="w3-col w3-rest">
@@ -67,7 +68,7 @@
                     <i class="fa fa-paper-plane w3-bar-item w3-xlarge w3-padding"
                        onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>
                 </button>
-                <button type="button" onclick="javascript: relativeRedir('/folder/list.do')"
+                <button type="button" onclick="relativeRedir('/folder/list.do')"
                         class="flatButton toRight w3-padding">
                     <i class="fa fa-arrow-left w3-bar-item w3-xlarge"
                        onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>
@@ -79,7 +80,8 @@
 
 <script>
     $(document).ready(function () {
-        setVisibility(document.getElementById("recipients"), document.getElementById("notificationCheck").value);
+        var checked = document.getElementById("notificationCheck").checked;
+        setVisibility('recipients', !checked);
     });
 
 </script>

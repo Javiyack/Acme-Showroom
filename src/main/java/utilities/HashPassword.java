@@ -19,7 +19,7 @@ import utilities.internal.ThrowablePrinter;
 
 public class HashPassword {
 
-	public static void main(final String[] args) throws IOException {
+	public static void main(final String[] args) {
 		Md5PasswordEncoder encoder;
 		ConsoleReader reader;
 		String line, hash;

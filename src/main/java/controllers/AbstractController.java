@@ -25,8 +25,6 @@ public class AbstractController {
 	
 	private boolean enDesarrollo = true;
 
-	@Autowired
-	private MessageSource	messageSource;
 // Panic handler ----------------------------------------------------------
 
 	@ExceptionHandler(Throwable.class)
@@ -46,7 +44,6 @@ public class AbstractController {
 
 		return result;
 	}
-	
 
 	
 	public ModelAndView createMessageModelAndView(final String messageText, final String goBackUrl) {

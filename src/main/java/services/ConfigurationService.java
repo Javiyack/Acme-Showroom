@@ -123,7 +123,7 @@ public class ConfigurationService {
 	}
 
 	public List<String> findFolderNames() {
-		Configuration cfg = (Configuration) configurationRepository.findCfg();
+		Configuration cfg = configurationRepository.findCfg();
 		System.out.println();
 		return (List<String>) cfg.getFolderNames();
 	}

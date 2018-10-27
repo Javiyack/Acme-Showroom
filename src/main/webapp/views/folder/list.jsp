@@ -51,7 +51,7 @@
 								value="/folder/delete.do?folderId=${folder.id}"></jstl:set>
 
 							<i class="w3-bar-item fa fa-remove w3-xlarge"
-								onclick="javascript: showConfirmationAlert(' ','${msg}','${url}');"
+								onclick="showConfirmationAlert(' ','${msg}','${url}');"
 								onmouseenter="overEffect(this);"
 								onmouseleave="overEffect(this);"></i>
 						</div>

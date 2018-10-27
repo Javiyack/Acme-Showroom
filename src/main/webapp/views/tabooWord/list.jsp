@@ -35,7 +35,7 @@
 			<div onclick="relativeRedir('tabooWord/administrator/edit.do?tabooWordId=${row.id}');">
 				<jstl:out value="${row.text}" />
 			</div>
-			<span onclick="javascript: showConfirmationAlert('${deleteConfirmation}', '${row.text}', '${deleteUrl}');"
+			<span onclick="showConfirmationAlert('${deleteConfirmation}', '${row.text}', '${deleteUrl}');"
 			class="w3-button w3-transparent w3-display-right"> &times; </span>
 		</li>
 	</jstl:forEach>

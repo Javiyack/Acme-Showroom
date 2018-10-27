@@ -9,6 +9,7 @@
           uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="JSTL" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <div class="form">
@@ -25,7 +26,6 @@
 
                     <legend>
                         <spring:message code="actor.personal.data"/>
-                        <jstl:out value="${modelName}"/>
                     </legend>
 
                     <div class="row">
@@ -52,14 +52,14 @@
                     </div>
 
                     <jstl:if
-                            test="${modelName=='agentForm' or modelName=='auditortForm'  }">
+                            test="${actorAuthority=='AGENT' or actorAuthority=='AUDITOR' }">
                         <div class="row" id="companyData">
                             <div class="col-100">
                                 <acme:textbox code="label.company" path="company" id="Company"/>
                             </div>
                         </div>
                     </jstl:if>
-                    <jstl:if test="${modelName eq 'userForm'}">
+                    <jstl:if test="${actorAuthority eq 'USER'}">
                         <div id="userData">
                             <div class="row">
                                 <div class="col-50">
@@ -83,7 +83,7 @@
                 </div>
 
                 <jstl:if test="${display}">
-                    <jstl:if test="${modelName eq 'userForm'}">
+                    <jstl:if test="${actorAuthority eq 'USER'}">
                         <div class="col-40">
                             <legend class="hideText">
                                 <spring:message code="label.photo"/>
@@ -102,6 +102,7 @@
                 </jstl:if>
                 <!-- Datos de la cuenta-->
                 <jstl:if test="${edition}">
+                    <form:hidden path="account.authority"/>
                     <div class="col-40">
                         <jstl:if test="${creation}">
                             <legend>
@@ -117,15 +118,14 @@
 
                         </jstl:if>
                         <jstl:if test="${!creation}">
-                            <form:hidden path="authority"/>
-                            <legend onclick="javascript: showUserAccount();"
+                            <legend onclick="showUserAccount();"
                                     onmouseenter="overEffect(this);"
                                     onmouseleave="overEffect(this);" class="iButton">
                                 <i class="fa fa-eye fa-fw"></i> 
                                 <spring:message
                                         code="actor.authority.${actorForm.account.authority}"/>
                             </legend>
-                            <jstl:if test="${modelName eq 'userForm'}">
+                            <jstl:if test="${actorAuthority eq 'USER'}">
                                 <div id="photoCard">
                                     <div class="col-40">
                                         <div class="w3-card-4" Style="margin-top: 2em;">
@@ -184,7 +184,7 @@
                                class="formButton toLeft"/>&nbsp; <input type="button"
                                                                         name="cancel"
                                                                         value='<spring:message code="actor.cancel" />'
-                                                                        onclick="javascript: relativeRedir('/');"
+                                                                        onclick="relativeRedir('/');"
                                                                         class="formButton toLeft"/>
                     </div>
                 </div>

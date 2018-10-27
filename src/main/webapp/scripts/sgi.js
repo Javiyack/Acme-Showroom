@@ -38,4 +38,4 @@ window.onclick = function(event) {
 			}
 		}
 	}
-}
+};

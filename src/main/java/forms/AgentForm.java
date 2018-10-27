@@ -1,6 +1,7 @@
 
 package forms;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
@@ -27,6 +28,7 @@ public class AgentForm extends ActorForm{
 	}
 
 
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getCompany() {
 		return company;

@@ -3,6 +3,9 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
+  <component name="JspManager">
+    <option name="searchForPrefixedReferences" value="false" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

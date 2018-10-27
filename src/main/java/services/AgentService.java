@@ -1,27 +1,15 @@
 package services;
 
-import domain.Actor;
-import domain.Administrator;
 import domain.Agent;
-import domain.Follow;
-import domain.User;
-import domain.Agent;
-import forms.ActorForm;
 import forms.AgentForm;
-import forms.UserForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.FollowRepository;
 import repositories.AgentRepository;
-import security.Authority;
-import security.UserAccount;
 import security.UserAccountService;
 
 import java.util.Collection;
@@ -34,7 +22,7 @@ public class AgentService {
     private AgentRepository agentRepository;
     //Services
     @Autowired
-    private FollowService followService;
+    private SubscriptionService subscriptionService;
     @Autowired
     private ActorService actorService;
     @Autowired
@@ -81,7 +69,7 @@ public class AgentService {
 	public Agent reconstruct(AgentForm agentForm, BindingResult binding) {
 		Agent agent = null;
 		this.validator.validate(agentForm, binding);
-		agent = (Agent) actorService.reconstruct((ActorForm) agentForm, binding);
+		agent = (Agent) actorService.reconstruct(agentForm, binding);
 		if (!binding.hasErrors()) {			
 			agent.setCompany(agentForm.getCompany());
 		}

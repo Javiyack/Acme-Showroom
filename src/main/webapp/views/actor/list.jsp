@@ -60,39 +60,25 @@
 				</jstl:if>
 				<jstl:if
 						test="${legend eq 'label.all.accounts'}">
-					<acme:column property="userAccount.authorities[0]" title="label.authority"
+					<acme:column property="userAccount.authorities.iterator.next" title="label.authority"
 								 sortable="true"/>
 				</jstl:if>
-				<security:authorize access="hasRole('USER')">
 					<jstl:if test="${!userIsFollowedMap[row]}">
 						<acme:column property=" " title="label.chirp.subscription" sortable="true"
-							rowUrl="follow/user/follow.do?userId=${row.id}"
+							rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
 							icon="fa fa-check w3-xlarge w3-text-gray css-uncheck" />
 					</jstl:if>
 					<jstl:if test="${userIsFollowedMap[row]}">
 						<acme:column property=" " title="label.chirp.subscription" sortable="true"
-							rowUrl="follow/user/follow.do?userId=${row.id}"
+							rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
 							icon="fa fa-check w3-xlarge w3-text-green" />
 					</jstl:if>
-				</security:authorize>
 
-				<security:authorize access="hasRole('ADMINISTRATOR')">
-					<jstl:if test="${!row.userAccount.active}">
-						<acme:column property=" " title="label.activation" sortable="true"
-							rowUrl="${activateUrl}"
-							icon="fa fa-toggle-off w3-xlarge w3-text-light-gray css-uncheck" />
-					</jstl:if>
-					<jstl:if test="${row.userAccount.active}">
-						<acme:column property=" " title="label.activation" sortable="true"
-							rowUrl="${activateUrl}"
-							icon="fa fa-toggle-on w3-xlarge w3-text-green" />
-					</jstl:if>
-				</security:authorize>
+
 			</display:table>
 		</div>
 	</div>
 </jstl:if>
-<security:authorize access="hasRole('USER')">
 	<jstl:if test="${userIsFollowedMap!=null && userIsFollowedMap.size!=0}">
 		<spring:message code="date.pattern" var="datePattern" />
 
@@ -107,7 +93,6 @@
 					<tr>
 						<th><spring:message code="label.user" /></th>
 						<th><spring:message code="label.name" /></th>
-						<th><spring:message code="label.birthdate" /></th>
 						<th><spring:message code="label.chirp.subscription" /></th>
 					</tr>
 
@@ -116,9 +101,7 @@
 							<tr>
 								<td>${entry.key.userAccount.username}</td>
 								<td>${entry.key.surname},${entry.key.name}</td>
-								<td><fmt:formatDate value="${entry.key.birthdate}"
-										pattern="${datePattern}" /></td>
-								<td><a href="follow/user/follow.do?userId=${entry.key.id}">
+								<td><a href="subscription/actor/subcribe.do?actorId=${entry.key.id}">
 										<i class="fa fa-check w3-xlarge w3-text-green"></i>
 								</a></td>
 							</tr>
@@ -128,7 +111,6 @@
 			</div>
 		</div>
 	</jstl:if>
-</security:authorize>
 <jstl:out value="${userIsFollowerMap}" />
 
 <security:authorize access="hasRole('USER')">
@@ -172,9 +154,9 @@
 	<div class="row">
 		<div class="col-50">
 			<security:authorize access="hasRole('USER')">
-				<acme:button url="/follow/user/followers.do" text="label.followers"
+				<acme:button url="/subscription/actor/subscribers/list.do" text="label.subscribers"
 					css="formButton toLeft w3-padding" />
-				<acme:button url="/follow/user/followeds.do" text="label.followeds"
+				<acme:button url="/subscription/actor/list.do" text="label.subscriptions"
 					css="formButton toLeft w3-padding" />
 			</security:authorize>
 			<acme:backButton text="actor.back" css="formButton toLeft w3-padding" />

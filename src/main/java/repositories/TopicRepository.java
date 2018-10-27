@@ -1,0 +1,18 @@
+
+package repositories;
+
+import domain.TabooWord;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
+
+@Repository
+public interface TopicRepository extends JpaRepository<TabooWord, Integer> {
+	
+
+	@Query("select t from Topic t where ?1 like concat('%',t.text,'%') or ?2 like concat('%',t.text,'%')")
+	Collection<TabooWord> getTabooWordFromMyMessageSubjectAndBody(String subject, String body);
+
+}

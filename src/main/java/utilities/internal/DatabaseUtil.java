@@ -113,7 +113,7 @@ public class DatabaseUtil {
 			this.entityManagerFactory.close();
 	}
 
-	public void recreateDatabase() throws Throwable {
+	public void recreateDatabase() {
 		List<String> databaseScript;
 		List<String> schemaScript;
 		String[] statements;

@@ -1,27 +1,25 @@
 
 package converters;
 
-import domain.Configuration;
-import domain.Follow;
+import domain.Subscription;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import repositories.ConfigurationRepository;
-import repositories.FollowRepository;
+import repositories.SubscriptionRepository;
 
 @Component
 @Transactional
-public class StringToFollowConverter implements Converter<String, Follow> {
+public class StringToSubscriptionConverter implements Converter<String, Subscription> {
 
 	@Autowired
-	private FollowRepository repository;
+	private SubscriptionRepository repository;
 
 
 	@Override
-	public Follow convert(final String str) {
-		Follow result;
+	public Subscription convert(final String str) {
+		Subscription result;
 		Integer id;
 		try {
 			if (StringUtils.isEmpty(str))

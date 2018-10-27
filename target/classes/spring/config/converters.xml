@@ -30,7 +30,7 @@
 		<bean class="converters.TabooWordToStringConverter" />
 		<bean class="converters.ShowroomToStringConverter" />
 		<bean class="converters.ItemToStringConverter" />
-		<bean class="converters.FollowToStringConverter" />
+		<bean class="converters.SubscriptionToStringConverter" />
 		<bean class="converters.CommentToStringConverter" />
 
 		<bean class="converters.StringToActorConverter" />
@@ -44,7 +44,7 @@
 		<bean class="converters.StringToTabooWordConverter" />
 		<bean class="converters.StringToShowroomConverter" />
 		<bean class="converters.StringToItemConverter" />
-		<bean class="converters.StringToFollowConverter" />
+		<bean class="converters.StringToSubscriptionConverter" />
 		<bean class="converters.StringToChirpConverter" />
 		<bean class="converters.StringToCommentConverter" />
 

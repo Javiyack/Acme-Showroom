@@ -115,7 +115,7 @@
                         </jstl:if>
                         <jstl:if test="${!creation}">
                             <form:hidden path="authority"/>
-                            <legend onclick="javascript: showUserAccount();"
+                            <legend onclick="showUserAccount();"
                                     onmouseenter="overEffect(this);"
                                     onmouseleave="overEffect(this);" class="iButton">
                                 <i class="fa fa-eye fa-fw"></i>  <spring:message
@@ -174,7 +174,7 @@
                                value='<spring:message code="actor.save"/>'
                                class="formButton toLeft"/>&nbsp;
                         <input type="button" name="cancel" value='<spring:message code="actor.cancel" />'
-                               onclick="javascript: relativeRedir('/');" class="formButton toLeft"/>
+                               onclick="relativeRedir('/');" class="formButton toLeft"/>
                     </div>
                 </div>
             </div>

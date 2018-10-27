@@ -24,7 +24,7 @@
 
 
 <jstl:set var="owns"
-          value="${logedActor.id == chirp.user.userAccount.id}"/>
+          value="${logedActor.id == chirp.actor.userAccount.id}"/>
 
 <jstl:set var="readonly"
           value="${(display || !owns || !edition) && chirp.id != 0}"/>

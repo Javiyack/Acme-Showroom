@@ -27,5 +27,5 @@
 
 	<input type="button" name="back"
 		   value="<spring:message code="folder.back"/>"
-		   onclick="javascript:relativeRedir('folder/list.do?folderId=${parentFolder.id}')" class ="formButton toLeft" />
+		   onclick="relativeRedir('folder/list.do?folderId=${parentFolder.id}')" class ="formButton toLeft" />
 </form:form>

@@ -3,6 +3,7 @@ package services;
 
 import java.util.Collection;
 
+import domain.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Administrator;
-import domain.Agent;
 import domain.TabooWord;
-import forms.ActorForm;
 import forms.AdminForm;
 import repositories.AdministratorRepository;
 import security.LoginService;
@@ -98,10 +97,7 @@ public class AdministratorService {
 			Collection<TabooWord> tabooWords;
 			tabooWords = this.tabooWordService.getTabooWordFromMyMessageSubjectAndBody(subject, body);
 
-			if (tabooWords.isEmpty())
-				isSpam = false;
-			else
-				isSpam = true;
+            isSpam = !tabooWords.isEmpty();
 
 		}
 
@@ -110,9 +106,12 @@ public class AdministratorService {
 
 	public Administrator reconstruct(final AdminForm adminForm, final BindingResult binding) {
 		Administrator admin = null;
+		Actor loggedActor = actorService.findByPrincipal();
+		Assert.notNull(loggedActor, "msg.not.logged.block");
+		Assert.isTrue(loggedActor instanceof Administrator, "msg.not.owned.block");
 
 		this.validator.validate(adminForm, binding);
-		admin = (Administrator) actorService.reconstruct((ActorForm) adminForm, binding);
+		admin = (Administrator) actorService.reconstruct(adminForm, binding);
 		
 		return admin;
 	}

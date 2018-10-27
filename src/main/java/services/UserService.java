@@ -2,6 +2,7 @@ package services;
 
 import java.util.Collection;
 
+import domain.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.User;
-import forms.ActorForm;
 import forms.UserForm;
 import repositories.UserRepository;
 import security.UserAccountService;
@@ -22,7 +22,7 @@ public class UserService {
 	private UserRepository userRepository;
 	// Services
 	@Autowired
-	private FollowService followService;
+	private SubscriptionService subscriptionService;
 	@Autowired
 	private ActorService actorService;
 	@Autowired
@@ -63,26 +63,26 @@ public class UserService {
 		return userRepository.findOne(userId);
 	}
 
-	public Collection<User> findFollowedUsers() {
-		return followService.findFollowedUsers();
+	public Collection<Actor> findActorSubscriptions() {
+		return subscriptionService.findUserSubscriptions();
 	}
 
-	public Collection<User> findFolloweds() {
-		return followService.findFollowerUsers();
+	public Collection<Actor> findFolloweds() {
+		return subscriptionService.findSubscriptorUsers();
 	}
 
-	public Collection<User> findFollowerUsers() {
-		return followService.findFollowerUsers();
+	public Collection<Actor> findFollowerUsers() {
+		return subscriptionService.findSubscriptorUsers();
 	}
 
-	public Collection<User> findFollowers() {
-		return followService.findFollowerUsers();
+	public Collection<Actor> findFollowers() {
+		return subscriptionService.findSubscriptorUsers();
 	}
 
 	public User reconstruct(UserForm userForm, BindingResult binding) {
-		User user = null;
+		User user;
 		this.validator.validate(userForm, binding);
-		user = (User) actorService.reconstruct((ActorForm) userForm, binding);
+		user = (User) actorService.reconstruct(userForm, binding);
 		if (!binding.hasErrors()) {
 			
 			user.setPhoto(userForm.getPhoto());

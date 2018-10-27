@@ -88,7 +88,7 @@
                           value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
                 <p>
                     <i class="fa fa-plus-square w3-xlarge"
-                       onclick="javascript: showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+                       onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
                 </p>
 
             </jstl:if>

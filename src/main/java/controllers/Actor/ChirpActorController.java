@@ -1,5 +1,5 @@
 
-package controllers.User;
+package controllers.Actor;
 
 import controllers.AbstractController;
 import domain.Chirp;
@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/chirp/user")
-public class ChirpUserController extends AbstractController {
+@RequestMapping("/chirp/actor")
+public class ChirpActorController extends AbstractController {
 
     // Supporting services -----------------------------------------------------
 
@@ -32,7 +32,7 @@ public class ChirpUserController extends AbstractController {
     private SubscriptionService subscriptionService;
     // Constructors -----------------------------------------------------------
 
-    public ChirpUserController() {
+    public ChirpActorController() {
         super();
     }
 

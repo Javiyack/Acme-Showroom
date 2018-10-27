@@ -24,7 +24,7 @@ import utilities.internal.ThrowablePrinter;
 
 public class QueryDatabase {
 
-	public static void main(final String[] args) throws Throwable {
+	public static void main(final String[] args) {
 		DatabaseUtil databaseUtil;
 		ConsoleReader reader;
 		String line;

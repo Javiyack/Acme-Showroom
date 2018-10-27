@@ -7,8 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -20,7 +18,8 @@ public class Chirp extends DomainEntity {
     private String description;
     private Date moment;
     // Relationships
-    private User user;
+    private Actor actor;
+    private Topic topic;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -54,13 +53,22 @@ public class Chirp extends DomainEntity {
 
     @ManyToOne(optional = true)
     @Valid
-    public User getUser() {
-        return user;
+    public Actor getActor() {
+        return actor;
     }
 
-    public void setUser(User showroom) {
-        this.user = showroom;
+    public void setActor(User showroom) {
+        this.actor = showroom;
     }
 
 
+    @ManyToOne(optional = true)
+    @Valid
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
 }

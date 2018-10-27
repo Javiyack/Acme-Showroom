@@ -7,14 +7,14 @@ public class Constant {
 		EUR,
 		USD
 }
-	public static enum requestStatus {
+	public enum requestStatus {
 		PENDING,
 		REJECTED,
 		ACCEPTED,
 		CANCELLED
 	}
 
-	public static enum difficultyLevels {
+	public enum difficultyLevels {
 		EASY,
 		MEDIUM,
 		DIFFICULT

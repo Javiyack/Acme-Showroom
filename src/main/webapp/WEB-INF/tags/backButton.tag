@@ -28,7 +28,7 @@
 
 <%-- Definition --%>
 
-<button type="button" onclick="javascript: window.history.back()" class="${css}">
+<button type="button" onclick="window.history.back()" class="${css}">
 	<spring:message code="${text}" />
 </button>
 

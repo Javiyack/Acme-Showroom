@@ -51,7 +51,7 @@
 			src="images/uk.ico" class="iconoenlace" style="margin-bottom: 22px;"
 			title="Change to english" /></a> <security:authorize
 			access="isAnonymous()">
-			<a href="actor/create.do"><i class="fa fa-user-plus w3-xxlarge"
+			<a href="user/create.do"><i class="fa fa-user-plus w3-xxlarge"
 				style="margin-left: 1em; margin-right: 1em;"></i></a>
 		</security:authorize> <a href="${url}" style="color:${color};"> <i
 			class="fa fa-power-off w3-xxlarge"> </i></a>

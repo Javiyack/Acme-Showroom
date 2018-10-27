@@ -44,7 +44,7 @@
 
 <%-- Definition --%>
 
-<button type="button" onclick="javascript: relativeRedir('${url}')" class="${cssVar}" id="${id}">
+<button type="button" onclick="relativeRedir('${url}')" class="${cssVar}" id="${id}">
 	<spring:message code="${text}" />
 </button>
 

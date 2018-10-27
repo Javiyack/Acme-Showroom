@@ -56,7 +56,7 @@
 <spring:message var = "deleteConfirmation" code="file.delete.confirmation" />
 <jstl:set var="deleteUrl" value="file/delte.do?fileId=${row.id}"/>
 <display:column>	
-		<button style="border: none; background-color: white;" onclick="javascript: showConfirmationAlert('${deleteConfirmation}', '${row.name}', '${deleteUrl}');"><spring:message code="master.page.delete" /></Button>
+		<button style="border: none; background-color: white;" onclick="showConfirmationAlert('${deleteConfirmation}', '${row.name}', '${deleteUrl}');"><spring:message code="master.page.delete" /></Button>
 </display:column>
 </jstl:if>
 
