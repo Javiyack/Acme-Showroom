@@ -15,8 +15,9 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -37,7 +38,8 @@
 <script type="text/javascript" src="scripts/w3.js"></script>
 <script type="text/javascript" src="scripts/acme.js"></script>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
@@ -62,7 +64,7 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 
-	
+
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
@@ -75,18 +77,20 @@
 		style="margin-left: 260px; margin-top: 56px; padding: 0em 7% 0em 7%;">
 		<!-- Mensajes de error -->
 		<jstl:if test="${message != null}">
-				<li class="w3-display-container seccion  w3-red" style="padding: 0.8em 2em; margin: 0em 1.5em;">
-				<spring:message code="${message}" /> <span
-					onclick="this.parentElement.style.display='none'"
-					class="w3-btn w3-transparent w3-display-right w3-padding">&times;</span>
-					</li>
+			<li class="w3-display-container seccion  w3-red"
+				style="padding: 0.8em 2em; margin: 0em 1.5em;"><spring:message
+					code="${message}" /> <span
+				onclick="this.parentElement.style.display='none'"
+				class="w3-btn w3-transparent w3-display-right w3-padding">&times;</span>
+			</li>
 		</jstl:if>
 		<jstl:if test="${info != null}">
-				<li class="w3-display-container seccion  w3-amber" style="padding: 0.5em 2em; margin: 0em 1.5em;">
-				<spring:message code="${info}" /> <span
-					onclick="this.parentElement.style.display='none'"
-					class="w3-btn w3-transparent w3-display-right w3-padding">&times;</span>
-					</li>
+			<li class="w3-display-container seccion  w3-amber"
+				style="padding: 0.5em 2em; margin: 0em 1.5em;"><spring:message
+					code="${info}" /> <span
+				onclick="this.parentElement.style.display='none'"
+				class="w3-btn w3-transparent w3-display-right w3-padding">&times;</span>
+			</li>
 		</jstl:if>
 
 		<!-- Titulo -->

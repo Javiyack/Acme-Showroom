@@ -1,12 +1,13 @@
 
 package services;
 
+import domain.Actor;
 import domain.Administrator;
-import domain.TabooWord;
+import domain.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import repositories.TabooWordRepository;
+import repositories.TopicRepository;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -17,11 +18,11 @@ public class TopicService {
 
 	// Managed repositories ------------------------------------------------
 	@Autowired
-	private TabooWordRepository		tabooWordRepository;
+	private TopicRepository		topicRepository;
 
 	//Services
 	@Autowired
-	private AdministratorService	administratorService;
+	private ActorService	actorService;
 
 
 	// Constructor ----------------------------------------------------------
@@ -31,75 +32,81 @@ public class TopicService {
 
 	// Methods CRUD ---------------------------------------------------------
 
-	public TabooWord create() {
-		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
+	public Topic create() {
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
 
-		final TabooWord tabooWord = new TabooWord();
+		final Topic topic = new Topic();
 
-		return tabooWord;
+		return topic;
+	}
+	public Collection<String> findNameList(){
+		return topicRepository.findNameList();
+	}
+	public Topic create(String name) {
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+
+		final Topic topic = new Topic();
+		topic.setName(name);
+		return topic;
 	}
 
-	public TabooWord findOne(final int tabooWordId) {
-		TabooWord result;
-		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
+	public Topic findOne(final int topicId) {
+		Topic result;
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
 
-		result = this.tabooWordRepository.findOne(tabooWordId);
+		result = this.topicRepository.findOne(topicId);
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public Collection<TabooWord> findAll() {
+	public Collection<Topic> findAll() {
 
-		Collection<TabooWord> result;
+		Collection<Topic> result;
 
-		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
 
-		result = this.tabooWordRepository.findAll();
+		result = this.topicRepository.findAll();
 		Assert.notNull(result);
 
 		return result;
 	}
 
-	public TabooWord save(final TabooWord tabooWord) {
+	public Topic save(final Topic topic) {
 
-		Assert.notNull(tabooWord);
+		Assert.notNull(topic);
 
-		final Administrator admin = this.administratorService.findByPrincipal();
+		final Actor admin = this.actorService.findByPrincipal();
 		Assert.notNull(admin);
 
-		final TabooWord saved = this.tabooWordRepository.save(tabooWord);
+		final Topic saved = this.topicRepository.save(topic);
 
 		return saved;
 	}
 
-	public void delete(final TabooWord tabooWord) {
-		Assert.notNull(tabooWord);
-		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		this.tabooWordRepository.delete(tabooWord);
+	public void delete(final Topic topic) {
+		Assert.notNull(topic);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		this.topicRepository.delete(topic);
 	}
 
-	public void deleteById(final int tabooWordId) {
-		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
-		this.tabooWordRepository.delete(tabooWordId);
+	public void deleteById(final int topicId) {
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+		this.topicRepository.delete(topicId);
 	}
 
 	public void flush() {
-		this.tabooWordRepository.flush();
+		this.topicRepository.flush();
 
 	}
-	
-	public Collection<TabooWord> getTabooWordFromMyMessageSubjectAndBody(final String subject, final String body) {
 
-		Assert.notNull(subject);
-		Assert.notNull(body);
-
-		return this.tabooWordRepository.getTabooWordFromMyMessageSubjectAndBody(subject, body);
-
+	public Topic findByName(String topicName) {
+		return topicRepository.fidByName(topicName);
 	}
 }

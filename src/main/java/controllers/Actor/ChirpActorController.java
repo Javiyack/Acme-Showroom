@@ -4,6 +4,7 @@ package controllers.Actor;
 import controllers.AbstractController;
 import domain.Chirp;
 import domain.Subscription;
+import domain.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ChirpService;
 import services.SubscriptionService;
+import services.TopicService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -30,7 +32,9 @@ public class ChirpActorController extends AbstractController {
 
     @Autowired
     private SubscriptionService subscriptionService;
-    // Constructors -----------------------------------------------------------
+    @Autowired
+    private TopicService topicService;
+// Constructors -----------------------------------------------------------
 
     public ChirpActorController() {
         super();
@@ -126,6 +130,8 @@ public class ChirpActorController extends AbstractController {
     protected ModelAndView createEditModelAndView(final Chirp model, final String message) {
         final ModelAndView result;
         result = new ModelAndView("chirp/actor/create");
+        Collection<Topic> topics = topicService.findAll();
+        result.addObject("topics", topics);
         result.addObject("chirp", model);
         result.addObject("requestUri", "chirp/actor/create.do");
         result.addObject("edition", true);

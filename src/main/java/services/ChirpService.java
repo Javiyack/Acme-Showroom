@@ -21,6 +21,8 @@ public class ChirpService {
     //Services
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private TopicService topicService;
     //Constructor
     public ChirpService() {
         super();
@@ -40,8 +42,13 @@ public class ChirpService {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         chirp.setActor(actor);
-        if(chirp.getId()==0)
+
+        if(chirp.getId()==0) {
+            if (chirp.getTopic() != null)
+                if (!topicService.findAll().contains(chirp.getTopic()))
+                    topicService.save(chirp.getTopic());
             chirp = chirpRepository.save(chirp);
+        }
         return chirp;
     }
 

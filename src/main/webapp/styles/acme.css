@@ -72,6 +72,10 @@ li.menuItem:hover{
 
 }
 
+.font-awesome{
+	font-family:Arial, FontAwesome;
+}
+
 .nombre-usuario {
 	font-size: large;
 	margin-left: 20px;
@@ -265,6 +269,16 @@ select {
 	border-radius: 3px;
 }
 
+.flat {
+	color: inherit !important;
+	background-color:  inherit !important;
+	border: none;
+	display: inline-block;
+	vertical-align: middle;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+}
 .flatButton {
 	color: inherit !important;
 	background-color:  inherit !important;

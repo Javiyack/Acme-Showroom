@@ -64,7 +64,21 @@ function ajaxCheck(element, contextPath) {
         document.getElementById("RESPONSABLE").disabled = allowed;
     });
 }
-
+function ajaxTopicCreate(element, contextPath) {
+    var name = element.value;
+    var url = contextPath + "/asynchronous/topic/create.do";
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: "topicName=" + name,
+        success: function (topic) {
+            document.getElementById("topic").value = topic;
+        },
+        error: function (e) {
+            alert(url + ': ' + e);
+        }
+    });
+}
 function ajaxSearch(element, contextPath) {
     id = element.value;
     url = contextPath + "/jquery/hostCheck.do";
