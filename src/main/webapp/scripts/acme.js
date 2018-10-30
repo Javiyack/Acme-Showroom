@@ -64,6 +64,14 @@ function ajaxCheck(element, contextPath) {
         document.getElementById("RESPONSABLE").disabled = allowed;
     });
 }
+
+
+function copyText(from, to) {
+    var valor = from.value;
+    document.getElementById(to).value = valor;
+
+
+}
 function ajaxTopicCreate(element, contextPath) {
     var name = element.value;
     var url = contextPath + "/asynchronous/topic/create.do";
@@ -72,7 +80,7 @@ function ajaxTopicCreate(element, contextPath) {
         url: url,
         data: "topicName=" + name,
         success: function (topic) {
-            document.getElementById("topic").value = topic;
+            document.getElementById('topic').value = topic;
         },
         error: function (e) {
             alert(url + ': ' + e);

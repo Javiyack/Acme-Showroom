@@ -29,14 +29,15 @@ public class RestController {
 		return topics;
 	}
 	@RequestMapping(value="/topic/create")
-	public @ResponseBody Topic create(HttpServletRequest req, HttpServletResponse res) {
-		Topic topic = topicService.findByName(req.getParameter("topicName"));
+	public @ResponseBody String create(HttpServletRequest req, HttpServletResponse res) {
+		String topicName = req.getParameter("topicName");
+		Topic topic = topicService.findByName(topicName);
 		if(topic != null) {
-			return topic;
+			return topic.getName();
 		}
 		else{
 			topic = topicService.create(req.getParameter("topicName"));
-			return topic;
+			return topic.getName();
 		}
 	}
 	@RequestMapping(value="/hostCheck")

@@ -65,15 +65,21 @@
                         <div class="w3-container">
                             <br>
                             <p>
-                                <input type="text" placeholder="&#xf02b; Topic" class="font-awesome" />
+                                <input type="text" placeholder="&#xf02b; Topic" class="font-awesome" id="topicText"/>
                             </p>
+                            <select onchange="this.nextElementSibling.value=this.value">
+                                <option></option>
+                                <jstl:forEach items="${topics}" var="topicItem">
+                                    <option>${topicItem}</option>
+                                </jstl:forEach>
+                            </select>
                             <p><acme:select items="${topics}" code="label.topics"
                                             itemLabel="name" path="topic" css="formSelect" id="combo"
-                                            onchange="javascript:document.getElementById('id01').style.display='none';setTopic(this, 'topic');"/></p>
+                                            onchange="javascript:document.getElementById('id01').style.display='none';copyText(this, 'topic');"/></p>
                         </div>
                         <footer class="w3-container">
                                 <i class="w3-bar-item fa fa-plus-square w3-xlarge toRight w3-padding"
-                                   onclick="ajaxTopicCreate(this, '${pageContext.request.contextPath}');document.getElementById('id01').style.display='none';"
+                                   onclick="copyText(document.getElementById('topicText'), 'topic');document.getElementById('id01').style.display='none';"
                                    onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>
                             <br>
                         </footer>
