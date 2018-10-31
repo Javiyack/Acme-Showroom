@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ItemService;
 import services.ShowroomService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
 
@@ -47,6 +48,19 @@ public class ShowroomController extends AbstractController {
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
+    // List ------------------------------------------------------------------
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public ModelAndView list(HttpServletRequest req) {
+        ModelAndView result;
+        final Collection<Showroom> showrooms;
+        showrooms = this.showroomService.findByKeyWord(req.getParameter("word").trim());
+        result = new ModelAndView("showroom/list");
+        result.addObject("showrooms", showrooms);
+        result.addObject("requestUri", "showroom/list.do");
+        result.addObject("word", req.getParameter("word"));
+        result.addObject("pageSize", (req.getParameter("pageSize") != null) ? req.getParameter("pageSize") : 5);
+        return result;
+    }
 
     // Display user -----------------------------------------------------------
     @RequestMapping(value = "/display", method = RequestMethod.GET)
@@ -77,12 +91,11 @@ public class ShowroomController extends AbstractController {
     protected ModelAndView createDisplaytModelAndView(final Showroom model, final String message) {
         final ModelAndView result;
         Collection<Item> items =  itemService.findByShowroom(model);
-        result = new ModelAndView("showroom/create");
+        result = new ModelAndView("showroom/display");
         result.addObject("showroom", model);
         result.addObject("items", items);
-        result.addObject("requestUri", "showroom/create.do");
-        result.addObject("edition", true);
-        result.addObject("creation", model.getId() == 0);
+        result.addObject("edition", false);
+        result.addObject("creation", false);
         result.addObject("message", message);
         result.addObject("display", true);
         return result;

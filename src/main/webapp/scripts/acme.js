@@ -221,6 +221,10 @@ function askSubmission(msg, form) {
     if (confirm(msg))
         form.submit();
 }
+function submitForm(form) {
+    if (confirm("Si?"))
+    form.submit();
+}
 
 function relativeRedir(loc) {
     var b = document.getElementsByTagName('base');

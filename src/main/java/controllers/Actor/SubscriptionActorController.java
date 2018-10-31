@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
+import services.ChirpService;
 import services.SubscriptionService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 @Controller
@@ -25,6 +27,9 @@ public class SubscriptionActorController extends AbstractController {
 
 	@Autowired
 	private ActorService actorService;
+
+	@Autowired
+	private ChirpService chirpService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -41,7 +46,7 @@ public class SubscriptionActorController extends AbstractController {
 
 		result = new ModelAndView("actor/list");
 		result.addObject("followers", followers);
-		result.addObject("requestUri", "subscription/subscriptors/list.do");
+		result.addObject("requestUri", "subscription/subscribers/list.do");
 		result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
 		return result;
 	}
@@ -52,6 +57,8 @@ public class SubscriptionActorController extends AbstractController {
 		final Collection<Actor> subscribedActors = this.subscriptionService.findSubscribedActors();
 		final Collection<Subscription> topicSubscriptions = this.subscriptionService.findTopicSubscriptions();
 		result = new ModelAndView("subscription/actor/list");
+		Collection <String> topics = chirpService.findAllTopics();
+		result.addObject("topics", topics);
 		result.addObject("subscribedActors", subscribedActors);
 		result.addObject("topicSubscriptions", topicSubscriptions);
 		result.addObject("requestUri", "subscription/actor/list.do");
@@ -59,9 +66,9 @@ public class SubscriptionActorController extends AbstractController {
 		return result;
 	}
 
-	// Subsribe  -----------------------------------------------------------
-	@RequestMapping(value = "/subcribe", method = RequestMethod.GET)
-	public ModelAndView activation(@RequestParam final int actorId) {
+	// Subsribe to an actor -----------------------------------------------------------
+	@RequestMapping(value = "/subscribe", method = RequestMethod.GET)
+	public ModelAndView subscribe(@RequestParam final int actorId, String redirectUrl) {
 		ModelAndView result;
 		try{
 			this.subscriptionService.follow(actorId);
@@ -72,7 +79,72 @@ public class SubscriptionActorController extends AbstractController {
 				return this.createMessageModelAndView("msg.commit.error", "/");
 			}
 		}
-		result = new ModelAndView("redirect:/actor/actor/list.do");
+		result = new ModelAndView("redirect:" + redirectUrl);
+		return result;
+	}
+
+	// Subsribe to a topic -----------------------------------------------------------
+	@RequestMapping(value = "/topic/subscribe", method = RequestMethod.GET)
+	public ModelAndView subscribe(@RequestParam final String topic) {
+		ModelAndView result;
+		try{
+			this.subscriptionService.subscribe(topic);
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+			} else {
+				return this.createMessageModelAndView("msg.commit.error", "/");
+			}
+		}
+		result = new ModelAndView("redirect:/subscription/actor/list.do");
+		return result;
+	}
+	// Subsribe to a topic -----------------------------------------------------------
+	@RequestMapping(value = "/topic/subscribe", method = RequestMethod.POST)
+	public ModelAndView topicSubscribe(HttpServletRequest req) {
+		ModelAndView result;
+		try{
+			this.subscriptionService.subscribe(req.getParameter("topic"));
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+			} else {
+				return this.createMessageModelAndView("msg.commit.error", "/");
+			}
+		}
+		result = new ModelAndView("redirect:/subscription/actor/list.do");
+		return result;
+	}
+	// UnSubsribe  -----------------------------------------------------------
+	@RequestMapping(value = "/topic/unsubscribe", method = RequestMethod.GET)
+	public ModelAndView topicUnsubscribe(@RequestParam final String topic) {
+		ModelAndView result;
+		try{
+			this.subscriptionService.unSubscribe(topic);
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+			} else {
+				return this.createMessageModelAndView("msg.commit.error", "/");
+			}
+		}
+		result = new ModelAndView("redirect:/subscription/actor/list.do");
+		return result;
+	}
+	// UnSubsribe  -----------------------------------------------------------
+	@RequestMapping(value = "/topic/unsubscribe", method = RequestMethod.POST)
+	public ModelAndView unsubscribe(HttpServletRequest req) {
+		ModelAndView result;
+		try{
+			this.subscriptionService.unSubscribe(req.getParameter("topic"));
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+			} else {
+				return this.createMessageModelAndView("msg.commit.error", "/");
+			}
+		}
+		result = new ModelAndView("redirect:/subscription/actor/list.do");
 		return result;
 	}
 

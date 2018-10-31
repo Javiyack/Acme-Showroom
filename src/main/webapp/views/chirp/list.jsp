@@ -40,10 +40,10 @@
     </jstl:if>
     <jstl:if test="${!chirps.isEmpty()}">
 
-        <form:form action="${requestUri}" method="GET">
+        <form:form action="${requestUri}" method="POST">
             <spring:message code="pagination.size"/>
             <input hidden="true" name="word" value="${word}">
-            <input hidden="true" name="showroomId" value="${showroom.id}">
+            <input hidden="true" name="topic" value="${topic}">
             <input type="number" name="pageSize" min="1" max="100"
                    value="${pageSize}">
             <input type="submit" value=">">
@@ -59,10 +59,11 @@
             <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
 
-            <acme:column property="${row.actor.userAccount.username}" title="label.user" rowUrl="${url}"/>
+            <acme:column property="${row.actor.userAccount.username}" title="label.user" rowUrl="${url}" sortable="true"/>
+            <acme:column property="${row.topic}" title="label.topic" rowUrl="${url}" sortable="true"/>
             <acme:column property="${row.title}" title="label.title" rowUrl="${url}"/>
             <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
-            <acme:column property="${row.moment}" title="label.moment" rowUrl="${url}"/>
+            <acme:column property="${row.moment}" title="label.moment" rowUrl="${url}" sortable="true"/>
             <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
 
         </display:table>

@@ -1,6 +1,9 @@
 
 package domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -8,15 +11,14 @@ import java.util.Date;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"subscriber_id", "subscribedActor_id"}))
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"subscriber_id", "subscribedActor_id"}),
+							@UniqueConstraint(columnNames = {"subscriber_id", "topic"})})
 public class Subscription extends DomainEntity {
 
 	//Relationships
 	private Actor subscriber;
 	private Actor subscribedActor;
-	private Actor topic;
-
-	private Date since;
+	private String topic;
 
 	//Constructor
 	public Subscription() {
@@ -44,21 +46,12 @@ public class Subscription extends DomainEntity {
 		this.subscribedActor = followed;
 	}
 
-	public Date getSince() {
-		return since;
-	}
-
-	public void setSince(Date since) {
-		this.since = since;
-	}
-
-	@Valid
-	@ManyToOne(optional = true)
-	public Actor getTopic() {
+	@SafeHtml
+	public String getTopic() {
 		return this.topic;
 	}
 
-	public void setTopic(Actor topic) {
+	public void setTopic(String topic) {
 		this.topic = topic;
 	}
 }

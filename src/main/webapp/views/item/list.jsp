@@ -28,69 +28,94 @@
     <security:authentication property="principal" var="logedActor"/>
     <security:authentication property="principal.authorities[0]"
                              var="permiso"/>
-    <jstl:set var="rol" value="${fn:toLowerCase(permiso)}/"/>
+    <jstl:set var="rol" value="${fn:toLowerCase(permiso)}"/>
 </security:authorize>
+<jstl:if test="${pageSize == null}">
+    <jstl:set value="20" var="pageSize"/>
+</jstl:if>
+<jstl:if test="${showroom != null}">
+    <jstl:set value="showroom/user/edit.do" var="requestUri"/>
+    <jstl:set value="true" var="included"/>
+</jstl:if>
 <div class="seccion w3-light-grey">
     <legend>
         <spring:message code="label.items"/>
+        <jstl:if test="${showroomId != null and !included}">
+            <spring:message code="label.of"/>
+            <jstl:out value="${showroomName}"/>
+        </jstl:if>
     </legend>
 
-            <jstl:if test="${pageSize == null}">
-                <jstl:set value="20" var="pageSize"/>
-            </jstl:if>
-            <jstl:if test="${showroom != null}">
-                <jstl:set value="showroom/user/edit.do" var="requestUri"/>
-            </jstl:if>
-            <jstl:if test="${!items.isEmpty()}">
+    <jstl:if test="${!items.isEmpty()}">
 
-                <form:form action="${requestUri}" method="GET">
-                    <spring:message code="pagination.size"/>
-                    <input hidden="true" name="word" value="${word}">
-                    <input hidden="true" name="showroomId" value="${showroom.id}">
-                    <input type="number" name="pageSize" min="1" max="100"
-                           value="${pageSize}">
-                    <input type="submit" value=">">
-                </form:form>
-            </jstl:if>
-            <div style="overflow-x:auto;">
-                <display:table pagesize="${pageSize}"
-                               class="flat-table flat-table-1 w3-light-grey" name="items"
-                               requestURI="${requestUri}" id="row">
-                    <jstl:set var="owns"
-                              value="${logedActor.id==row.showroom.user.userAccount.id}"/>
-                    <jstl:if test="${owns}">
-                        <spring:message var="dificultad" code="difficulty.${row.difficulty}"/>
-                        <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
-                        <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
-                    </jstl:if>
-                    <jstl:if test="${!owns}">
-                        <spring:message var="dificultad" code="difficulty.${row.difficulty}"/>
-                        <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
-                        <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
-                    </jstl:if>
+        <jstl:if test="${included}">
+            <a href="item/list.do?showroomId=${showroom.id}&showroomName=${showroom.name}"
+               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+                    class="fa fa-diamond fa-fw"></i>  <spring:message
+                    code="label.show.all" />
+            </a>
+        </jstl:if>
+            <jstl:if test="${!included}">
+                <form:form action="${requestUri}" method="POST">
+                <div class="row">
+                    <div class="col-75">
+                        <spring:message code="pagination.size"/>
+                        <input hidden="true" name="showroomId" value="${showroomId}">
+                        <input hidden="true" name="showroomName" value="${showroomName}">
+                        <input type="number" name="pageSize" min="1" max="100"
+                               value="${pageSize}">
+                        <input type="submit" value=">">
+                    </div>
+                    <div class="col-25">
+                        <spring:message code="label.search" var="placeholder"/>
+                        <input name="word" value="${word}" placeholder="&#xf002; ${placeholder}"
+                               class="font-awesome toRight">
 
-                    <acme:column property="${row.name}" title="label.name" rowUrl="${url}"/>
-                    <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
-                    <acme:column property="${dificultad}" title="label.difficult" rowUrl="${url}"/>
-                    <acme:column property="${row.origin}" title="label.origin" rowUrl="${url}"/>
-                    <acme:column property="${row.destination}" title="label.destination" rowUrl="${url}"/>
-                    <acme:column property="${row.length}" title="label.length" rowUrl="${url}"/>
-                    <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
+                    </div>
 
-                </display:table>
-            </div>
-            <jstl:if test="${showroom==null}">
-                <acme:backButton text="label.back" css="formButton toLeft"/>
-            </jstl:if>
-            <jstl:if test="${showroom!=null}">
-                <spring:message var="msg" code="msg.save.first"/>
-                <jstl:set var="url"
-                          value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
-                <p>
-                    <i class="fa fa-plus-square w3-xlarge"
-                       onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
-                </p>
+                </div>
 
+            </form:form>
+        </jstl:if>
+    </jstl:if>
+    <div style="overflow-x:auto;">
+        <display:table pagesize="${pageSize}"
+                       class="flat-table flat-table-1 w3-light-grey" name="items"
+                       requestURI="${requestUri}" id="row">
+            <jstl:set var="owns"
+                      value="${logedActor.id==row.showroom.user.userAccount.id}"/>
+            <jstl:if test="${owns}">
+                <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
+                <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
             </jstl:if>
-            <br/>
+            <jstl:if test="${!owns}">
+                <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
+                <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
+            </jstl:if>
+
+            <jstl:if test="${!included}">
+                <acme:column property="${row.showroom.name}" title="label.showroom" rowUrl="${url}"/>
+            </jstl:if>
+            <acme:column property="${row.SKU}" title="label.SKU" rowUrl="${url}"/>
+            <acme:column property="${row.title}" title="label.name" rowUrl="${url}"/>
+            <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
+            <acme:column property="${row.price}" title="label.price" rowUrl="${url}"/>
+            <acme:column property="${row.available}" title="label.available" rowUrl="${url}"/>
+            <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
+
+        </display:table>
+    </div>
+    <jstl:if test="${showroom==null}">
+        <acme:backButton text="label.back" css="formButton toLeft"/>
+    </jstl:if>
+    <jstl:if test="${showroom!=null and rol eq 'user'}">
+            <spring:message var="msg" code="msg.save.first"/>
+            <jstl:set var="url"
+                      value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
+            <p>
+                <i class="fa fa-plus-square w3-xlarge"
+                   onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+            </p>
+    </jstl:if>
+    <br/>
 </div>

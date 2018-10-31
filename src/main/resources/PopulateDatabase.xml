@@ -340,49 +340,85 @@
 	<bean id="showroom1" class="domain.Showroom">
 		<property name="name" value="El Escaparate" />
 		<property name="description" value="De las maravillas" />
-		<property name="length" value="00325.500" />
-		<property name="pictures">
-			<list>
-				<value></value>
-			</list>
-		</property>
+		<property name="logo" value="https://image.shutterstock.com/image-vector/cool-dude-monkey-glasses-headphones-260nw-574759426.jpg" />
 		<property name="user" ref="user1" />
 	</bean>
 
 	<bean id="showroom2" class="domain.Showroom">
 		<property name="name" value="De escaparate a rota" />
 		<property name="description" value="Urta a la roteña" />
-		<property name="length" value="00420.110" />
-		<property name="pictures">
-			<list>
-				<value></value>
-			</list>
-		</property>
+		<property name="logo" value="" />
 		<property name="user" ref="user1" />
 	</bean>
 
 	<bean id="showroom3" class="domain.Showroom">
 		<property name="name" value="Sigueme" />
 		<property name="description" value="Si puedes... si, puedes." />
-		<property name="length" value="00155.760" />
-		<property name="pictures">
-			<list>
-				<value></value>
-			</list>
-		</property>
+		<property name="logo" value="" />
 		<property name="user" ref="user2" />
 	</bean>
 
-	<bean id="showroom4" class="domain.Showroom">
-		<property name="name" value="Tolfrio" />
+	<!-- Items -->
+
+	<bean id="item1" class="domain.Item">
+		<property name="title" value="Titulo tem 1" />
 		<property name="description" value="Pa mi" />
-		<property name="length" value="00652.735" />
-		<property name="user" ref="user2" />
-		<property name="pictures">
-			<list>
-				<value></value>
-			</list>
-		</property>
+		<property name="available" value="true" />
+		<property name="price" value="99.99" />
+		<property name="SKU" value="720615-XXXX99" />
+		<property name="showroom" ref="showroom1" />
+
 	</bean>
+
+	<bean id="item2" class="domain.Item">
+		<property name="title" value="Titulo tem 2" />
+		<property name="description" value="Pa ti" />
+		<property name="available" value="true" />
+		<property name="price" value="199.99" />
+		<property name="SKU" value="720615-XXXX00" />
+		<property name="showroom" ref="showroom1" />
+
+	</bean>
+
+	<bean id="item3" class="domain.Item">
+		<property name="title" value="Titulo tem 3" />
+		<property name="description" value="Pa si" />
+		<property name="available" value="true" />
+		<property name="price" value="19.99" />
+		<property name="SKU" value="720615-XXXX01" />
+		<property name="showroom" ref="showroom3" />
+
+	</bean>
+
+	<bean id="item4" class="domain.Item">
+		<property name="title" value="Titulo tem 4" />
+		<property name="description" value="Pa mi" />
+		<property name="available" value="true" />
+		<property name="price" value="14.99" />
+		<property name="SKU" value="720615-XXXX09" />
+		<property name="showroom" ref="showroom1" />
+
+	</bean>
+
+	<bean id="item5" class="domain.Item">
+		<property name="title" value="Titulo tem 5" />
+		<property name="description" value="Pa mi" />
+		<property name="available" value="true" />
+		<property name="price" value="99.99" />
+		<property name="SKU" value="720615-YYYY99" />
+		<property name="showroom" ref="showroom2" />
+
+	</bean>
+
+	<bean id="item6" class="domain.Item">
+		<property name="title" value="Titulo tem 6" />
+		<property name="description" value="Barato" />
+		<property name="available" value="true" />
+		<property name="price" value="99.99" />
+		<property name="SKU" value="720615-YYYY99" />
+		<property name="showroom" ref="showroom3" />
+
+	</bean>
+
 
 </beans>

@@ -4,7 +4,6 @@ package controllers.Actor;
 import controllers.AbstractController;
 import domain.Chirp;
 import domain.Subscription;
-import domain.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ChirpService;
 import services.SubscriptionService;
-import services.TopicService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.TreeSet;
 
 @Controller
 @RequestMapping("/chirp/actor")
@@ -32,8 +32,6 @@ public class ChirpActorController extends AbstractController {
 
     @Autowired
     private SubscriptionService subscriptionService;
-    @Autowired
-    private TopicService topicService;
 // Constructors -----------------------------------------------------------
 
     public ChirpActorController() {
@@ -44,7 +42,7 @@ public class ChirpActorController extends AbstractController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView list(final Integer pageSize) {
         ModelAndView result;
-        final Collection<Chirp> chirps;
+        final Collection <Chirp> chirps;
         chirps = this.chirpService.findByLoggedActor();
         result = new ModelAndView("chirp/actor/list");
         result.addObject("chirps", chirps);
@@ -57,15 +55,64 @@ public class ChirpActorController extends AbstractController {
     @RequestMapping(value = "/stream", method = RequestMethod.GET)
     public ModelAndView stream(final Integer pageSize) {
         ModelAndView result;
-        final Collection<Chirp> chirps = new ArrayList<Chirp>();
-        final Collection<Subscription> follows = subscriptionService.findByLogedActor();
-        for (Subscription followed: follows) {
-            chirps.addAll(chirpService.findByUserId(followed.getSubscribedActor().getId()));
+        final Collection <Chirp> chirps = new TreeSet <>();
+        final Collection <Subscription> subscriptions = subscriptionService.findByLogedActor();
+        for (Subscription subscription : subscriptions) {
+            if(subscription.getSubscribedActor()!=null){
+                Collection <Chirp> actorChirps = chirpService.findByUserId(subscription.getSubscribedActor().getId());
+                chirps.addAll(actorChirps);
+            }
+            else if(subscription.getTopic()!=null) {
+                Collection <Chirp> topicChirps = chirpService.findByTopic(subscription.getTopic());
+                chirps.addAll(topicChirps);
+            }
         }
         result = new ModelAndView("chirp/actor/stream");
         result.addObject("chirps", chirps);
         result.addObject("requestUri", "chirp/actor/stream.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        return result;
+    }
+    // List ------------------------------------------------------------------
+    @RequestMapping(value = "/stream", method = RequestMethod.POST)
+    public ModelAndView stream(HttpServletRequest req) {
+        ModelAndView result;
+        final Collection <Chirp> chirps = new TreeSet <>();
+        final Collection <Subscription> follows = subscriptionService.findByLogedActor();
+        for (Subscription followed : follows) {
+            if(followed.getSubscribedActor()!=null)
+                chirps.addAll(chirpService.findByUserId(followed.getSubscribedActor().getId()));
+            else if(followed.getTopic()!=null)
+                chirps.addAll(chirpService.findByTopic(followed.getTopic()));
+        }
+        result = new ModelAndView("chirp/actor/stream");
+        result.addObject("chirps", chirps);
+        result.addObject("requestUri", "chirp/actor/stream.do");
+        result.addObject("pageSize", (req.getParameter("pageSize") != null) ? req.getParameter("pageSize") : 5);
+        return result;
+    }
+    // List by topic------------------------------------------------------------------
+    @RequestMapping(value = "/topic/list", method = RequestMethod.GET)
+    public ModelAndView listByTopic(String topic, final Integer pageSize) {
+        ModelAndView result;
+        final Collection <Chirp> chirps = chirpService.findByTopic(topic);
+        result = new ModelAndView("chirp/actor/list");
+        result.addObject("chirps", chirps);
+        result.addObject("topic", topic);
+        result.addObject("requestUri", "chirp/actor/topic/list.do");
+        result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        return result;
+    }
+    // List by topic------------------------------------------------------------------
+    @RequestMapping(value = "/topic/list", method = RequestMethod.POST)
+    public ModelAndView listingByTopic(HttpServletRequest req) {
+        ModelAndView result;
+        final Collection <Chirp> chirps = chirpService.findByTopic(req.getParameter("topic"));
+        result = new ModelAndView("chirp/actor/list");
+        result.addObject("chirps", chirps);
+        result.addObject("topic", req.getParameter("topic"));
+        result.addObject("requestUri", "chirp/actor/topic/list.do");
+        result.addObject("pageSize", (req.getParameter("pageSize") != null) ? req.getParameter("pageSize") : 5);
         return result;
     }
 
@@ -130,7 +177,7 @@ public class ChirpActorController extends AbstractController {
     protected ModelAndView createEditModelAndView(final Chirp model, final String message) {
         final ModelAndView result;
         result = new ModelAndView("chirp/actor/create");
-        Collection<Topic> topics = topicService.findAll();
+        Collection <String> topics = chirpService.findAllTopics();
         result.addObject("topics", topics);
         result.addObject("chirp", model);
         result.addObject("requestUri", "chirp/actor/create.do");

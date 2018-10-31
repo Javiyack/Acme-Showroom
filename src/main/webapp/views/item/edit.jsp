@@ -52,92 +52,23 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-50">
-                <div class="row">
-                    <div class="col-50">
-                        <acme:textbox code="label.name" path="name"
-                                      readonly="${readonly}"/>
-                    </div>
-                    <div class="col-25">
-                        <acme:textbox code="label.length" path="length"
-                                      readonly="${readonly}"/>
-                    </div>
-                    <div class="col-25">
-                        <form:label path="difficulty">
-                            <spring:message code="label.difficult"/>
-                        </form:label>
-                        <select id="difficulty" name="difficulty" class="w3-text-black"
-                                <jstl:if test='${readonly}'>disabled</jstl:if>>
-
-                            <jstl:forEach items="${difficultyLevels}" var="item">
-                                <option value="${item}" id="${item}"
-                                        <jstl:if test='${item==item.difficulty}'>selected</jstl:if> >
-                                    <spring:message code="difficulty.${item}"/>
-                                </option>
-
-                            </jstl:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-50">
-
-                        <acme:textbox code="label.origin" path="origin"
-                                      readonly="${readonly}"/>
-                    </div>
-                    <div class="col-50">
-                        <acme:textbox code="label.destination" path="destination"
-                                      readonly="${readonly}"/>
-
-                    </div>
-
-                </div>
+            <div class="col-25">
+                <acme:textbox code="label.SKU" path="SKU"
+                              readonly="${readonly}"/>
+                <acme:textbox code="label.title" path="title"
+                              readonly="${readonly}"/>
+                <acme:checkBox value="${item.available}" code="label.available" path="available"
+                               readonly="${readonly}" css="w3-check"/>
+                <acme:textbox code="label.price" path="price"
+                              readonly="${readonly}"/>
 
             </div>
-            <div class="col-50">
+            <div class="col-75">
                 <acme:textarea code="label.description" path="description"
                                readonly="${readonly}" css="formTextArea w3-text-black"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-100">
-                <acme:textarea path="pictures" code="label.pictures" css="formTextArea collection w3-text-black"
-                               id="fotosPath" readonly="${readonly}"/>
-                <br/>
-                <br/>
-                <div id="fotos" style="margin-bottom: 0.2em;">
-                    <jstl:set var="count" scope="application" value="${0}"/>
-                    <jstl:forEach items="${item.pictures}" var="picture">
-                        <jstl:set var="count" scope="application" value="${count + 1}"/>
-                        <img src="${picture}" class="tableImg iButton" onclick="currentSlide(${count})">
-                    </jstl:forEach>
-                </div>
 
-
-                <!-- Carrusel se fotos  -->
-                <div class="carrusel">
-                    <div class="slideshow-container" id="carrusel">
-                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                        <jstl:forEach items="${item.pictures}" var="picture">
-                            <jstl:set var="count" scope="application" value="${count + 1}"/>
-                            <div class="mySlides">
-                                <a href="${picture}"><img src="${picture}" class="w3-border w3-card-4 marco iButton" style="width: 100%">
-                                </a>
-                            </div>
-                        </jstl:forEach>
-                    </div>
-                </div>
-                <br>
-                <jstl:set var="count" scope="application" value="${0}"/>
-                <div style="text-align: center" id="punto">
-                    <jstl:forEach items="${item.pictures}" var="picture">
-                        <jstl:set var="count" scope="application" value="${count + 1}"/>
-                        <span class="dot" onclick="currentSlide(${count})"></span>
-                    </jstl:forEach>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-100">
                 <jstl:if test="${!readonly}">

@@ -54,7 +54,9 @@
 
                 <input type="text" placeholder="&#xf02b; Topic" class="font-awesome"
                        onclick="document.getElementById('id01').style.display='block'" path="topic"
-                       name="topic" id="topic"/>
+                       name="topic" id="topic" value="${chirp.topic}" readonly="${readonly}"/>
+
+                <jstl:if test="${creation}">
                 <div id="id01" class="w3-modal w3-animate-opacity">
                     <div class="w3-modal-content w3-card-4">
                         <header class="w3-container">
@@ -62,29 +64,31 @@
                                   class="w3-button w3-large w3-display-topright">&times;</span>
                             <h2>Modal Header</h2>
                         </header>
-                        <div class="w3-container">
+                        <div class="w3-container w3-third">
                             <br>
                             <p>
-                                <input type="text" placeholder="&#xf02b; Topic" class="font-awesome" id="topicText"/>
+                                <input list="topics" name="state-choice" placeholder="&#xf02b; Topic" class="font-awesome" id="topicText"  />
+                                <i class="w3-bar-item fa fa-plus-square w3-xlarge w3-padding"
+                                   onclick="copyText(document.getElementById('topicText'), 'topic');document.getElementById('id01').style.display='none';">
+                                </i>
                             </p>
-                            <select onchange="this.nextElementSibling.value=this.value">
+
+                            <datalist id="topics">
                                 <option></option>
                                 <jstl:forEach items="${topics}" var="topicItem">
                                     <option>${topicItem}</option>
                                 </jstl:forEach>
-                            </select>
-                            <p><acme:select items="${topics}" code="label.topics"
-                                            itemLabel="name" path="topic" css="formSelect" id="combo"
-                                            onchange="javascript:document.getElementById('id01').style.display='none';copyText(this, 'topic');"/></p>
+                            </datalist>
+
                         </div>
                         <footer class="w3-container">
-                                <i class="w3-bar-item fa fa-plus-square w3-xlarge toRight w3-padding"
-                                   onclick="copyText(document.getElementById('topicText'), 'topic');document.getElementById('id01').style.display='none';"
-                                   onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>
+
                             <br>
                         </footer>
                     </div>
                 </div>
+
+                </jstl:if>
             </div>
             <div class="col-75">
                 <spring:message code='label.description' var="descriptionLabel"/>

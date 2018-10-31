@@ -11,7 +11,7 @@
 
 <tiles-definitions>
 	<definition name="item/create" extends="master.page">
-		<put-attribute name="title" value="New Item" />
+		<put-attribute name="title" value="New item" />
 		<put-attribute name="body" value="/views/item/edit.jsp" />
 	</definition>
 	<definition name="item/list" extends="master.page">

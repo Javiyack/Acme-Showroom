@@ -270,7 +270,6 @@ select {
 }
 
 .flat {
-	color: inherit !important;
 	background-color:  inherit !important;
 	border: none;
 	display: inline-block;

@@ -15,7 +15,7 @@ public interface ShowroomRepository extends JpaRepository<Showroom, Integer> {
 	Collection<Showroom> findByOwner(Integer ownerId);
 
 
-	@Query("select r from Showroom r where r.description like %?1%")
+	@Query("select r from Showroom r where r.name like %?1% or r.description like %?1%")
 	Collection<Showroom> findByKeyWord(String keyWord);
 
 	@Query("select r from Showroom r where r.user.id=?1")

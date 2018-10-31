@@ -27,7 +27,7 @@
 <!-- Menu and banner usually + "$") -->
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-flat-midnight-blue sombra"
-	style="z-index: 3; width: 260px;" id="mySidebar">
+	style="z-index: 3; width: 290px;" id="mySidebar">
 
 	<br>
 	<div class="w3-container w3-row">
@@ -94,7 +94,7 @@
 
 		<a href="showroom/list.do"
 		   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-diamond fa-fw"></i>  <spring:message
+				class="fa fa-shopping-bag fa-fw"></i>  <spring:message
 				code="label.showrooms" />
 		</a>
 		<a href="item/list.do"
@@ -114,11 +114,11 @@
 			</a>
 			<a href="chirp/actor/list.do"
 			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-					class="fa fa-podcast fa-fw"></i>  <spring:message code="label.chirp" />
+					class="fa fa-podcast fa-fw"></i>  <spring:message code="label.my.chirps" />
 			</a>
 			<a href="chirp/actor/stream.do"
 			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-					class="fa fa-bell-o fa-fw"></i>  <spring:message code="label.chirp" />
+					class="fa fa-bell-o fa-fw"></i>  <spring:message code="label.my.subscribed.chirps" />
 			</a>
 		</security:authorize>
 
@@ -132,7 +132,7 @@
 			</a>
 			<a href="tabooWord/administrator/list.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-cog fa-fw"></i>  <spring:message
+				class="fa fa-ban fa-fw"></i>  <spring:message
 					code="label.tabooWords" />
 			</a>
 			<!-- Trigger/Open The Modal -->

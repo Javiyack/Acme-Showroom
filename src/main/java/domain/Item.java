@@ -12,18 +12,16 @@ import java.util.Collection;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {@Index(columnList = "name, description, origin, destination")})
+@Table(indexes = {@Index(columnList = "SKU, title, description")})
 public class Item extends DomainEntity {
-
-    private String name;
+    /*store an auto-generated SKU, a
+    title, a description, a price, and whether it?s available or not.*/
+    private String SKU;
+    private String title;
     private String description;
-    private String origin;
-    private String destination;
-    private String difficulty;//pattern
+    private Boolean available;
 
-    private Double length;
-
-    private Collection<String> pictures;
+    private Double price;
 
     // Relationships
     private Showroom showroom;
@@ -40,54 +38,15 @@ public class Item extends DomainEntity {
         this.description = description;
     }
 
-    @NotBlank
-    @SafeHtml
-    public String getOrigin() {
-        return origin;
-    }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    @NotBlank
-    @SafeHtml
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-
-    @SafeHtml
-    @Pattern(regexp = "^(EASY|MEDIUM|DIFFICULT)$")
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
 
     @NotNull
-    public Double getLength() {
-        return length;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setLength(Double length) {
-        this.length = length;
-    }
-
-    @NotNull
-    @ElementCollection
-    public Collection<String> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(Collection<String> pictures) {
-        this.pictures = pictures;
+    public void setPrice(Double length) {
+        this.price = length;
     }
 
     @Valid
@@ -104,13 +63,29 @@ public class Item extends DomainEntity {
 
     @NotBlank
     @SafeHtml
-    public String getName() {
-        return this.name;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setTitle(final String name) {
+        this.title = name;
     }
 
 
+    @Pattern(regexp = "^\\d\\d([0][1-9]|[1][0-2])([012][1-9]|[3][01])-[A-Z]{4}\\d\\d$")
+    public String getSKU() {
+        return SKU;
+    }
+
+    public void setSKU(String SKU) {
+        this.SKU = SKU;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
 }

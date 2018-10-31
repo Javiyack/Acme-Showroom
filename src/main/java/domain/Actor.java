@@ -26,8 +26,8 @@ public abstract class Actor extends DomainEntity {
 	private String 		phone; 		
 	//Relationships
 	private UserAccount userAccount;
-	
-	
+
+
 	@SafeHtml
 	@NotNull
 	public String getName() {

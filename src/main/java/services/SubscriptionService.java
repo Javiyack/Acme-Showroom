@@ -35,12 +35,16 @@ public class SubscriptionService {
     //Create
     public Subscription create() {
         final Subscription result = new Subscription();
-        result.setSince(new Date());
         return result;
     }
 
     public Subscription save(Subscription foolow) {
         return subscriptionRepository.save(foolow);
+
+    }
+
+    public void delete(Subscription subscription) {
+        subscriptionRepository.delete(subscription);
 
     }
 
@@ -95,7 +99,7 @@ public class SubscriptionService {
         int followerId = actor.getId();
         Actor followed = actorService.findOne(userId);
         Subscription follow = subscriptionRepository.find(followerId, followed.getId());
-        Assert.isTrue(!followed.equals(actor), "msg.not.self.follow.block");
+        //Assert.isTrue(!followed.equals(actor), "msg.not.self.follow.block");
         if(follow!=null)
             subscriptionRepository.delete(follow);
         else{
@@ -108,6 +112,25 @@ public class SubscriptionService {
 
     public Subscription findOne(int followId) {
         return subscriptionRepository.findOne(followId);
+    }
+
+    public void subscribe(String topic) {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        topic=topic.trim();
+        if(!topic.isEmpty() && !subscriptionRepository.findTopicSubscriptionsNames(actor.getId()).contains(topic)){
+            Subscription subscription = this.create();
+            subscription.setSubscriber(actor);
+            subscription.setTopic(topic);
+            this.save(subscription);
+        }
+    }
+
+    public void unSubscribe(String topic) {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Subscription subscription = subscriptionRepository.findByTopic(topic, actor.getId());
+        this.delete(subscription);
     }
 
 }

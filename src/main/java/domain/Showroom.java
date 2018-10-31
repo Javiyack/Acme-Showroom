@@ -4,11 +4,11 @@ package domain;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -18,15 +18,10 @@ public class Showroom extends DomainEntity {
 
     private String name;
     private String description;
-
-    private Double length;      // En Km. tres decimales
-
-    private Collection<String> pictures;
+    private String logo;
 
     // Relationships
     private User user;
-    // Relationships
-
 
     @Valid
     @NotNull
@@ -61,23 +56,12 @@ public class Showroom extends DomainEntity {
 
 
     @NotNull
-    public Double getLength() {
-        return length;
+    @URL
+    public String getLogo() {
+        return logo;
     }
 
-    public void setLength(Double length) {
-        this.length = length;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
-
-    @NotNull
-    @ElementCollection
-    public Collection<String> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(Collection<String> pictures) {
-        this.pictures = pictures;
-    }
-
-
 }

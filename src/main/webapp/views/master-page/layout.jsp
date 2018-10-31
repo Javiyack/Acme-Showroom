@@ -74,7 +74,7 @@
 
 	<!-- !PAGE CONTENT! -->
 	<div class="w3-main"
-		style="margin-left: 260px; margin-top: 56px; padding: 0em 7% 0em 7%;">
+		style="margin-left: 290px; margin-top: 56px; padding: 0em 7% 0em 7%;">
 		<!-- Mensajes de error -->
 		<jstl:if test="${message != null}">
 			<li class="w3-display-container seccion  w3-red"

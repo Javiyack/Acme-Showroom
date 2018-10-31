@@ -36,6 +36,7 @@
                 <input type="submit" value=">">
             </form:form>
         </jstl:if>
+
         <legend>
             <spring:message code="label.actors"/>
         </legend>
@@ -48,23 +49,50 @@
             <acme:column property="${row.surname}, ${row.name}" title="label.name" sortable="true" rowUrl="${url}"/>
 
             <acme:column property=" " title="label.chirp.subscription"
-                         rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
+                         rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/subscription/actor/list.do"
                          icon="fa fa-check w3-xlarge w3-text-green"/>
         </display:table>
         <legend>
             <spring:message code="label.topics"/>
         </legend>
-        <display:table pagesize="${pageSize}"
-                       class="flat-table flat-table-1 w3-light-grey" name="topicSubscriptions"
-                       requestURI="${requestUri}" id="row2">
-            <jstl:set var="url" value="chirp/actor/list.do?subscriptionId=${row2.id}"/>
-            <acme:column property="${row2.topic.name}" title="label.topic" sortable="true" rowUrl="${url}"/>
 
-            <acme:column property=" " title="label.chirp.subscription"
-                         rowUrl="subscription/actor/topic/subcribe.do?topicId=${row2.id}"
-                         icon="fa fa-check w3-xlarge w3-text-green"/>
-        </display:table>
+        <form action="subscription/actor/topic/subscribe.do" method="POST">
+            <input list="topics" name="topic" placeholder="&#xf02b; Topic" class="font-awesome"
+                   id="topic"/>
+            <input type="submit" value="&plus;" class="font-awesome" style="">
+        </form>
     </div>
+
+    <datalist id="topics">
+        <option></option>
+        <jstl:forEach items="${topics}" var="topicItem">
+            <option>${topicItem}</option>
+        </jstl:forEach>
+    </datalist>
+    <jstl:set var="unsubscribeUrl" value="subscription/actor/topic/unsubscribe.do"/>
+
+
+    <display:table pagesize="${pageSize}"
+                   class="flat-table flat-table-1 w3-light-grey" name="topicSubscriptions"
+                   requestURI="${requestUri}" id="row2">
+        <spring:message code="label.topic" var="label"/>
+        <display:column title="${label}">
+            <form action="chirp/actor/topic/list.do" method="POST">
+                <input type="hidden" name="topic" value="${row2.topic}">
+                <input type="submit" value="${row2.topic}" class="font-awesome flat">
+            </form>
+
+        </display:column>
+        <spring:message code="label.chirp.subscription" var="labelSubscription"/>
+        <display:column title="${labelSubscription}">
+    <form action="subscription/actor/topic/unsubscribe.do" method="POST">
+        <input type="hidden" name="topic" value="${row2.topic}">
+            <input type="submit" value="&#xf00c;" class="font-awesome flat w3-text-green w3-xlarge">
+    </form>
+        </display:column>
+
+    </display:table>
+</div>
 </div>
 <br/>
 <acme:button url="/"

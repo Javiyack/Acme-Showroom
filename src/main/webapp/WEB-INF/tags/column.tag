@@ -31,6 +31,7 @@
 <%@ attribute name="style" required="false"%>
 <%@ attribute name="css" required="false"%>
 <%@ attribute name="rowUrl" required="false"%>
+<%@ attribute name="onclick" required="false"%>
 <%@ attribute name="icon" required="false"%>
 
 <%-- Definition --%>
@@ -41,9 +42,11 @@
 <spring:message code="${title }" var="titleVar" />
 
 <jstl:if test="${rowUrl==null}">
+    <div onclick="${onclick}">
     <display:column property="${property }" title="${ titleVar}"
-                    sortable="${sortable }" class="${css}" format="${formatVar}" style="${style}">
+                    sortable="${sortable }" class="${css}" format="${formatVar}" style="${style}" >
     </display:column>
+    </div>
 </jstl:if>
 <jstl:if test="${rowUrl!=null}">
     <display:column  title="${ titleVar}"

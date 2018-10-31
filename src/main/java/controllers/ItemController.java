@@ -17,6 +17,7 @@ import services.ActorService;
 import services.ItemService;
 import services.ShowroomService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +35,45 @@ public class ItemController extends AbstractController {
     private ItemService itemService;
     @Autowired
     private ActorService actorService;
-    // Constructors -----------------------------------------------------------
+
+    // List ------------------------------------------------------------------
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list(Integer showroomId, String showroomName, final Integer pageSize) {
+        ModelAndView result;
+        result = new ModelAndView("item/list");
+        final Collection<Item> items;
+        if(showroomId!=null){
+            items = this.itemService.findByShowroomId(showroomId);
+            result.addObject("showroomId", showroomId);
+            result.addObject("showroomName", showroomName);
+        }
+        else
+            items = this.itemService.findAll();
+        result.addObject("items", items);
+        result.addObject("requestUri", "item/list.do");
+        result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        return result;
+    }
+    // List ------------------------------------------------------------------
+    // List ------------------------------------------------------------------
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public ModelAndView list(HttpServletRequest req) {
+        ModelAndView result;
+        final Collection<Item> items;
+        result = new ModelAndView("item/list");
+        if(!req.getParameter("showroomId").isEmpty()){
+            items = this.itemService.findByKeyWordAndShowroom(req.getParameter("word").trim(), Integer.valueOf(req.getParameter("showroomId")));
+            result.addObject("showroomId", req.getParameter("showroomId"));
+            result.addObject("showroomName", req.getParameter("showroomName"));
+        }
+        else
+            items = this.itemService.findByKeyWord(req.getParameter("word").trim());
+        result.addObject("items", items);
+        result.addObject("requestUri", "item/list.do");
+        result.addObject("word", req.getParameter("word"));
+        result.addObject("pageSize", (req.getParameter("pageSize") != null) ? req.getParameter("pageSize") : 5);
+        return result;
+    }
 
     public ItemController() {
         super();

@@ -51,45 +51,29 @@
                         <spring:message code="label.showroom"/>
                     </legend>
                     <div class="row">
-                        <div class="col-25">
+                        <div class="col-75">
                             <acme:textbox code="label.name" path="name" readonly="${readonly}"/>
-                            <acme:textbox code="label.length" path="length" readonly="${readonly}"/>
                             <acme:textarea code="label.description" path="description" readonly="${readonly}"
                                            css="formTextArea w3-text-black"/>
-                            <acme:textarea code="label.pictures" path="pictures"
-                                           readonly="${readonly}" css="collection w3-text-black"
-                                           id="fotosPath"/>
+                            <acme:textbox code="label.logo.url" path="logo" readonly="${readonly}" id="fotosPath"/>
                         </div>
-                        <div class="col-75" >
-                            <h2>
-                                Gallery
-                            </h2>
-                            <hr>
+                        <div class="col-25">
                             <!-- Carrusel se fotos  -->
-                            <div class="carrusel">
-                                <div class="slideshow-container" id="carrusel">
-                                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                                    <jstl:forEach items="${showroom.pictures}" var="picture">
-                                        <jstl:set var="count" scope="application" value="${count + 1}"/>
-                                        <div class="mySlides">
-                                            <a href="${picture}"> <img src="${picture}" class="w3-border w3-card-4 marco iButton"
-                                                 style="width: 100%"></a>
-                                        </div>
-                                    </jstl:forEach>
-                                </div>
+                            <div class="">
+                                <spring:message code="label.logo"/>
                             </div>
-                            <br>
-
-                            <div id="fotos" style="margin-bottom: 0.2em;">
-                                <jstl:set var="count" scope="application" value="${0}"/>
-                                <jstl:forEach items="${showroom.pictures}" var="picture">
-                                    <jstl:set var="count" scope="application" value="${count + 1}"/>
-                                    <img src="${picture}" class="tableImg iButton" onclick="currentSlide(${count})">
-                                </jstl:forEach>
+                            <div class="carrusel" style="background-color: black;">
+                                <div class="slideshow-container" id="carrusel">
+                                    <jstl:if test="${showroom.logo!=null}">
+                                        <div class="mySlides">
+                                            <img src="${showroom.logo}" style="width: 100%">
+                                        </div>
+                                    </jstl:if>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <hr>

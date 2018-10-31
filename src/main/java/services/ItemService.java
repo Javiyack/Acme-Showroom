@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import repositories.ItemRepository;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -38,6 +40,28 @@ public class ItemService {
         Assert.isTrue(actor instanceof User, "msg.not.owned.block");
         Item result= new Item();
         result.setShowroom(showroom);
+        result.setSKU(this.generateSKU());
+        return result;
+    }
+
+    private String generateSKU() {
+        String result ="";
+        Calendar calendar = Calendar.getInstance();
+        result += (("" + calendar.get(Calendar.YEAR) % 100).length() == 2) ? calendar.get(Calendar.YEAR) % 100
+                : "0" + calendar.get(Calendar.YEAR) % 100;
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        result += (("" + mes).length() == 2) ? mes : "0" + mes;
+        result += (("" + calendar.get(Calendar.DAY_OF_MONTH)).length() == 2) ? calendar.get(Calendar.DAY_OF_MONTH)
+                : "0" + calendar.get(Calendar.DAY_OF_MONTH);
+        result += "-";
+        String uppercaseLetters = "ABCEFGHYJKLMNÑOPQRSTUVWXYZ";
+        Random rnd = new Random();
+        for (int i = 0; i < 4; i++) {
+            result += uppercaseLetters.charAt(rnd.nextInt(26));
+        }
+        result += rnd.nextInt(10);
+        result += rnd.nextInt(10);
+
         return result;
     }
 
@@ -73,7 +97,7 @@ public class ItemService {
     }
 
     public Collection<Item> findByKeyWord(String keyWord) {
-        return itemRepository.findByIndexedKeyWord(keyWord);
+        return itemRepository.findByKeyWord(keyWord);
     }
 
 
@@ -99,5 +123,10 @@ public class ItemService {
     public Collection<Item> findByShowroomId(Integer showroomId) {
 
         return itemRepository.findByShowroomId(showroomId);
+    }
+
+    public Collection<Item> findByKeyWordAndShowroom(String word, Integer showroomId) {
+
+        return itemRepository.findByKeyWordAndShowroom(word, showroomId );
     }
 }

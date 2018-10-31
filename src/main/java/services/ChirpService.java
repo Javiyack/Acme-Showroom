@@ -2,7 +2,6 @@ package services;
 
 import domain.Actor;
 import domain.Chirp;
-import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +20,7 @@ public class ChirpService {
     //Services
     @Autowired
     private ActorService actorService;
-    @Autowired
-    private TopicService topicService;
+
     //Constructor
     public ChirpService() {
         super();
@@ -43,16 +41,14 @@ public class ChirpService {
         Assert.notNull(actor, "msg.not.logged.block");
         chirp.setActor(actor);
 
-        if(chirp.getId()==0) {
-            if (chirp.getTopic() != null)
-                if (!topicService.findAll().contains(chirp.getTopic()))
-                    topicService.save(chirp.getTopic());
+        if (chirp.getId() == 0) {
+            chirp.setTopic(chirp.getTopic().trim());
             chirp = chirpRepository.save(chirp);
         }
         return chirp;
     }
 
-    public Collection<Chirp> findAll() {
+    public Collection <Chirp> findAll() {
         return chirpRepository.findAll();
     }
 
@@ -60,12 +56,21 @@ public class ChirpService {
         return chirpRepository.findOne(chirpId);
     }
 
-    public Collection<Chirp> findByLoggedActor() {
+    public Collection <Chirp> findByLoggedActor() {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         return chirpRepository.findByActor(actor.getId());
     }
-    public Collection<Chirp> findByUserId(Integer UserId) {
+
+    public Collection <Chirp> findByUserId(Integer UserId) {
         return chirpRepository.findByActor(UserId);
+    }
+
+    public Collection <String> findAllTopics() {
+        return chirpRepository.findAllTopics();
+    }
+
+    public Collection<Chirp> findByTopic(String topic) {
+        return chirpRepository.findByTopic(topic);
     }
 }

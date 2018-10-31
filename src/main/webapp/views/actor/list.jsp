@@ -65,12 +65,12 @@
                 </jstl:if>
                 <jstl:if test="${!userIsFollowedMap[row]}">
                     <acme:column property=" " title="label.chirp.subscription" sortable="true"
-                                 rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
+                                 rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
                                  icon="fa fa-check w3-xlarge w3-text-gray css-uncheck"/>
                 </jstl:if>
                 <jstl:if test="${userIsFollowedMap[row]}">
                     <acme:column property=" " title="label.chirp.subscription" sortable="true"
-                                 rowUrl="subscription/actor/subcribe.do?actorId=${row.id}"
+                                 rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
                                  icon="fa fa-check w3-xlarge w3-text-green"/>
                 </jstl:if>
 
