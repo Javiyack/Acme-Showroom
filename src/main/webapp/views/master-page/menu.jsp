@@ -123,12 +123,20 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('USER')">
+			<a href="request/user/created/list.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-shopping-cart fa-fw"></i>  <spring:message code="label.requests" />
+			</a>
+			<a href="request/user/received/list.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-euro fa-fw"></i>  <spring:message code="label.sales" />
+			</a>
 
 		</security:authorize>
 		<security:authorize access="hasRole('ADMINISTRATOR')">
 			<a href="configuration/administrator/edit.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-cog fa-fw"></i>  Settings
+				class="fa fa-cog fa-fw"></i>  <spring:message code="label.configuration" />
 			</a>
 			<a href="tabooWord/administrator/list.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
@@ -160,7 +168,7 @@
 						</p>
 					</div>
 					<div class="modal-footer">
-						<h3>Modal Footer</h3>
+						<h3></h3>
 					</div>
 				</div>
 

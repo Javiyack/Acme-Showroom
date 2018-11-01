@@ -58,6 +58,7 @@ public class RequestUserController extends AbstractController {
         result.addObject("requests", requests);
         result.addObject("requestUri", "request/user/created/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        result.addObject("legend", "label.request.created");
         return result;
     }
 
@@ -71,6 +72,7 @@ public class RequestUserController extends AbstractController {
         result.addObject("requests", requests);
         result.addObject("requestUri", "request/user/received/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        result.addObject("legend", "label.request.received");
         return result;
     }
 
@@ -113,7 +115,6 @@ public class RequestUserController extends AbstractController {
         return result;
     }
 
-
     // Save mediante Post ---------------------------------------------------
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
@@ -127,7 +128,10 @@ public class RequestUserController extends AbstractController {
                 request = this.requestService.save(request);
                 result = this.redirectModel(request);
             } catch (Throwable oops) {
-                if (oops.getMessage().startsWith("msg.")) {
+                if (oops.getCause().getCause() != null
+                        && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+                    result = this.createEditModelAndView(request, "msg.duplicate.request");
+                else if (oops.getMessage().startsWith("msg.")) {
                     return createMessageModelAndView(oops.getLocalizedMessage(), "/request/user/edit.do?requestId=" + request.getId());
                 } else {
                     return this.createMessageModelAndView("msg.commit.error", "/request/user/edit.do?requestId=" + request.getId());

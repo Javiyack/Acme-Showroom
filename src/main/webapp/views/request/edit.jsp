@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-50">
                 <acme:textbox code="label.description" path="item.description"
-                              readonly="${true}"/>
+                              readonly="true"/>
             </div>
             <div class="col-50">
                 <acme:textbox code="label.status" path="status"
@@ -61,55 +61,38 @@
         <hr>
         <div class="row">
             <div class="col-50">
-                <h3>Billing Address</h3>
-                <label for="fname"><i class="fa fa-user"></i> Name</label>
-                <input type="text" id="fname" name="firstname" placeholder="John M." value="${request.user.name}" readonly>
-                <label for="fname"><i class="fa fa-user"></i> Surname</label>
-                <input type="text" id="fname" name="surname" placeholder="Doe" value="${request.user.surname}" readonly>
-                <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                <input type="text" id="email" name="email" placeholder="john@example.com" value="${request.user.email}" readonly>
-                <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                <input type="text" id="adr" name="address" placeholder="542 W. 15th Street"
-                       value="${request.user.address}" readonly>
-                <label for="phone"><i class="fa fa-phone"></i> Phone</label>
-                <input type="text" id="phone" name="phone" placeholder="666666666" value="${request.user.phone}" readonly>
+                <h3><spring:message code="label.billing"/></h3>
+                <acme:textbox code="label.name" path="user.name" readonly="true" icon="fa fa-user" placeholder=""/>
+                <acme:textbox code="label.surname" path="user.surname" readonly="true" icon="fa fa-user"/>
+                <acme:textbox code="label.email" path="user.email" readonly="true" icon="fa fa-envelope"/>
+                <acme:textbox code="label.address" path="user.address" readonly="true" icon="fa fa-address-card-o"/>
+                <acme:textbox code="label.phone" path="user.phone" readonly="true" icon="fa fa-phone"/>
 
             </div>
             <div class="col-50">
-                <h3>Payment</h3>
-                <label for="fname">Accepted Cards</label>
                 <div class="icons-container">
-                    <i class="fa fa-cc-visa" style="color:navy;"></i>
-                    <i class="fa fa-cc-amex" style="color:blue;"></i>
-                    <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                    <i class="fa fa-cc-discover" style="color:orange;"></i>
+                    <h3><spring:message code="label.payment"/>   <i class="fa fa-cc-visa" style="color:navy;"></i>
+                        <i class="fa fa-cc-amex" style="color:blue;"></i>
+                        <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                        <i class="fa fa-cc-discover" style="color:orange;"></i></h3>
+
                 </div>
-                <label for="cname">Brand Name</label>
-                <input type="text" id="cname" name="creditCard.brandName" placeholder="John More Doe" path="creditCard.brandName"
-                       <jstl:if test="${!creditCardNeeded}">readonly</jstl:if> value="${request.creditCard.brandName}" >
-                <form:errors path="creditCard.brandName" cssClass="error" /><br>
-                <label for="cname">Name on Card</label>
-                <input type="text" id="cname" name="creditCard.holderName" value="${request.creditCard.holderName}"
-                       placeholder="John More Doe" <jstl:if test="${!creditCardNeeded}">readonly</jstl:if>>
-                <form:errors path="creditCard.holderName" cssClass="errorCC" /><br>
-                <label for="ccnum">Credit card number</label>
-                <input type="text" id="ccnum" name="creditCard.cardNumber" value="${request.creditCard.cardNumber}" placeholder="1111-2222-3333-4444" <jstl:if test="${!creditCardNeeded}">readonly</jstl:if>>
-                <form:errors path="creditCard.cardNumber" cssClass="errorCC" /><br>
+                <acme:textbox code="label.cc.brandName" path="creditCard.brandName" readonly="${!creditCardNeeded}"/>
+                <acme:textbox code="label.cc.holderName" path="creditCard.holderName" readonly="${!creditCardNeeded}"/>
+                <acme:textbox code="label.cc.cardNumber" path="creditCard.cardNumber" readonly="${!creditCardNeeded}"
+                              placeholder="1111-2222-3333-4444"/>
                 <div class="row">
                     <div class="col-33">
-                        <label for="expmonth">Exp Month</label>
-                        <input type="text" id="expmonth" name="creditCard.expirationMonth" value="${request.creditCard.expirationMonth}" placeholder="September" <jstl:if test="${!creditCardNeeded}">readonly</jstl:if>">
-                        <form:errors path="creditCard.expirationMonth" cssClass="errorCC" /><br>
+                        <acme:textbox code="label.cc.expirationMonth" path="creditCard.expirationMonth"
+                                      readonly="${!creditCardNeeded}" placeholder="01-12"/>
                     </div>
                     <div class="col-33">
-                        <label for="expyear">Exp Year</label>
-                        <input type="text" id="expyear" name="creditCard.expirationYear" value="${request.creditCard.expirationYear}" placeholder="2018" <jstl:if test="${!creditCardNeeded}">readonly</jstl:if>>
-                        <form:errors path="creditCard.expirationYear" cssClass="errorCC" /><br>
+                        <acme:textbox code="label.cc.expirationYear" path="creditCard.expirationYear"
+                                      readonly="${!creditCardNeeded}" placeholder="00-99"/>
                     </div>
                     <div class="col-33">
-                        <label for="cvv">CVV</label>
-                        <input type="text" id="cvv" name="creditCard.CVV" value="${request.creditCard.CVV}" placeholder="352" <jstl:if test="${!creditCardNeeded}">readonly</jstl:if>>
-                        <form:errors path="creditCard.CVV" cssClass="errorCC" /><br>
+                        <acme:textbox code="label.cc.CVV" path="creditCard.CVV" readonly="${!creditCardNeeded}"
+                                      placeholder="000-999"/>
                     </div>
                 </div>
             </div>

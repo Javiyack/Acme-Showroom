@@ -90,6 +90,13 @@
             <jstl:if test="${!owns}">
                 <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
                 <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
+
+            </jstl:if>
+            <jstl:if test="${row.available}">
+                <jstl:set var="availableIcon" value="fa fa-check-square-o w3-xlarge"/>
+            </jstl:if>
+            <jstl:if test="${!row.available}">
+                <jstl:set var="availableIcon" value="fa fa-square-o w3-xlarge"/>
             </jstl:if>
             <jstl:if test="${!included}">
                 <acme:column property="${row.showroom.name}" title="label.showroom" rowUrl="${url}"/>
@@ -98,7 +105,7 @@
             <acme:column property="${row.title}" title="label.name" rowUrl="${url}"/>
             <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
             <acme:column property="${row.price}" title="label.price" rowUrl="${url}"/>
-            <acme:column property="${row.available}" title="label.available" rowUrl="${url}"/>
+            <acme:column property="${row.available}" icon="${availableIcon}" title="label.available" rowUrl="${url}"/>
             <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
         </display:table>
     </div>
