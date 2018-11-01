@@ -56,7 +56,7 @@ public class RequestUserController extends AbstractController {
 
         result = new ModelAndView("request/user/list");
         result.addObject("requests", requests);
-        result.addObject("requestUri", "request/user/list.do");
+        result.addObject("requestUri", "request/user/created/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
@@ -69,7 +69,7 @@ public class RequestUserController extends AbstractController {
 
         result = new ModelAndView("request/user/list");
         result.addObject("requests", requests);
-        result.addObject("requestUri", "request/user/list.do");
+        result.addObject("requestUri", "request/user/received/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
