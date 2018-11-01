@@ -39,6 +39,7 @@
 		<value>/views/item/messages</value>
 		<value>/views/chirp/messages</value>
 		<value>/views/subscription/messages</value>
+		<value>/views/request/messages</value>
 		<value>/views/comment/messages</value>
 
 

@@ -40,7 +40,7 @@
     </jstl:if>
     <jstl:if test="${!chirps.isEmpty()}">
 
-        <form:form action="${requestUri}" method="POST">
+        <form:form action="${requestUri}" method="GET">
             <spring:message code="pagination.size"/>
             <input hidden="true" name="word" value="${word}">
             <input hidden="true" name="topic" value="${topic}">

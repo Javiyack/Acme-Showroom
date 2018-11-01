@@ -223,6 +223,7 @@ public class ActorService {
             actor.setSurname(actorForm.getSurname());
             actor.setEmail(actorForm.getEmail());
             actor.setPhone(actorForm.getPhone());
+            actor.setAddress(actorForm.getAddress());
 
             Assert.isTrue(actorForm.getAccount().getPassword().equals(actorForm.getAccount().getConfirmPassword()),
                     "msg.userAccount.repeatPassword.mismatch");
@@ -239,7 +240,7 @@ public class ActorService {
                 actor.setSurname(actorForm.getSurname());
                 actor.setEmail(actorForm.getEmail());
                 actor.setPhone(actorForm.getPhone());
-
+                actor.setAddress(actorForm.getAddress());
             }
             // Si ha cambiado algún parámetro del Authority (Usuario, password)
             // Si ha cambiado el nombre de usuario

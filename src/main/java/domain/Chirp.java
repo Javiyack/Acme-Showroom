@@ -64,7 +64,7 @@ public class Chirp extends DomainEntity implements Comparable<Chirp>{
 
 
     @SafeHtml
-    @Size(min = 2, max = 16)
+    @Size(max = 16)
     public String getTopic() {
         return topic;
     }

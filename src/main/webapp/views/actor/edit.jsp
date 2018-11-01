@@ -50,6 +50,12 @@
 
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-100">
+                            <acme:textbox code="label.address" path="address"
+                                          readonly="${!edition}" />
+                        </div>
+                    </div>
 
                     <jstl:if
                             test="${actorAuthority=='AGENT' or actorAuthority=='AUDITOR' }">
@@ -67,8 +73,9 @@
                                                readonly="${!edition}" id="birthdate"/>
                                 </div>
                                 <div class="col-50">
+                                    <spring:message code="placeholder.genere" var="placeholder"/>
                                     <acme:textbox code="label.genere" path="genere"
-                                                  readonly="${!edition}" id="genere"/>
+                                                  readonly="${!edition}" id="genere" placeholder="${placeholder}"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -160,7 +167,7 @@
                 </jstl:if>
             </div>
         </div>
-        <jstl:if test="${display}">
+        <jstl:if test="${display and actorAuthority eq 'USER'}">
             <!-- Showrooms -->
 
             <jstl:set value="${actorForm.id}" var="userId"/>

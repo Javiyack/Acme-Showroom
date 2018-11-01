@@ -72,6 +72,7 @@ public class Item extends DomainEntity {
     }
 
 
+    @NotBlank
     @Pattern(regexp = "^\\d\\d([0][1-9]|[1][0-2])([012][1-9]|[3][01])-[A-Z]{4}\\d\\d$")
     public String getSKU() {
         return SKU;

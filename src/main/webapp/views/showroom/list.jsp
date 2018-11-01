@@ -33,18 +33,21 @@
         <form:form action="${requestUri}" method="POST">
 
             <div class="row">
-                <div class="col-75">
-                    <spring:message code="pagination.size"/>
-                    <input type="number" name="pageSize" min="1" max="100"
-                           value="${pageSize}">
-                    <input type="submit" value=">">
-                </div>
-                <div class="col-25">
+                <div class="col-50">
                     <spring:message code="label.search" var="placeholder"/>
                     <input name="word" value="${word}" placeholder="&#xf002; ${placeholder}"
-                           class="font-awesome toRight">
+                           class="font-awesome">
                 </div>
+                <div class="col-50">
+                       <p class="toRight">
+                           <spring:message code="pagination.size"/>
+                           <input type="number" name="pageSize" min="1" max="100"
+                                  value="${pageSize}">
+                           <input type="submit" value=">">
 
+                       </p>
+
+                </div>
             </div>
         </form:form>
     </jstl:if>

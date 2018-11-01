@@ -45,9 +45,7 @@
             <jstl:out value="${showroomName}"/>
         </jstl:if>
     </legend>
-
     <jstl:if test="${!items.isEmpty()}">
-
         <jstl:if test="${included}">
             <a href="item/list.do?showroomId=${showroom.id}&showroomName=${showroom.name}"
                class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
@@ -58,23 +56,24 @@
             <jstl:if test="${!included}">
                 <form:form action="${requestUri}" method="POST">
                 <div class="row">
-                    <div class="col-75">
-                        <spring:message code="pagination.size"/>
-                        <input hidden="true" name="showroomId" value="${showroomId}">
-                        <input hidden="true" name="showroomName" value="${showroomName}">
-                        <input type="number" name="pageSize" min="1" max="100"
-                               value="${pageSize}">
-                        <input type="submit" value=">">
-                    </div>
-                    <div class="col-25">
+                    <div class="col-50">
                         <spring:message code="label.search" var="placeholder"/>
                         <input name="word" value="${word}" placeholder="&#xf002; ${placeholder}"
-                               class="font-awesome toRight">
+                               class="font-awesome">
+                    </div>
+                    <div class="col-50">
+
+                        <p class="toRight"> <spring:message code="pagination.size"/>
+                            <input hidden="true" name="showroomId" value="${showroomId}">
+                            <input hidden="true" name="showroomName" value="${showroomName}">
+                            <input type="number" name="pageSize" min="1" max="100"
+                                   value="${pageSize}">
+                            <input type="submit" value=">">
+                        </p>
 
                     </div>
 
                 </div>
-
             </form:form>
         </jstl:if>
     </jstl:if>
@@ -92,7 +91,6 @@
                 <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
                 <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
             </jstl:if>
-
             <jstl:if test="${!included}">
                 <acme:column property="${row.showroom.name}" title="label.showroom" rowUrl="${url}"/>
             </jstl:if>
@@ -102,7 +100,6 @@
             <acme:column property="${row.price}" title="label.price" rowUrl="${url}"/>
             <acme:column property="${row.available}" title="label.available" rowUrl="${url}"/>
             <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
-
         </display:table>
     </div>
     <jstl:if test="${showroom==null}">
@@ -110,8 +107,7 @@
     </jstl:if>
     <jstl:if test="${showroom!=null and rol eq 'user'}">
             <spring:message var="msg" code="msg.save.first"/>
-            <jstl:set var="url"
-                      value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
+            <jstl:set var="url" value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
             <p>
                 <i class="fa fa-plus-square w3-xlarge"
                    onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>

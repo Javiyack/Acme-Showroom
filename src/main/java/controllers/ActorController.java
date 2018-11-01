@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import security.Authority;
 import services.ActorService;
 import services.ShowroomService;
 import services.UserService;
@@ -43,15 +44,20 @@ public class ActorController extends AbstractController {
 
         final Actor actor;
         actor = this.actorService.findOneIfActive(actorId);
-        Collection <Showroom> showrooms = showroomService.findByUserId(actorId);
-        result = new ModelAndView("actor/display");
-        result.addObject("actorForm", actor);
-        result.addObject("actorAuthority", actor.getUserAccount().getAuthorities().iterator().next().getAuthority());
-        result.addObject("display", true);
-        result.addObject("showrooms", showrooms);
-        result.addObject("display", true);
-        result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        String authority = actor.getUserAccount().getAuthorities().iterator().next().getAuthority();
+        if(authority.equals(Authority.USER)){
+            Collection <Showroom> showrooms = showroomService.findByUserId(actorId);
+            result = new ModelAndView("actor/display");
+            result.addObject("actorForm", actor);
+            result.addObject("actorAuthority", authority);
+            result.addObject("display", true);
+            result.addObject("showrooms", showrooms);
+            result.addObject("display", true);
+            result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
 
+        }else {
+            result = new ModelAndView("redirect:/");
+        }
 
         return result;
     }

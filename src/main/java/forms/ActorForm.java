@@ -3,6 +3,7 @@ package forms;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -16,7 +17,8 @@ public class ActorForm {
 	private String name;
 	private String surname;
 	private String email;
-	private String phone; 
+	private String phone;
+	private String address;
 	private String username;
 	private String password;
 	private String newPassword;
@@ -44,7 +46,8 @@ public class ActorForm {
 		this.setSurname(actor.getSurname());
 		this.setEmail(actor.getEmail());
 		this.setPhone(actor.getPhone());
-		
+		this.setAddress(actor.getAddress());
+
 		this.setAccount(new AccountForm(actor));
 		this.setAuthority(this.getAccount().getAuthority());
 		this.setUsername(actor.getUserAccount().getUsername());
@@ -117,6 +120,7 @@ public class ActorForm {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Size(min = 5,max = 32)
 	public String getName() {
 		return this.name;
 	}
@@ -127,6 +131,7 @@ public class ActorForm {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Size(min = 5,max = 32)
 	public String getSurname() {
 		return this.surname;
 	}
@@ -173,4 +178,14 @@ public class ActorForm {
 		this.version = version;
 	}
 
+	@SafeHtml
+	@NotBlank
+	@Size(min = 5,max = 32)
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

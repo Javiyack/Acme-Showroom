@@ -10,8 +10,7 @@ public class Constant {
 	public enum requestStatus {
 		PENDING,
 		REJECTED,
-		ACCEPTED,
-		CANCELLED
+		ACCEPTED
 	}
 
 	public enum difficultyLevels {

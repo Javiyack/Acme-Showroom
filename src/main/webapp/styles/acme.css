@@ -982,6 +982,10 @@ label {
 	padding: 7px 0;
 	font-size: 24px;
 }
+.icons-container {
+	margin-bottom: 6px;
+	font-size: 24px;
+}
 
 .btn {
 	background-color: #4CAF50;

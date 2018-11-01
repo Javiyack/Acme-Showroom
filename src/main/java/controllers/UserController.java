@@ -65,7 +65,12 @@ public class UserController extends AbstractController {
     public ModelAndView create() {
         ModelAndView result;
         final UserForm registerForm = new UserForm();
-        result = this.createEditModelAndView(registerForm, null);
+        result = new ModelAndView("actor/create");
+        result.addObject("actorForm", registerForm);
+        result.addObject("actorAuthority", Authority.USER);
+        result.addObject("requestUri", "user/create.do");
+        result.addObject("edition", true);
+        result.addObject("creation", registerForm.getId() == 0);
         return result;
     }
 
@@ -137,7 +142,7 @@ public class UserController extends AbstractController {
 
     protected ModelAndView createEditModelAndView(final UserForm model, final String message) {
         final ModelAndView result;
-        result = new ModelAndView("actor/create");
+        result = new ModelAndView("actor/edit");
         result.addObject("actorForm", model);
         result.addObject("actorAuthority", Authority.USER);
         result.addObject("requestUri", "user/create.do");

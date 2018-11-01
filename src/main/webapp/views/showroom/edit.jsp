@@ -83,6 +83,7 @@
                         <acme:submit name="save" code="label.save"/>
                     </jstl:if>
                     <acme:button text="label.back" url="${backUrl}"/>
+                    <acme:button text="label.user" url="actor/display.do?actorId=${showroom.user.id}"/>
                 </div>
             </div>
         </div>

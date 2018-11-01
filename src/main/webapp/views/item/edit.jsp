@@ -76,6 +76,8 @@
                     <acme:submit name="save" code="label.save"
                                  css="formButton toLeft"/>
                 </jstl:if>
+                <acme:button text="label.user" url="actor/display.do?actorId=${item.showroom.user.id}"/>
+                <acme:button text="label.request" url="request/user/create.do?itemId=${item.id}" />
             </div>
         </div>
 

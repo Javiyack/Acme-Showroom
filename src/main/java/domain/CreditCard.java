@@ -1,5 +1,6 @@
 package domain;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 
@@ -44,9 +45,10 @@ public class CreditCard {
         this.brandName = brandName;
     }
 
+    //@Pattern(regexp = "^\\d{16}$")
     @NotBlank
     @SafeHtml
-    @Pattern(regexp = "^\\d{16}$")
+    @CreditCardNumber
     public String getCardNumber() {
         return cardNumber;
     }
