@@ -13,6 +13,22 @@ $(document).ready(function () {
 
 });
 
+
+function validatePhone(msg) {
+    var str = document.getElementById("phone").value;
+
+    //look for "Hello"
+    var patt = /^([+][1-9]\d{0,2}[ ]?[(][1-9]\d{0,2}[)][ ]?\d{4,32})$|^([+][0-9]{1,3}[ ]\d{4,32})$|^(\d{4,32})$/g;
+    var matchPatern = patt.test(str);
+    if(!matchPatern){
+        if (confirm(msg)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 function selectedCheck(element) {
     switch (element.value) {
         case 'ADMINISTRATOR':
@@ -72,6 +88,7 @@ function copyText(from, to) {
 
 
 }
+
 function ajaxTopicCreate(element, contextPath) {
     var name = element.value;
     var url = contextPath + "/asynchronous/topic/create.do";
@@ -87,6 +104,7 @@ function ajaxTopicCreate(element, contextPath) {
         }
     });
 }
+
 function ajaxSearch(element, contextPath) {
     id = element.value;
     url = contextPath + "/jquery/hostCheck.do";
@@ -221,9 +239,10 @@ function askSubmission(msg, form) {
     if (confirm(msg))
         form.submit();
 }
+
 function submitForm(form) {
     if (confirm("Si?"))
-    form.submit();
+        form.submit();
 }
 
 function relativeRedir(loc) {

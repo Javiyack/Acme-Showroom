@@ -3,6 +3,7 @@ package domain;
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -25,6 +26,12 @@ public class CreditCard {
 
     private String CVV;
 
+    public static final String	VISA			= "VISA";
+    public static final String	MASTERCARD	= "MASTER-CARD";
+    public static final String	DINERS	= "DINERS";
+    public static final String	AMEX	= "AMEX";
+
+
     @NotBlank
     @SafeHtml
     public String getHolderName() {
@@ -37,6 +44,7 @@ public class CreditCard {
 
     @NotBlank
     @SafeHtml
+    @Pattern(regexp = "^(VISA|MASTER-CARD|DINNERS|AMEX)$")
     public String getBrandName() {
         return brandName;
     }

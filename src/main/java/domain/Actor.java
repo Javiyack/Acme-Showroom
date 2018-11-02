@@ -63,7 +63,7 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@SafeHtml
-	@Pattern(regexp = "^\\+?\\d{3,14}$")
+	@Pattern(regexp = "^([+][1-9]\\d{0,2}[ ]?[(][1-9]\\d{0,2}[)][ ]?\\d{4,32})$|^([+][0-9]{1,3}[ ]\\d{4,32})$|^(\\d{4,32})$")
 	public String getPhone() {
 		return this.phone;
 	}

@@ -3,6 +3,7 @@ package controllers.User;
 
 import controllers.AbstractController;
 import domain.Actor;
+import domain.CreditCard;
 import domain.Request;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import services.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Controller
@@ -84,6 +87,7 @@ public class RequestUserController extends AbstractController {
         try {
             Request request = requestService.create(itemId);
             result = this.createEditModelAndView(request);
+
         }catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
                 return createMessageModelAndView(oops.getLocalizedMessage(), "/showroom/list.do");
@@ -166,6 +170,15 @@ public class RequestUserController extends AbstractController {
         result.addObject("requestUri", "request/user/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);
+        String[] states = {Request.ACCEPTED, Request.PENDING, Request.REJECTED};
+        Collection<String> estados = Arrays.asList(states);
+        result.addObject("states", states);
+        result.addObject("estados", estados);
+        String[] acceptedCreditCards = {CreditCard.AMEX, CreditCard.VISA, CreditCard.DINERS, CreditCard.MASTERCARD};
+        Collection<String> validCreditCards = Arrays.asList(acceptedCreditCards);
+        result.addObject("acceptedCreditCards", acceptedCreditCards);
+        result.addObject("validCreditCards", validCreditCards);
+
         result.addObject("message", message);
         return result;
     }

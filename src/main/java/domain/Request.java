@@ -27,6 +27,10 @@ public class Request extends DomainEntity {
     private String status;
     private CreditCard creditCard;
 
+    public static final String	PENDING			= "PENDING";
+    public static final String	ACCEPTED	    = "ACCEPTED";
+    public static final String	REJECTED	    = "REJECTED";
+
     //Constructor
     public Request() {
         super();

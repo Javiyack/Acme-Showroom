@@ -42,7 +42,7 @@ public class RequestService {
         }else{
             Assert.isTrue(result.getUser().equals((User)actor) || result.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
             String status = result.getStatus();
-            if(!status.equals(Constant.requestStatus.PENDING)) // Aqui impedimos el cambio de estado una vez aceptado o rechazado
+            if(!status.equals(Constant.requestStatus.PENDING.toString())) // Aqui impedimos el cambio de estado una vez aceptado o rechazado
                 request.setStatus(status);
         }
         if(request.getItem().getPrice()>0)

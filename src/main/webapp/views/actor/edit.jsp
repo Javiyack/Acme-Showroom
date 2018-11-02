@@ -14,7 +14,9 @@
 
 <div class="form">
 
-    <form:form action="${requestUri}" modelAttribute="actorForm">
+    <form:form action="${requestUri}" modelAttribute="actorForm"
+               onsubmit="javascript:return validatePhone('El telefono no tiene el formato esperado. ¿Desea guardarlo de todas formas?');"
+               id="actorForm">
         <form:hidden path="id"/>
         <br>
         <!-- Datos -->
@@ -46,14 +48,14 @@
                         </div>
                         <div class="col-50">
                             <acme:textbox code="label.phone" path="phone"
-                                          readonly="${!edition}"/>
+                                          readonly="${!edition}" id="phone"/>
 
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-100">
                             <acme:textbox code="label.address" path="address"
-                                          readonly="${!edition}" />
+                                          readonly="${!edition}"/>
                         </div>
                     </div>
 

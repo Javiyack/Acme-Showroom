@@ -25,6 +25,10 @@
 
 <jstl:set var="creditCardNeeded"
           value="${request.item.price>0}"/>
+<jstl:set var="creator"
+          value="${request.user.userAccount eq logedAccount}"/>
+<jstl:set var="reciber"
+          value="${request.item.showroom.user.userAccount eq logedAccount}"/>
 
 
 <div class="seccion w3-light-grey">
@@ -37,7 +41,7 @@
         <div class="row">
             <div class="col-50">
                 <acme:textbox code="label.item" path="item.title"
-                              readonly="${true}"/>
+                              readonly="true"/>
             </div>
             <div class="col-25">
                 <acme:textbox code="label.price" path="item.price"
@@ -54,8 +58,20 @@
                               readonly="true"/>
             </div>
             <div class="col-50">
-                <acme:textbox code="label.status" path="status"
-                              readonly="true"/>
+                <form:label path="status">
+                    <spring:message code="label.status"/>: ${request.status} - Creator: ${creator} - Reciber: ${reciber}
+                </form:label>
+                <select id="status" name="status" >
+                    <jstl:forEach items="${estados}" var="state">
+                        <option value="${state}" id="${state}" <jstl:if test="${state eq request.status}">
+                            selected
+                        </jstl:if> <jstl:if test="${request.status != 'PENDING' or (creator and state != 'PENDING') or (reciber and state eq 'PENDING')}">
+                            disabled
+                        </jstl:if> >
+                            <spring:message code="request.status.${state}"/>
+                        </option>
+                    </jstl:forEach>
+                </select>
             </div>
         </div>
         <hr>
@@ -71,27 +87,44 @@
             </div>
             <div class="col-50">
                 <div class="icons-container">
-                    <h3><spring:message code="label.payment"/>   <i class="fa fa-cc-visa" style="color:navy;"></i>
-                        <i class="fa fa-cc-amex" style="color:blue;"></i>
+                    <h3><spring:message code="label.payment"/>  
+                        <i class="fa fa-cc-visa" style="color:navy;"></i>
                         <i class="fa fa-cc-mastercard" style="color:red;"></i>
-                        <i class="fa fa-cc-discover" style="color:orange;"></i></h3>
-
+                        <i class="fa fa-cc-diners-club" style="color:blue;"></i>
+                        <i class="fa fa-cc-amex" style="color:orange;"></i>
+                    </h3>
                 </div>
-                <acme:textbox code="label.cc.brandName" path="creditCard.brandName" readonly="${!creditCardNeeded}"/>
-                <acme:textbox code="label.cc.holderName" path="creditCard.holderName" readonly="${!creditCardNeeded}"/>
-                <acme:textbox code="label.cc.cardNumber" path="creditCard.cardNumber" readonly="${!creditCardNeeded}"
+                <form:label path="creditCard.brandName">
+                    <spring:message code="label.cc.brandName"/>
+                </form:label>
+                <jstl:if test="${reciber or !creditCardNeeded}">
+                    <form:hidden path="creditCard.brandName"/>
+                </jstl:if>
+                <select id="creditCard.brandName" name="creditCard.brandName" <jstl:if test="${reciber or !creditCardNeeded}">
+                    disabled
+                </jstl:if>>
+                    <jstl:forEach items="${acceptedCreditCards}" var="validCreditCard">
+                        <option value="${validCreditCard}" id="${validCreditCard}" <jstl:if test="${validCreditCard eq request.creditCard.brandName}">
+                            selected
+                        </jstl:if>>
+                            <spring:message code="label.cc.${validCreditCard}"/>
+                        </option>
+                    </jstl:forEach>
+                </select>
+                <acme:textbox code="label.cc.holderName" path="creditCard.holderName" readonly="${!creditCardNeeded or reciber}"/>
+                <acme:textbox code="label.cc.cardNumber" path="creditCard.cardNumber" readonly="${!creditCardNeeded or reciber}"
                               placeholder="1111-2222-3333-4444"/>
                 <div class="row">
                     <div class="col-33">
                         <acme:textbox code="label.cc.expirationMonth" path="creditCard.expirationMonth"
-                                      readonly="${!creditCardNeeded}" placeholder="01-12"/>
+                                      readonly="${!creditCardNeeded or reciber}" placeholder="01-12"/>
                     </div>
                     <div class="col-33">
                         <acme:textbox code="label.cc.expirationYear" path="creditCard.expirationYear"
-                                      readonly="${!creditCardNeeded}" placeholder="00-99"/>
+                                      readonly="${!creditCardNeeded or reciber}" placeholder="00-99"/>
                     </div>
                     <div class="col-33">
-                        <acme:textbox code="label.cc.CVV" path="creditCard.CVV" readonly="${!creditCardNeeded}"
+                        <acme:textbox code="label.cc.CVV" path="creditCard.CVV" readonly="${!creditCardNeeded or reciber}"
                                       placeholder="000-999"/>
                     </div>
                 </div>
@@ -102,7 +135,7 @@
 
         <div class="row">
             <div class="col-100">
-                <jstl:if test="${!readonly}">
+                <jstl:if test="${creator or reciber}">
                     <hr>
                     <acme:submit name="save" code="label.save"
                                  css="btn formButton"/>
