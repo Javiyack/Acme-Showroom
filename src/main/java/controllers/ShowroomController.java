@@ -38,13 +38,14 @@ public class ShowroomController extends AbstractController {
 
     // List ------------------------------------------------------------------
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(final Integer pageSize) {
+    public ModelAndView list(final Integer pageSize, String word) {
         ModelAndView result;
         final Collection<Showroom> showrooms;
-        showrooms = this.showroomService.findAll();
+        showrooms = this.showroomService.findByKeyWord((word!=null)?word:"");
         result = new ModelAndView("showroom/list");
         result.addObject("showrooms", showrooms);
         result.addObject("requestUri", "showroom/list.do");
+        result.addObject("word", word);
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }

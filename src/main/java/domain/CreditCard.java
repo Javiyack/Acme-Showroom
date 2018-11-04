@@ -44,7 +44,7 @@ public class CreditCard {
 
     @NotBlank
     @SafeHtml
-    @Pattern(regexp = "^(VISA|MASTER-CARD|DINNERS|AMEX)$")
+    @Pattern(regexp = "^(VISA|MASTER-CARD|DINERS|AMEX)$")
     public String getBrandName() {
         return brandName;
     }
@@ -53,9 +53,7 @@ public class CreditCard {
         this.brandName = brandName;
     }
 
-    //@Pattern(regexp = "^\\d{16}$")
-    @NotBlank
-    @SafeHtml
+    @Pattern(regexp = "^(?=.*\\d).{1,64}$")
     @CreditCardNumber
     public String getCardNumber() {
         return cardNumber;

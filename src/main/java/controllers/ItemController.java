@@ -38,18 +38,19 @@ public class ItemController extends AbstractController {
 
     // List ------------------------------------------------------------------
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(Integer showroomId, String showroomName, final Integer pageSize) {
+    public ModelAndView list(Integer showroomId, String word, String showroomName, final Integer pageSize) {
         ModelAndView result;
         result = new ModelAndView("item/list");
         final Collection<Item> items;
         if(showroomId!=null){
-            items = this.itemService.findByShowroomId(showroomId);
+            items = this.itemService.findByKeyWordAndShowroom((word!=null)?word:"", showroomId);
             result.addObject("showroomId", showroomId);
             result.addObject("showroomName", showroomName);
         }
         else
-            items = this.itemService.findAll();
+            items = this.itemService.findByKeyWord((word!=null)?word:"");
         result.addObject("items", items);
+        result.addObject("word", word);
         result.addObject("requestUri", "item/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;

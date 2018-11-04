@@ -26,7 +26,7 @@
 
 <!-- Menu and banner usually + "$") -->
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-flat-midnight-blue sombra"
+<nav class="w3-sidebar w3-collapse w3-dark-gray sombra"
 	style="z-index: 3; width: 290px;" id="mySidebar">
 
 	<br>
@@ -90,7 +90,7 @@
 		</div>
 	</div>
 	<hr>
-	<div class="w3-bar-block" style="padding-bottom: 60px">
+	<div class="w3-bar-block button-bar" id ="myDIV" style="padding-bottom: 60px">
 
 		<a href="showroom/list.do"
 		   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
@@ -109,7 +109,7 @@
 			</a>
 			<a href="subscription/actor/list.do"
 			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-					class="fa fa-assistive-listening-systems fa-fw"></i>  <spring:message
+					class="fa fa-heart-o fa-fw"></i>  <spring:message
 					code="label.subscriptions" />
 			</a>
 			<a href="chirp/actor/list.do"
@@ -177,7 +177,7 @@
 		<security:authorize access="hasRole('AGENT')">
 			<a href="inn/agent/list.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-home fa-fw"></i>  <spring:message code="label.inns" />
+				class="fa fa-home fa-fw"></i>  <spring:message code="label.inn" />
 			</a>
 		</security:authorize>
 		<br> <br>
@@ -192,6 +192,43 @@
 	id="myOverlay"></div>
 
 <script>
+    var mySidebar = document.getElementById("mySidebar");
+
+    //Get the DIV with overlay effect
+    var overlayBg = document.getElementById("myOverlay");
+
+    //Toggle between showing and hiding the sidebar, and add overlay effect
+    function w3_open() {
+        if (mySidebar.style.display === 'block') {
+            mySidebar.style.display = 'none';
+            overlayBg.style.display = "none";
+        } else {
+            mySidebar.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
+    }
+
+    //Close the sidebar with the close button
+    function w3_close() {
+        mySidebar.style.display = "none";
+        overlayBg.style.display = "none";
+    }
+
+    var btnContainer = document.getElementById("myDIV");
+
+    //Get all buttons with class="btn" inside the container
+    var btns = btnContainer.getElementsByClassName("btn");
+
+    //Loop through the buttons and add the active class to the current/clicked button
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+
+
 	// Get the modal
 	var modal = document.getElementById('myModal');
 
@@ -217,39 +254,4 @@
 			modal.style.display = "none";
 		}
 	};
-	var mySidebar = document.getElementById("mySidebar");
-
-	//Get the DIV with overlay effect
-	var overlayBg = document.getElementById("myOverlay");
-
-	//Toggle between showing and hiding the sidebar, and add overlay effect
-	function w3_open() {
-		if (mySidebar.style.display === 'block') {
-			mySidebar.style.display = 'none';
-			overlayBg.style.display = "none";
-		} else {
-			mySidebar.style.display = 'block';
-			overlayBg.style.display = "block";
-		}
-	}
-
-	//Close the sidebar with the close button
-	function w3_close() {
-		mySidebar.style.display = "none";
-		overlayBg.style.display = "none";
-	}
-
-	var btnContainer = document.getElementById("myDIV");
-
-	//Get all buttons with class="btn" inside the container
-	var btns = btnContainer.getElementsByClassName("btn");
-
-	//Loop through the buttons and add the active class to the current/clicked button
-	for (var i = 0; i < btns.length; i++) {
-		btns[i].addEventListener("click", function() {
-			var current = document.getElementsByClassName("active");
-			current[0].className = current[0].className.replace(" active", "");
-			this.className += " active";
-		});
-	}
 </script>

@@ -43,7 +43,7 @@
                            requestURI="${requestUri}" id="row">
                 <jstl:set var="activateUrl"
                           value="actor/administrator/activate.do?actorId=${row.id}&pageSize=${pageSize}"/>
-                <jstl:set var="url" value="actor/display.do?actorId=${row.id}"/>
+                <jstl:set var="url" value="actor/actor/display.do?actorId=${row.id}"/>
                 <acme:column property="${row.userAccount.username}"
                              title="label.user" sortable="true" rowUrl="${url}" css="iButton"/>
                 <acme:column property="${row.surname}, ${row.name}"

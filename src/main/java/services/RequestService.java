@@ -11,6 +11,8 @@ import repositories.RequestRepository;
 import repositories.SubscriptionRepository;
 import repositories.UserRepository;
 
+import java.lang.ref.ReferenceQueue;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -32,22 +34,43 @@ public class RequestService {
     private Validator validator;
     // CRUD  -----------------------------------------------------
     public Request save(Request request){
+        Assert.isTrue(request.getItem().getAvailable(), "msg.not.available.item.block");
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
+        Assert.isTrue(!request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.own.request.block");
         Request result = requestRepository.findOne(request.getId());
         if(request.getId()==0){
-            Assert.isTrue(request.getUser().equals((User)actor) || request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
+            Assert.isTrue(request.getUser().equals((User)actor)
+                    || request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
             request.setStatus(Constant.requestStatus.PENDING.toString());
+            if(request.getItem().getPrice()>0) {
+                Assert.notNull(request.getCreditCard(), "msg.not.credit.card.block");
+                Calendar fechaLimite = Calendar.getInstance();
+                Calendar expirationDate = Calendar.getInstance();
+                System.out.println(expirationDate.getTime());
+                expirationDate.set(Integer.parseInt(20+request.getCreditCard().getExpirationYear()),
+                        Integer.parseInt(request.getCreditCard().getExpirationMonth())-1,1);
+                System.out.println("Hoy: " + fechaLimite.getTime());
+                System.out.println("Expiration: " + expirationDate.getTime());
+                Assert.isTrue(expirationDate.after(fechaLimite), "msg.credit.card.expired.block");
+                fechaLimite.add(Calendar.DATE,30);
+                System.out.println("Fecha limite: " + fechaLimite.getTime());
+                System.out.println("Expiration: " + expirationDate.getTime());
+                Assert.isTrue(expirationDate.after(fechaLimite), "msg.credit.card.close.to.expire.block");
+            }
+            return requestRepository.save(request);
         }else{
-            Assert.isTrue(result.getUser().equals((User)actor) || result.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
+            Assert.isTrue(result.getUser().equals((User)actor)
+                    || result.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
             String status = result.getStatus();
+            result.setStatus(request.getStatus());
             if(!status.equals(Constant.requestStatus.PENDING.toString())) // Aqui impedimos el cambio de estado una vez aceptado o rechazado
-                request.setStatus(status);
+                result.setStatus(status);
+            return requestRepository.save(result);
+
         }
-        if(request.getItem().getPrice()>0)
-            Assert.notNull(request.getCreditCard(), "msg.not.credit.card.block");
-        return requestRepository.save(request);
+
     }
 
 
@@ -55,10 +78,12 @@ public class RequestService {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
+        Item item = itemService.findOne(itemId);
+        Assert.isTrue(item.getAvailable(), "msg.not.available.item.block");
         Request request = new Request();
         request.setUser((User)actor);
         request.setMoment(new Date());
-        request.setItem(itemService.findOne(itemId));
+        request.setItem(item);
         request.setStatus(Constant.requestStatus.PENDING.toString());
         return request;
     }

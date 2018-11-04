@@ -48,14 +48,16 @@
             <div class="row">
                 <div class="col-100">
                     <legend>
-                        <spring:message code="label.showroom"/>
+                        <spring:message code="label.showroom"/>: <jstl:out value="${showroom.name}"/>
                     </legend>
                     <div class="row">
                         <div class="col-75">
                             <acme:textbox code="label.name" path="name" readonly="${readonly}"/>
                             <acme:textarea code="label.description" path="description" readonly="${readonly}"
                                            css="formTextArea w3-text-black"/>
-                            <acme:textbox code="label.logo.url" path="logo" readonly="${readonly}" id="fotosPath"/>
+                            <jstl:if test="${!display}">
+                                <acme:textbox code="label.logo.url" path="logo" readonly="${readonly}" id="fotosPath"/>
+                            </jstl:if>
                         </div>
                         <div class="col-25">
                             <!-- Carrusel se fotos  -->
@@ -81,8 +83,11 @@
                 <div class="col-100">
                     <jstl:if test="${owns}">
                         <acme:submit name="save" code="label.save"/>
+                        <jstl:if test="${item.id!=0}">
+                            <acme:submit name="delete" code="label.delete"
+                                         css="formButton toLeft"/>
+                        </jstl:if>
                     </jstl:if>
-                    <acme:button text="label.back" url="${backUrl}"/>
                     <acme:button text="label.user" url="actor/display.do?actorId=${showroom.user.id}"/>
                 </div>
             </div>

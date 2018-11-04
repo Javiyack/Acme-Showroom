@@ -59,6 +59,7 @@ public class ActorController extends AbstractController {
             result = new ModelAndView("redirect:/");
         }
 
+
         return result;
     }
 

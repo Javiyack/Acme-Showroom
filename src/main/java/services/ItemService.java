@@ -72,6 +72,10 @@ public class ItemService {
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.owned.block");
         Assert.isTrue(item.getShowroom().getUser().equals(actor), "msg.not.owned.block");
+        Item bdItem = itemRepository.findOne(item.getId());
+        if(item.getId()!=0){
+            item.setSKU(bdItem.getSKU());
+        }
         Item result = itemRepository.saveAndFlush(item);
         return result;
     }
@@ -128,5 +132,12 @@ public class ItemService {
     public Collection<Item> findByKeyWordAndShowroom(String word, Integer showroomId) {
 
         return itemRepository.findByKeyWordAndShowroom(word, showroomId );
+    }
+
+    public Collection <Item> findByKeyWordAndLogedActor(String word) {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Assert.isTrue(actor instanceof User, "msg.not.owned.block");
+        return itemRepository.findByKeyWordAndLogedActor(word, actor.getId());
     }
 }

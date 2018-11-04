@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -88,7 +86,7 @@ public class RequestUserController extends AbstractController {
             Request request = requestService.create(itemId);
             result = this.createEditModelAndView(request);
 
-        }catch (Throwable oops) {
+        } catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
                 return createMessageModelAndView(oops.getLocalizedMessage(), "/showroom/list.do");
             } else {
@@ -132,13 +130,14 @@ public class RequestUserController extends AbstractController {
                 request = this.requestService.save(request);
                 result = this.redirectModel(request);
             } catch (Throwable oops) {
-                if (oops.getCause().getCause() != null
+                if (oops.getMessage().startsWith("msg.")) {
+                    result = this.createEditModelAndView(request, oops.getLocalizedMessage());
+                }
+                else if (oops.getCause().getCause() != null
                         && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
                     result = this.createEditModelAndView(request, "msg.duplicate.request");
-                else if (oops.getMessage().startsWith("msg.")) {
-                    return createMessageModelAndView(oops.getLocalizedMessage(), "/request/user/edit.do?requestId=" + request.getId());
-                } else {
-                    return this.createMessageModelAndView("msg.commit.error", "/request/user/edit.do?requestId=" + request.getId());
+                else{
+                    result = this.createEditModelAndView(request, "msg.commit.error");
                 }
             }
         return result;
@@ -149,9 +148,9 @@ public class RequestUserController extends AbstractController {
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
         if (actor.getId() == request.getUser().getId())
-            return new ModelAndView("redirect:/request/user/received/list.do");
-        else if (actor.getId() == request.getItem().getShowroom().getUser().getId())
             return new ModelAndView("redirect:/request/user/created/list.do");
+        else if (actor.getId() == request.getItem().getShowroom().getUser().getId())
+            return new ModelAndView("redirect:/request/user/received/list.do");
         else
             return new ModelAndView("redirect:/");
     }
@@ -171,11 +170,11 @@ public class RequestUserController extends AbstractController {
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);
         String[] states = {Request.ACCEPTED, Request.PENDING, Request.REJECTED};
-        Collection<String> estados = Arrays.asList(states);
+        Collection <String> estados = Arrays.asList(states);
         result.addObject("states", states);
         result.addObject("estados", estados);
         String[] acceptedCreditCards = {CreditCard.AMEX, CreditCard.VISA, CreditCard.DINERS, CreditCard.MASTERCARD};
-        Collection<String> validCreditCards = Arrays.asList(acceptedCreditCards);
+        Collection <String> validCreditCards = Arrays.asList(acceptedCreditCards);
         result.addObject("acceptedCreditCards", acceptedCreditCards);
         result.addObject("validCreditCards", validCreditCards);
 

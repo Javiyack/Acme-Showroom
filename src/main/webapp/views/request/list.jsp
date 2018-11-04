@@ -55,25 +55,25 @@
                        class="flat-table flat-table-1 w3-light-grey" name="requests"
                        requestURI="${requestUri}" id="row">
 
-            <jstl:set var="url" value="chirp/actor/display.do?chirpId=${row.id}"/>
+            <jstl:set var="url" value="request/user/edit.do?requestId=${row.id}"/>
             <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
 
-            <acme:column property="moment" title="label.moment" format="moment.format" sortable="true"/>
-            <acme:column property="item.title" title="label.item"/>
-            <acme:column property="status" title="label.status"/>
+            <acme:column property="${row.moment}" title="label.moment" format="moment.format" sortable="true" rowUrl="${url}"/>
+            <acme:column property="${row.item.title}" title="label.item" rowUrl="item/display.do?itemId=${row.item.id}"/>
+            <acme:column property="${row.status}" title="label.status" rowUrl="${url}" sortable="true"/>
             <jstl:set var="owns"
                       value="${rol=='user' and (logedActor eq row.user.userAccount or  logedActor eq row.item.showroom.user.userAccount)}"/>
 
             <display:column>
-                <jstl:if test="${owns}">
+                <jstl:if test="${logedActor eq row.item.showroom.user.userAccount}">
                     <div>
                         <a href="request/user/edit.do?requestId=${row.id}"> <i
                                 class="fa fa-edit w3-xlarge"></i>
                         </a>
                     </div>
                 </jstl:if>
-                <jstl:if test="${!owns}">
+                <jstl:if test="${logedActor eq row.user.userAccount}">
                     <div>
                         <a href="request/user/edit.do?requestId=${row.id}"> <i
                                 class="fa fa-eye w3-xlarge"></i>

@@ -26,7 +26,10 @@
 <%@ attribute name="code" required="true"%>
 <%@ attribute name="placeholder" required="false"%>
 
+<%@ attribute name="title" required="false"%>
+<%@ attribute name="pattern" required="false"%>
 <%@ attribute name="value" required="false"%>
+<%@ attribute name="form" required="false"%>
 <%@ attribute name="id" required="false"%>
 <%@ attribute name="readonly" required="false"%>
 <%@ attribute name="css" required="false"%>
@@ -47,7 +50,8 @@
 	<form:label path="${path}">
 		<i class="${icon}"></i> <spring:message code="${code}" />
 	</form:label>
-	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}" 
-		class="${css}" title="${value}" id="${id}" style="font-family:Arial, FontAwesome"/>
+	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}"
+		class="${css}" title="${title}" id="${id}" style="font-family:Arial, FontAwesome" form="${form}" pattern="${pattern}"/>
+
 	<form:errors path="${path}" cssClass="error" />
 </div>

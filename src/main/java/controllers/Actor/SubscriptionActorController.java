@@ -74,7 +74,7 @@ public class SubscriptionActorController extends AbstractController {
 			this.subscriptionService.follow(actorId);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+				return createMessageModelAndView(oops.getLocalizedMessage(), redirectUrl);
 			} else {
 				return this.createMessageModelAndView("msg.commit.error", "/");
 			}
@@ -91,7 +91,7 @@ public class SubscriptionActorController extends AbstractController {
 			this.subscriptionService.subscribe(topic);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/subscription/actor/list.do");
 			} else {
 				return this.createMessageModelAndView("msg.commit.error", "/");
 			}
@@ -103,16 +103,22 @@ public class SubscriptionActorController extends AbstractController {
 	@RequestMapping(value = "/topic/subscribe", method = RequestMethod.POST)
 	public ModelAndView topicSubscribe(HttpServletRequest req) {
 		ModelAndView result;
+		String redirectUrl;
+		if(req.getParameter("redirectUrl")!=null)
+			redirectUrl = req.getParameter("redirectUrl");
+		else
+			redirectUrl = "/subscription/actor/list.do";
+
 		try{
 			this.subscriptionService.subscribe(req.getParameter("topic"));
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+				return createMessageModelAndView(oops.getLocalizedMessage(), redirectUrl);
 			} else {
 				return this.createMessageModelAndView("msg.commit.error", "/");
 			}
 		}
-		result = new ModelAndView("redirect:/subscription/actor/list.do");
+		result = new ModelAndView("redirect:" + redirectUrl);
 		return result;
 	}
 	// UnSubsribe  -----------------------------------------------------------
@@ -135,16 +141,21 @@ public class SubscriptionActorController extends AbstractController {
 	@RequestMapping(value = "/topic/unsubscribe", method = RequestMethod.POST)
 	public ModelAndView unsubscribe(HttpServletRequest req) {
 		ModelAndView result;
+		String redirectUrl;
+		if(req.getParameter("redirectUrl")!=null)
+			redirectUrl = req.getParameter("redirectUrl");
+		else
+			redirectUrl = "/subscription/actor/list.do";
 		try{
 			this.subscriptionService.unSubscribe(req.getParameter("topic"));
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
+				return createMessageModelAndView(oops.getLocalizedMessage(), redirectUrl);
 			} else {
 				return this.createMessageModelAndView("msg.commit.error", "/");
 			}
 		}
-		result = new ModelAndView("redirect:/subscription/actor/list.do");
+		result = new ModelAndView("redirect:" + redirectUrl);
 		return result;
 	}
 

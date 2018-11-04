@@ -49,7 +49,7 @@
     </div>
 </jstl:if>
 <jstl:if test="${rowUrl!=null}">
-    <display:column  title="${ titleVar}"
+    <display:column  title="${titleVar}"
                     sortable="${sortable }" class="${css}" format="${formatVar}" style="${style}">
         <jstl:if test="${rowUrl!=null}">
 

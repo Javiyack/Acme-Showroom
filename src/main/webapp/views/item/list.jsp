@@ -88,7 +88,7 @@
                 <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
             </jstl:if>
             <jstl:if test="${!owns}">
-                <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
+                <jstl:set var="url" value="item/display.do?itemId=${row.id}"/>
                 <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
             </jstl:if>
@@ -109,16 +109,33 @@
             <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
         </display:table>
     </div>
-    <jstl:if test="${showroom==null}">
-        <acme:backButton text="label.back" css="formButton toLeft"/>
+    <jstl:if test="${showroom!=null and rol eq 'user' and logedActor eq showroom.user.userAccount}">
+
+        <spring:message var="msg" code="msg.save.first"/>
+        <jstl:set var="url" value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
+        <p>
+            <i class="fa fa-plus-square w3-text-dark-grey w3-hover-text-light-blue w3-xxlarge toRight w3-padding iButton"
+               onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+        </p>
     </jstl:if>
-    <jstl:if test="${showroom!=null and rol eq 'user'}">
-            <spring:message var="msg" code="msg.save.first"/>
-            <jstl:set var="url" value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
+    <jstl:if test="${showroom==null and rol eq 'user'}">
+        <hr>
+        <jstl:if test="${userList and rol eq 'user'}">
             <p>
-                <i class="fa fa-plus-square w3-xlarge"
-                   onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+                <a href="item/list.do" >
+                    <i class="fa fa fa-filter w3-xxlarge w3-text-green"
+                       title="<spring:message code="label.show.all"/>">
+                </i> <spring:message code="label.show.all"/></a>
             </p>
+        </jstl:if>
+        <jstl:if test="${userList==null and rol eq 'user'}">
+            <p>
+                <a href="item/user/list.do" >
+                    <i class="fa fa fa-filter w3-xxlarge w3-text-gray"
+                       title="<spring:message code="label.show.mine.only"/>"></i>
+                    <spring:message code="label.show.mine.only"/></a>
+            </p>
+        </jstl:if>
     </jstl:if>
     <br/>
 </div>

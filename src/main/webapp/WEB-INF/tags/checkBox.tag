@@ -42,16 +42,13 @@
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
-
-
-
-
 <%-- Definition --%>
 
 <spring:message code="${code}" var="title" />
-<form:checkbox id="${id}" path="${path}" disabled="${readonly}" onclick="${onclick}"
-	placeholder="${placeholder}" class="${css}" />
-<form:label for="check" path="${path}" cssStyle="display:inline; margin:0.5em;" >
-		<jstl:out value="${title}"/>
-	</form:label>	
+
+<form:label for="check" path="${path}"  >
+    <form:checkbox id="${id}" path="${path}" disabled="${readonly}" onclick="${onclick}"
+                   placeholder="${placeholder}" class="${css}" cssStyle="display:inline; margin-right:0.3em;"/>
+    <jstl:out value="${title}"/>
+</form:label>
 

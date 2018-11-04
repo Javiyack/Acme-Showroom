@@ -1,6 +1,7 @@
 package services;
 
 import domain.Actor;
+import domain.Chirp;
 import domain.Subscription;
 import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,4 +134,17 @@ public class SubscriptionService {
         this.delete(subscription);
     }
 
+    public Boolean checkIfSubscribedToActor(Actor subscribed) {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Boolean result = subscriptionRepository.findSubscribedActorsBySubscriberId(actor.getId()).contains(subscribed);
+        return result;
+    }
+    public Boolean checkIfSubscribedToTopic(Chirp chirp) {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Boolean result = subscriptionRepository.findTopicSubscriptionsNames(actor.getId()).contains(chirp.getTopic());
+
+        return result;
+    }
 }

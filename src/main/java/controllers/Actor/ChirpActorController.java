@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import services.ActorService;
 import services.ChirpService;
 import services.SubscriptionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 
@@ -32,6 +32,8 @@ public class ChirpActorController extends AbstractController {
 
     @Autowired
     private SubscriptionService subscriptionService;
+    @Autowired
+    private ActorService actorService;
 // Constructors -----------------------------------------------------------
 
     public ChirpActorController() {
@@ -123,8 +125,12 @@ public class ChirpActorController extends AbstractController {
         try {
             final Chirp chirp = this.chirpService.findOne(chirpId);
             Assert.notNull(chirp, "msg.not.found.resource");
-            result = new ModelAndView("chirp/actor/create");
+            result = new ModelAndView("chirp/actor/display");
             result.addObject("chirp", chirp);
+            Boolean subscribedToActor =  this.subscriptionService.checkIfSubscribedToActor(chirp.getActor());
+            Boolean subscribedToTopic =  this.subscriptionService.checkIfSubscribedToTopic(chirp);
+            result.addObject("subscribedToActor", subscribedToActor);
+            result.addObject("subscribedToTopic", subscribedToTopic);
             result.addObject("display", true);
         } catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {

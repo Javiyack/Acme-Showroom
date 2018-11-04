@@ -13,9 +13,9 @@
 
 
 <div class="form">
-
+    <spring:message code="msg.validate.phone" var="msg"/>
     <form:form action="${requestUri}" modelAttribute="actorForm"
-               onsubmit="javascript:return validatePhone('El telefono no tiene el formato esperado. ¿Desea guardarlo de todas formas?');"
+               onsubmit="javascript:return validatePhone('${msg}');"
                id="actorForm">
         <form:hidden path="id"/>
         <br>
@@ -82,8 +82,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-100">
-                                    <acme:textbox code="label.photo" path="photo"
-                                                  readonly="${!edition}" id="photo"/>
+                                    <jstl:if test="${edition}">
+                                        <acme:textbox code="label.photo" path="photo"
+                                                      id="photo"/>
+                                    </jstl:if>
+                                    <br>
+                                    <jstl:if test="${!subscribedToActor and !edition}">
+                                        <spring:message code="label.follow" var="actorTooltip"/>
+                                        <a href="subscription/actor/subscribe.do?actorId=${actorForm.id}
+                                        &redirectUrl=/actor/actor/display.do?actorId=${actorForm.id}">
+                                            <i class="fa fa-heart-o font-awesome w3-text-gray w3-margin-right w3-xxlarge"
+                                               title="${actorTooltip}"></i>
+                                        </a>
+                                    </jstl:if>
+
+                                    <jstl:if test="${subscribedToActor and !edition}">
+                                        <spring:message code="label.unfollow" var="actorTooltip"/>
+                                        <a href="subscription/actor/subscribe.do?actorId=${actorForm.id}
+                        &redirectUrl=/actor/actor/display.do?actorId=${actorForm.id}">
+                                            <i class="fa fa-heart font-awesome w3-text-red w3-margin-right w3-xxlarge"
+                                               title="${actorTooltip}"></i>
+                                        </a>
+
+                                    </jstl:if>
                                 </div>
                             </div>
                         </div>
@@ -171,21 +192,32 @@
         </div>
         <jstl:if test="${display and actorAuthority eq 'USER'}">
             <!-- Showrooms -->
-
             <jstl:set value="${actorForm.id}" var="userId"/>
             <%@ include file="/views/showroom/list.jsp" %>
         </jstl:if>
+        <security:authorize access="isAuthenticated()">
+            <jstl:if test="${display}">
+                <!-- Chirps -->
+                <jstl:set value="${actorForm.id}" var="actorId"/>
+                <%@ include file="/views/chirp/list.jsp" %>
+            </jstl:if>
+        </security:authorize>
 
         <jstl:if test="${edition}">
             <div class="seccion w3-light-grey">
                 <security:authorize access="isAnonymous()">
-                <p class="terminos w3-text-purple">
+                    <p class="terminos w3-text-purple">
                         <acme:checkBox code="term.registration.acept" path="agree"
                                        css="w3-check"/>
-                    (<a href="term/termsAndConditions.do"><spring:message
-                        code="term.terms"/></a> && <a href="term/cookies.do"><spring:message
-                        code="term.cookie"/></a>)
-                    </security:authorize>
+                    </p>
+                    <p class="terminos">
+                        (<a href="term/termsAndConditions.do"
+                            class="w3-text-deep-purple w3-hover-text-aqua"><spring:message
+                            code="term.terms"/></a> && <a href="term/cookies.do"
+                                                          class="w3-text-deep-purple w3-hover-text-aqua"><spring:message
+                            code="term.cookie"/></a>)
+                    </p>
+                </security:authorize>
                 <div class="row">
                     <div class="col-50">
                         <input type="submit" name="save" id="save"
@@ -206,6 +238,11 @@
                 <div class="row">
                     <div class="col-50">
                         <acme:backButton text="actor.back" css="formButton toLeft"/>
+                        <security:authorize access="isAuthenticated()">
+                            <acme:button text="label.follow" css="formButton toLeft"
+                                         url="subscription/actor/subscribe.do?actorId=${actorForm.id}&redirectUrl=/actor/actor/display.do?actorId=${actorForm.id}"/>
+
+                        </security:authorize>
                     </div>
                 </div>
             </div>

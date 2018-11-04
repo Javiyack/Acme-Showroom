@@ -117,7 +117,7 @@
 		<property name="email" value="chiquichancla@ecotono.org" />
 		<property name="phone" value="618399522" />
 		<property name="address" value="C/ Beatriz de Suabia 76." />
-		<property name="photo" value="https://fotki.yandex.ru/get/15523/197059212.12/0_14541b_f067d910_orig.jpg" />
+		<property name="photo" value="https://png.icons8.com/android/1600/user.png" />
 		<property name="birthdate" value="1985/03/21" />
 		<property name="genere" value="MALE" />
 		<property name="userAccount" ref="userAccountUser3" />
@@ -342,31 +342,31 @@
 	<!-- Showrooms -->
 
 	<bean id="showroom1" class="domain.Showroom">
-		<property name="name" value="El Escaparate" />
-		<property name="description" value="De las maravillas" />
-		<property name="logo" value="https://image.shutterstock.com/image-vector/cool-dude-monkey-glasses-headphones-260nw-574759426.jpg" />
+		<property name="name" value="TodoTrapo" />
+		<property name="description" value="Miles de artículos a su disposición. Confianza absoluta" />
+		<property name="logo" value="http://caritasespanola.org/economiasolidaria/wp-content/uploads/Logo-ATT-300x132.jpg" />
 		<property name="user" ref="user1" />
 	</bean>
 
 	<bean id="showroom2" class="domain.Showroom">
-		<property name="name" value="De escaparate a rota" />
-		<property name="description" value="Urta a la roteña" />
-		<property name="logo" value="" />
+		<property name="name" value="SimBarBa" />
+		<property name="description" value="Articulos de peluqueria y cosmetica" />
+		<property name="logo" value="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" />
 		<property name="user" ref="user1" />
 	</bean>
 
 	<bean id="showroom3" class="domain.Showroom">
-		<property name="name" value="Sigueme" />
-		<property name="description" value="Si puedes... si, puedes." />
-		<property name="logo" value="" />
+		<property name="name" value="TARA" />
+		<property name="description" value="Ropa de primeras marcas a un percio increible con alguna pequeña inperfeccion o tara." />
+		<property name="logo" value="https://www.comparasoftware.com/wp-content/uploads/2018/08/logoTARA.ai_.png" />
 		<property name="user" ref="user2" />
 	</bean>
 
 	<!-- Items -->
 
 	<bean id="item1" class="domain.Item">
-		<property name="title" value="Titulo tem 1" />
-		<property name="description" value="Pa mi" />
+		<property name="title" value="Gorra Militar" />
+		<property name="description" value="Resistente y duradera." />
 		<property name="available" value="true" />
 		<property name="price" value="99.99" />
 		<property name="SKU" value="720615-XXXX99" />
@@ -375,8 +375,8 @@
 	</bean>
 
 	<bean id="item2" class="domain.Item">
-		<property name="title" value="Titulo tem 2" />
-		<property name="description" value="Pa ti" />
+		<property name="title" value="Sandalias" />
+		<property name="description" value="Del pescador" />
 		<property name="available" value="true" />
 		<property name="price" value="199.99" />
 		<property name="SKU" value="720615-XXXX00" />
@@ -385,8 +385,8 @@
 	</bean>
 
 	<bean id="item3" class="domain.Item">
-		<property name="title" value="Titulo tem 3" />
-		<property name="description" value="Pa si" />
+		<property name="title" value="Vaqueros Lee" />
+		<property name="description" value="Pantalón vaquero como los que ya no se hacen" />
 		<property name="available" value="true" />
 		<property name="price" value="19.99" />
 		<property name="SKU" value="720615-XXXX01" />
@@ -395,8 +395,8 @@
 	</bean>
 
 	<bean id="item4" class="domain.Item">
-		<property name="title" value="Titulo tem 4" />
-		<property name="description" value="Pa mi" />
+		<property name="title" value="RainJacket" />
+		<property name="description" value="Chaqueta deportiva preparada para la lluvia" />
 		<property name="available" value="true" />
 		<property name="price" value="14.99" />
 		<property name="SKU" value="720615-XXXX09" />
@@ -405,8 +405,8 @@
 	</bean>
 
 	<bean id="item5" class="domain.Item">
-		<property name="title" value="Titulo tem 5" />
-		<property name="description" value="Pa mi" />
+		<property name="title" value="Secador Sahara" />
+		<property name="description" value="Secador de pelo de 15000W de potencias. Podrias cocinar un cordero..." />
 		<property name="available" value="true" />
 		<property name="price" value="99.99" />
 		<property name="SKU" value="720615-YYYY99" />
@@ -415,8 +415,8 @@
 	</bean>
 
 	<bean id="item6" class="domain.Item">
-		<property name="title" value="Titulo tem 6" />
-		<property name="description" value="Barato" />
+		<property name="title" value="Botas Panama Jack" />
+		<property name="description" value="Todos conocemos la calidad del calzado 'Panama Jack'. Son dos pies izquierdos del 44." />
 		<property name="available" value="true" />
 		<property name="price" value="99.99" />
 		<property name="SKU" value="720615-YYYY99" />

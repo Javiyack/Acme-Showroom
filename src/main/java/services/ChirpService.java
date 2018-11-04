@@ -53,6 +53,8 @@ public class ChirpService {
     }
 
     public Chirp findOne(int chirpId) {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
         return chirpRepository.findOne(chirpId);
     }
 
@@ -72,5 +74,15 @@ public class ChirpService {
 
     public Collection<Chirp> findByTopic(String topic) {
         return chirpRepository.findByTopic(topic);
+    }
+
+    public Chirp createAutomaticChrip(String topic, String tile, String text) {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Chirp chirp = this.create();
+        chirp.setTopic(topic);
+        chirp.setTitle(tile);
+        chirp.setDescription(text);
+        return this.save(chirp);
     }
 }

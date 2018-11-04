@@ -85,16 +85,13 @@
         </display:column>
         <spring:message code="label.chirp.subscription" var="labelSubscription"/>
         <display:column title="${labelSubscription}">
-    <form action="subscription/actor/topic/unsubscribe.do" method="POST">
-        <input type="hidden" name="topic" value="${row2.topic}">
-            <input type="submit" value="&#xf00c;" class="font-awesome flat w3-text-green w3-xlarge">
-    </form>
+            <form action="subscription/actor/topic/unsubscribe.do" method="POST">
+                <input type="hidden" name="topic" value="${row2.topic}">
+                <input type="submit" value="&#xf00c;" class="font-awesome flat w3-text-green w3-xlarge">
+            </form>
         </display:column>
 
     </display:table>
 </div>
 </div>
-<br/>
-<acme:button url="/"
-             text="label.back" css="formButton toLeft w3-padding"/>
-
+<br>

@@ -49,6 +49,7 @@ public class ShowroomService {
         Assert.isTrue(actor instanceof User, "msg.not.owned.block");
         Assert.isTrue(showroom.getUser().equals(actor), "msg.not.owned.block");
         Showroom result = showroomRepository.saveAndFlush(showroom);
+
         return result;
     }
 

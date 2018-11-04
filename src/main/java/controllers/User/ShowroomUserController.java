@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
+import services.ChirpService;
 import services.ItemService;
 import services.ShowroomService;
 
@@ -35,6 +36,8 @@ public class ShowroomUserController extends AbstractController {
     private ItemService itemService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private ChirpService chirpService;
     // Constructors -----------------------------------------------------------
 
     public ShowroomUserController() {
@@ -109,6 +112,7 @@ public class ShowroomUserController extends AbstractController {
         else
             try {
                 showroom = this.showroomService.save(showroom);
+                this.chirpService.createAutomaticChrip("Showroom", "Nuevo Escaparate","Se ha creado el nuevo escaparate " + showroom.getName());
                 result = this.createEditModelAndView(showroom);
                 result.addObject("info", "msg.commit.ok");
             } catch ( Throwable oops) {

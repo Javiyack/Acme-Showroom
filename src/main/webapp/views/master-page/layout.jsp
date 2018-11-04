@@ -68,7 +68,7 @@
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
-<body class="w3-flat-wet-asphalt" ondragover="return false;">
+<body class="w3-dark-gray" ondragover="return false;">
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="menu" />
 

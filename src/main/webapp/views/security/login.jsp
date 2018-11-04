@@ -33,7 +33,7 @@
 	<form:password path="password"  class="w3-input"/>	
 	<form:errors class="error" path="password" />
 	<br />
-	<a href="actor/create.do" class="w3-text-blue-gray"><spring:message code="msg.not.registered.yet" /></a>
+	<a href="user/create.do" class="w3-text-blue-gray"><spring:message code="msg.not.registered.yet" /></a>
 	<jstl:if test="${showError == true}">
 		<div class="error">
 			<spring:message code="security.login.failed" />

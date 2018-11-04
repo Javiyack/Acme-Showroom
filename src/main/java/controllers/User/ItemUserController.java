@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import services.ActorService;
+import services.ChirpService;
 import services.ItemService;
 import services.ShowroomService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +37,8 @@ public class ItemUserController extends AbstractController {
     private ShowroomService showroomService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private ChirpService chirpService;
     // Constructors -----------------------------------------------------------
 
     public ItemUserController() {
@@ -42,12 +47,16 @@ public class ItemUserController extends AbstractController {
 
     // List ------------------------------------------------------------------
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list( Integer showroomId,  Integer pageSize) {
+    public ModelAndView list(Integer showroomId, String word, Integer pageSize) {
         ModelAndView result;
-         Collection<Item> showrooms;
+        Collection<Item> items;
         result = new ModelAndView("item/list");
         try {
-            showrooms = this.itemService.findByShowroomId(showroomId);
+            if(showroomId!=null){
+                items = this.itemService.findByShowroomId(showroomId);
+            }else{
+                items = this.itemService.findByLogedActor();
+            }
         } catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
                 return createMessageModelAndView(oops.getLocalizedMessage(), "/showroom/user/edit.do?showroomId=" + showroomId);
@@ -55,9 +64,33 @@ public class ItemUserController extends AbstractController {
                 return this.createMessageModelAndView("panic.message.text", "/showroom/list.do");
             }
         }
-        result.addObject("showrooms", showrooms);
-        result.addObject("requestUri", "showroom/user/list.do");
+        result.addObject("items", items);
+        result.addObject("userList", true);
+        result.addObject("word", word);
+        result.addObject("requestUri", "item/user/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        return result;
+    }
+    // List ------------------------------------------------------------------
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public ModelAndView list(HttpServletRequest req) {
+        ModelAndView result;
+        final Collection<Item> items;
+        result = new ModelAndView("item/list");
+        if(!req.getParameter("showroomId").isEmpty()){
+            items = this.itemService.findByKeyWordAndShowroom(req.getParameter("word").trim(), Integer.valueOf(req.getParameter("showroomId")));
+            result.addObject("showroomId", req.getParameter("showroomId"));
+            result.addObject("showroomName", req.getParameter("showroomName"));
+        }
+        else
+            items = this.itemService.findByKeyWordAndLogedActor(req.getParameter("word").trim());
+        result.addObject("items", items);
+        result.addObject("requestUri", "item/list.do");
+        result.addObject("word", req.getParameter("word"));
+        result.addObject("pageSize", (req.getParameter("pageSize") != null) ? req.getParameter("pageSize") : 5);
+        result.addObject("items", items);
+        result.addObject("userList", true);
+        result.addObject("requestUri", "item/user/list.do");
         return result;
     }
 
@@ -67,8 +100,12 @@ public class ItemUserController extends AbstractController {
     @RequestMapping("/create")
     public ModelAndView create(int showroomId) {
         ModelAndView result;
-         Item item = itemService.create(showroomService.findOne(showroomId));
-        result = this.createEditModelAndView(item);
+        Item item = itemService.create(showroomService.findOne(showroomId));
+        result = new ModelAndView("item/edit");
+        result.addObject("item", item);
+        result.addObject("requestUri", "item/user/create.do");
+        result.addObject("edition", true);
+        result.addObject("creation", true);
         return result;
     }
 
@@ -105,6 +142,8 @@ public class ItemUserController extends AbstractController {
         else
             try {
                 item = this.itemService.save(item);
+                this.chirpService.createAutomaticChrip("Artículos", "Nuevo Articulo","Se ha añadido el nuevo artículo "
+                        + item.getTitle() + " al escaparate " + item.getShowroom().getName());
                 result = new ModelAndView("redirect:/showroom/user/edit.do?showroomId=" + item.getShowroom().getId());
             } catch ( Throwable oops) {
                 if (oops.getMessage().startsWith("msg.")) {
@@ -156,15 +195,9 @@ public class ItemUserController extends AbstractController {
 
     protected ModelAndView createEditModelAndView( Item model,  String message) {
          ModelAndView result;
-        Constant.difficultyLevels[] difficulties = Constant.difficultyLevels.values();
-        List<String> difficultyLevels = new ArrayList<>();
 
-        for (Constant.difficultyLevels level:difficulties) {
-            difficultyLevels.add(level.toString());
-        }
-        result = new ModelAndView("item/create");
+        result = new ModelAndView("item/edit");
         result.addObject("item", model);
-        result.addObject("difficultyLevels", difficultyLevels);
         result.addObject("requestUri", "item/user/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);

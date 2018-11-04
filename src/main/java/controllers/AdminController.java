@@ -31,19 +31,6 @@ public class AdminController extends AbstractController {
         super();
     }
 
-    // List ------------------------------------------------------------------
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(final Integer pageSize) {
-        ModelAndView result;
-
-        final Collection <Administrator> administators = this.adminService.findAll();
-        result = new ModelAndView("actor/list");
-        result.addObject("legend", "label.administrators");
-        result.addObject("actors", administators);
-        result.addObject("requestUri", "administators/list.do");
-        result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
-        return result;
-    }
 
     // Edit ---------------------------------------------------------------
 
@@ -52,27 +39,4 @@ public class AdminController extends AbstractController {
         ModelAndView result = new ModelAndView("redirect:/admin/administrator/edit.do");
         return result;
     }
-
-
-    // Auxiliary methods -----------------------------------------------------
-    protected ModelAndView createEditModelAndView(final ActorForm model) {
-        final ModelAndView result;
-        result = this.createEditModelAndView(model, null);
-        return result;
-    }
-
-    protected ModelAndView createEditModelAndView(final ActorForm model, final String message) {
-        final ModelAndView result;
-        result = new ModelAndView("actor/create");
-        result.addObject("actorForm", model);
-        result.addObject("actorAuthority", Authority.ADMINISTRATOR);
-        result.addObject("requestUri", "actor/create.do");
-        result.addObject("edition", true);
-        result.addObject("creation", model.getId() == 0);
-        result.addObject("message", message);
-
-        return result;
-
-    }
-
 }

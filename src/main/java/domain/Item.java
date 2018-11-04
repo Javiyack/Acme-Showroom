@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
@@ -41,6 +42,8 @@ public class Item extends DomainEntity {
 
 
     @NotNull
+    @Valid
+    @Digits(integer = 7, fraction = 2 )
     public Double getPrice() {
         return price;
     }
