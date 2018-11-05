@@ -13,6 +13,10 @@
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<div class="seccion w3-light-grey">
+	<legend>
+		<spring:message code="dashboard.administrator" />
+	</legend>
 <!-- Dashboard D09 6.2.1 The best-selling services. -->
 <h3>
 	<spring:message code="dashboard.best.selling.services" />
@@ -307,4 +311,45 @@
 <br />
 <acme:backButton text="label.back" />
 <br />
+
+</div>
+
+
+<script>
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("tendersPerAdministrative", {
+            animationEnabled: true,
+            title: {
+                text: "${titulo}"
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 270,
+                yValueFormatString: "##0.00\"\"",
+                indexLabel: "{label} {y}",
+                dataPoints: ${data}
+            }]
+        });
+        chart.render();
+
+        var chartB3 = new CanvasJS.Chart("dataB3", {
+            animationEnabled: true,
+            title: {
+                text: "${tituloB3}"
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 270,
+                yValueFormatString: "##0.00\"\"",
+                indexLabel: "{label} {y}",
+                dataPoints: ${dataB3}
+            }]
+        });
+        chartB3.render();
+
+
+
+    }
+</script>
 

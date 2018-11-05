@@ -30,6 +30,7 @@
 <%@ attribute name="id" required="false"%>
 <%@ attribute name="visible" required="false"%>
 <%@ attribute name="placeholder" required="false"%>
+<%@ attribute name="title" required="false"%>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
@@ -51,6 +52,6 @@
 		<spring:message code="${code}" />
 	</form:label>
 	<form:textarea disabled="${disabled}" path="${path}" readonly="${readonly}" id="${id}"
-		class="${css}" style="display:${visible}" placeholder="${placeholder}" />
+		class="${css}" style="display:${visible}" placeholder="${placeholder}" title="${title}"/>
 	<form:errors path="${path}" cssClass="error" />
 </div>

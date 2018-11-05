@@ -81,10 +81,10 @@
 
     <jstl:if test="${logedActor != null}">
         <jstl:if test="${rol == 'user'}">
-            <div class="w3-display-container" >
-                   <p><i class="fa fa-plus-square w3-xxlarge w3-text-dark-grey w3-hover-text-light-blue iButton w3-padding w3-margin-right w3-display-right"
-                       onclick="relativeRedir('showroom/user/create.do');" style="margin-right:20px;"></i> </p>
-            </div>
+            <spring:message code="label.new" var="newTitle"/>
+            <spring:message code="label.showroom" var="showroomTitle"/>
+            <p><i class="fa fa-plus-square w3-xxlarge w3-text-dark-grey w3-hover-text-light-blue iButton w3-padding w3-margin-right"
+                       onclick="relativeRedir('showroom/user/create.do');" title="${newTitle} ${showroomTitle}"></i> </p>
         </jstl:if>
     </jstl:if>
 

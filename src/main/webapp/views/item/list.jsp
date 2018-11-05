@@ -20,8 +20,6 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<jsp:useBean id="date" class="java.util.Date"/>
-
 <security:authorize access="isAuthenticated()">
     <jstl:set var="colom" value=", "/>
     <security:authentication property="principal.username" var="username"/>
@@ -31,10 +29,10 @@
     <jstl:set var="rol" value="${fn:toLowerCase(permiso)}"/>
 </security:authorize>
 <jstl:if test="${pageSize == null}">
-    <jstl:set value="20" var="pageSize"/>
+    <jstl:set value="5" var="pageSize"/>
 </jstl:if>
 <jstl:if test="${showroom != null}">
-    <jstl:set value="showroom/user/edit.do" var="requestUri"/>
+    <jstl:set value="showroom/display.do" var="requestUri"/>
     <jstl:set value="true" var="included"/>
 </jstl:if>
 <div class="seccion w3-light-grey">
@@ -113,9 +111,11 @@
 
         <spring:message var="msg" code="msg.save.first"/>
         <jstl:set var="url" value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
+        <spring:message code="label.new" var="newTitle"/>
+        <spring:message code="label.item" var="itemTitle"/>
         <p>
             <i class="fa fa-plus-square w3-text-dark-grey w3-hover-text-light-blue w3-xxlarge toRight w3-padding iButton"
-               onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');"></i>
+               onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');" title="${newTitle} ${itemTitle}"></i>
         </p>
     </jstl:if>
     <jstl:if test="${showroom==null and rol eq 'user'}">

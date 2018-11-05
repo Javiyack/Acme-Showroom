@@ -1,12 +1,18 @@
 package services;
 
+import domain.Actor;
 import domain.Comment;
+import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import repositories.CommentRepository;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -18,6 +24,8 @@ public class CommentService {
     @Autowired
     private ActorService actorService;
 
+    @Autowired
+    private Validator validator;
     //Constructor
     public CommentService() {
         super();
@@ -28,12 +36,15 @@ public class CommentService {
     //Create
     public Comment create() {
         final Comment result = new Comment();
+        result.setMoment(new Date());
         return result;
     }
 
-    public Comment save(Comment foolow) {
-        return commentRepository.save(foolow);
-
+    public Comment save(Comment comment) {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        comment.setMoment(new Date());
+        return commentRepository.save(comment);
     }
 
     public Collection<Comment> findAll() {
@@ -44,7 +55,22 @@ public class CommentService {
         return commentRepository.findOne(followId);
     }
 
-    public Collection<Comment> findByPlace(Integer id) {
-        return commentRepository.findByPlace(id);
+
+    public Collection <Comment> findByCommentedObjectId(Integer objectId) {
+        return commentRepository.findByCommentedObjectId(objectId);    }
+
+    public Collection<Comment> findByActor(Integer actorId) {
+        return commentRepository.findByActor(actorId);
+    }
+    public Collection<Comment> findByActorAndObject(Integer actorId, Integer objectId) {
+        return commentRepository.findByActorAndObject(actorId, objectId);
+    }
+
+    public Comment recontruct(Comment comment, BindingResult binding ) {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        comment.setActor(actor);
+        this.validator.validate(comment, binding);
+        return comment;
     }
 }

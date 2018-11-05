@@ -26,7 +26,7 @@
 
 <!-- Menu and banner usually + "$") -->
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-dark-gray sombra"
+<nav class="w3-sidebar w3-collapse sombra w3-flat-wet-asphalt"
 	style="z-index: 3; width: 290px;" id="mySidebar">
 
 	<br>
@@ -139,9 +139,14 @@
 				class="fa fa-cog fa-fw"></i>  <spring:message code="label.configuration" />
 			</a>
 			<a href="tabooWord/administrator/list.do"
-				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-				class="fa fa-ban fa-fw"></i>  <spring:message
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-ban fa-fw"></i>  <spring:message
 					code="label.tabooWords" />
+			</a>
+			<a href="dashboard/administrator/display.do"
+			   class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+					class="fa fa-dashboard fa-fw"></i>  <spring:message
+					code="master.page.dashboard" />
 			</a>
 			<!-- Trigger/Open The Modal -->
 			

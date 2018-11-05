@@ -11,8 +11,6 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<jsp:useBean id="date" class="java.util.Date" />
-
 <div class="toRight">
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Showroom Co., Inc.</b>
 <a href="term/termsAndConditions.do"><spring:message code="term.terms"/></a>

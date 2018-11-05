@@ -972,6 +972,10 @@ input {
 	color: black;
 }
 
+.checked {
+	color: orange !important;
+}
+
 label {
 	margin-top: 14px;
 	margin-bottom: 1px !important;

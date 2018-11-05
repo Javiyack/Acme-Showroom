@@ -1,10 +1,7 @@
 
 package controllers;
 
-import domain.Constant;
-import domain.Item;
-import domain.Showroom;
-import domain.User;
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
+import services.CommentService;
 import services.ItemService;
 import services.ShowroomService;
 
@@ -28,13 +26,10 @@ import java.util.List;
 public class ItemController extends AbstractController {
 
     // Supporting services -----------------------------------------------------
-
-    @Autowired
-    private ShowroomService showroomService;
     @Autowired
     private ItemService itemService;
     @Autowired
-    private ActorService actorService;
+    private CommentService commentService;
 
     // List ------------------------------------------------------------------
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -111,14 +106,10 @@ public class ItemController extends AbstractController {
 
     protected ModelAndView createEditModelAndView(final Item model, final String message) {
         final ModelAndView result;
-        Constant.difficultyLevels[] difficulties = Constant.difficultyLevels.values();
-        List<String> difficultyLevels = new ArrayList<>();
-        for (Constant.difficultyLevels level:difficulties) {
-            difficultyLevels.add(level.toString());
-        }
         result = new ModelAndView("item/edit");
+        Collection<Comment> comments = this.commentService.findByCommentedObjectId(model.getId());
         result.addObject("item", model);
-        result.addObject("difficultyLevels", difficultyLevels);
+        result.addObject("comments", comments);
         result.addObject("message", message);
 
         return result;

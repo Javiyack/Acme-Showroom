@@ -17,7 +17,7 @@
 <tiles-definitions>
 
 	<definition name="dashboard/display" extends="master.page">	
-		<put-attribute name="title" value="Panel de información del Administrador" />
+		<put-attribute name="title" value="" />
 		<put-attribute name="body" value="/views/dashboard/display.jsp" />
 	</definition>
 

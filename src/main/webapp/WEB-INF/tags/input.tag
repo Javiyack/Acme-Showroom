@@ -46,9 +46,11 @@
 
 <div>
 	<form:label path="${path}">
-		<spring:message code="${code}" />
+		<i class="${icon}"></i> <spring:message code="${code}" />
 	</form:label>
-	<form:input path="${path}" type="${type}" readonly="${readonly}" placeholder="${placeholder}" step="${step}"
-		class="${css}" title="${value}" min="${min}" max="${max}"/>
+	<form:input path="${path}"  type="${type}" readonly="${readonly}" placeholder="${placeholder}" step="${step}"
+				class="${css}" title="${title}" id="${id}"  min="${min}" max="${max}"
+				style="font-family:Arial, FontAwesome" form="${form}" pattern="${pattern}"/>
+
 	<form:errors path="${path}" cssClass="error" />
 </div>

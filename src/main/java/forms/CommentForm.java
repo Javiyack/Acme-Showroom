@@ -1,8 +1,10 @@
 
-package domain;
+package forms;
 
+import domain.Actor;
+import domain.Item;
+import domain.Showroom;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,10 +14,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
 
-@Entity
-@Access(AccessType.PROPERTY)
-@Table(indexes = {@Index(columnList = "title, text")})
-public class Comment extends DomainEntity {
+
+public class CommentForm {
 
     private String title;
     private String text;
@@ -24,8 +24,11 @@ public class Comment extends DomainEntity {
     private Collection<String> pictures;
     // Relationships
     private Actor actor;
-    private int commentedObjectId;
-
+    private Item item;
+    private Showroom showroom;
+    // Static
+    public static String SHOWROOM       = "Showroom";
+    public static String ITEM       = "Item";
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -57,17 +60,26 @@ public class Comment extends DomainEntity {
         this.title = title;
     }
 
-
-    @NotNull
-    public int getCommentedObjectId() {
-        return this.commentedObjectId;
+    @Valid
+    @ManyToOne(optional = true)
+    public Item getItem() {
+        return this.item;
     }
 
-    public void setCommentedObjectId(final int commentedObjectId) {
-        this.commentedObjectId = commentedObjectId;
+    public void setItem(final Item parentFolder) {
+        this.item = parentFolder;
     }
 
-    @Range(min = 0, max = 3)
+    @ManyToOne(optional = true)
+    @Valid
+    public Showroom getShowroom() {
+        return showroom;
+    }
+
+    public void setShowroom(Showroom showroom) {
+        this.showroom = showroom;
+    }
+
     public Integer getRating() {
         return rating;
     }

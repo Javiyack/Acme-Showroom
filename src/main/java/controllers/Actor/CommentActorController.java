@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.CommentService;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/comment/actor")
@@ -22,8 +23,7 @@ public class CommentActorController extends AbstractController {
     // Supporting services -----------------------------------------------------
 
     @Autowired
-    private CommentService commentService
-            ;
+    private CommentService commentService;
 
     // Constructors -----------------------------------------------------------
 
@@ -31,6 +31,19 @@ public class CommentActorController extends AbstractController {
         super();
     }
 
+
+    // List ------------------------------------------------------------------
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ModelAndView list(Integer objectId, final Integer pageSize) {
+        ModelAndView result;
+        final Collection <Comment> comments;
+        comments = this.commentService.findByCommentedObjectId(objectId);
+        result = new ModelAndView("comment/list");
+        result.addObject("comments", comments);
+        result.addObject("requestUri", "comment/actor/list.do");
+        result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
+        return result;
+    }
 
 
     // Display user -----------------------------------------------------------
@@ -57,21 +70,22 @@ public class CommentActorController extends AbstractController {
 
     // Create ---------------------------------------------------------------
 
-    @RequestMapping("/create")
-    public ModelAndView create() {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView create(@RequestParam final int objectId) {
         ModelAndView result;
         final Comment comment = commentService.create();
+        comment.setCommentedObjectId(objectId);
         result = this.createEditModelAndView(comment);
         return result;
     }
 
     // Edit  -----------------------------------------------------------
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView edit(@RequestParam final int showroomId) {
+    public ModelAndView edit(@RequestParam final int commentId) {
         ModelAndView result;
 
         try {
-            final Comment comment = this.commentService.findOne(showroomId);
+            final Comment comment = this.commentService.findOne(commentId);
             Assert.notNull(comment, "msg.not.found.resource");
             result = new ModelAndView("comment/edit");
             result.addObject("comment", comment);
@@ -91,8 +105,9 @@ public class CommentActorController extends AbstractController {
     // Save mediante Post ---------------------------------------------------
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid final Comment comment, final BindingResult binding) {
+    public ModelAndView save(Comment comment, final BindingResult binding) {
         ModelAndView result;
+        comment = commentService.recontruct(comment, binding);
         if (binding.hasErrors())
             result = this.createEditModelAndView(comment);
         else
@@ -118,9 +133,9 @@ public class CommentActorController extends AbstractController {
 
     protected ModelAndView createEditModelAndView(final Comment model, final String message) {
         final ModelAndView result;
-        result = new ModelAndView("comment/create");
+        result = new ModelAndView("comment/edit");
         result.addObject("comment", model);
-        result.addObject("requestUri", "comment/create.do");
+        result.addObject("requestUri", "comment/actor/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);
         result.addObject("message", message);

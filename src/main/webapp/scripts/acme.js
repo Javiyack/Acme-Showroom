@@ -13,6 +13,74 @@ $(document).ready(function () {
 
 });
 
+function setRating(element, rating, max) {
+    document.getElementById("rating").value = rating;
+    var id = "star";
+    var i = rating + 1;
+    var next = id + i;
+    if (element.classList.contains("checked")) {
+        if (i <= max && document.getElementById(next).classList.contains("checked")) {
+            for (i = 1; i <= rating; i++) {
+                id += i;
+                document.getElementById(id).classList.remove("fa-star-o");
+                document.getElementById(id).classList.add("fa-star");
+                document.getElementById(id).classList.add("checked");
+                id = "star";
+            }
+            for (i = rating + 1; i <= max; i++) {
+                id += i;
+                document.getElementById(id).classList.remove("checked");
+                document.getElementById(id).classList.remove("fa-star");
+                document.getElementById(id).classList.add("fa-star-o");
+                id = "star";
+            }
+
+        } else {
+            for (i = 1; i <= rating; i++) {
+                id += i;
+                document.getElementById(id).classList.remove("fa-star");
+                document.getElementById(id).classList.add("fa-star-o");
+                document.getElementById(id).classList.remove("checked");
+                id = "star";
+            }
+        }
+    } else {
+        for (i = 1; i <= rating; i++) {
+            id += i;
+            document.getElementById(id).classList.remove("fa-star-o");
+            document.getElementById(id).classList.add("fa-star");
+            document.getElementById(id).classList.add("checked");
+            id = "star";
+        }
+        for (i = rating + 1; i <= max; i++) {
+            id += i;
+            document.getElementById(id).classList.remove("fa-star");
+            document.getElementById(id).classList.add("fa-star-o");
+            document.getElementById(id).classList.remove("checked");
+            id = "star";
+        }
+    }
+
+}
+
+function fillRating(rating) {
+    var id = "star";
+    var i;
+    for (i = 1; i <= rating; i++) {
+        id += i;
+        document.getElementById(id).classList.remove("fa-star-o");
+        document.getElementById(id).classList.add("fa-star");
+        document.getElementById(id).classList.add("checked");
+        id = "star";
+    }
+    for (i = rating + 1; i <= 10; i++) {
+        id += i;
+        document.getElementById(id).classList.remove("fa-star");
+        document.getElementById(id).classList.add("fa-star-o");
+        document.getElementById(id).classList.remove("checked");
+        id = "star";
+    }
+}
 
 function validatePhone(msg) {
     var str = document.getElementById("phone").value;
@@ -20,7 +88,7 @@ function validatePhone(msg) {
     //look for "Hello"
     var patt = /^([+][1-9]\d{0,2}[ ]?[(][1-9]\d{0,2}[)][ ]?\d{4,32})$|^([+][0-9]{1,3}[ ]\d{4,32})$|^(\d{4,32})$/g;
     var matchPatern = patt.test(str);
-    if(!matchPatern){
+    if (!matchPatern) {
         if (confirm(msg)) {
             return true;
         } else {

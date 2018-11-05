@@ -52,6 +52,5 @@
 	</form:label>
 	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}"
 		class="${css}" title="${title}" id="${id}" style="font-family:Arial, FontAwesome" form="${form}" pattern="${pattern}"/>
-
 	<form:errors path="${path}" cssClass="error" />
 </div>

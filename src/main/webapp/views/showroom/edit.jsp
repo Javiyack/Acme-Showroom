@@ -49,6 +49,12 @@
                 <div class="col-100">
                     <legend>
                         <spring:message code="label.showroom"/>: <jstl:out value="${showroom.name}"/>
+                        <jstl:if test="${item.id!=0}">
+                            <a href="comment/actor/create.do?objectId=${showroom.id}"><i
+                                    class="fa fa-commenting-o font-awesome w3-xxlarge toRight"></i></a>
+                            <a href="comment/actor/list.do?objectId=${showroom.id}"><i
+                                    class="fa fa-comments-o font-awesome w3-xxlarge toRight w3-margin-right"></i></a>
+                        </jstl:if>
                     </legend>
                     <div class="row">
                         <div class="col-75">
@@ -89,6 +95,7 @@
                         </jstl:if>
                     </jstl:if>
                     <acme:button text="label.user" url="actor/display.do?actorId=${showroom.user.id}"/>
+
                 </div>
             </div>
         </div>
@@ -97,3 +104,5 @@
 <jstl:set value="${showroom.id}" var="showroomId"/>
 
 <%@ include file="/views/item/list.jsp" %>
+
+<%@ include file="/views/comment/list.jsp" %>

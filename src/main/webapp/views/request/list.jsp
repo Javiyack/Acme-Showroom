@@ -20,8 +20,6 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<jsp:useBean id="date" class="java.util.Date"/>
-
 <security:authorize access="isAuthenticated()">
     <jstl:set var="colom" value=", "/>
     <security:authentication property="principal.username" var="username"/>

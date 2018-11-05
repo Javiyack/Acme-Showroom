@@ -4,6 +4,7 @@ package controllers.User;
 import controllers.AbstractController;
 import controllers.ShowroomController;
 import controllers.UserController;
+import domain.Comment;
 import domain.Item;
 import domain.Showroom;
 import domain.User;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import services.ActorService;
-import services.ChirpService;
-import services.ItemService;
-import services.ShowroomService;
+import services.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -38,6 +36,8 @@ public class ShowroomUserController extends AbstractController {
     private ActorService actorService;
     @Autowired
     private ChirpService chirpService;
+    @Autowired
+    private CommentService commentService;
     // Constructors -----------------------------------------------------------
 
     public ShowroomUserController() {
@@ -111,8 +111,10 @@ public class ShowroomUserController extends AbstractController {
             result = this.createEditModelAndView(showroom);
         else
             try {
+                Boolean crearChirpAutomatico = showroom.getId()==0;
                 showroom = this.showroomService.save(showroom);
-                this.chirpService.createAutomaticChrip("Showroom", "Nuevo Escaparate","Se ha creado el nuevo escaparate " + showroom.getName());
+                if(crearChirpAutomatico)
+                    this.chirpService.createAutomaticChrip("Showroom", "Nuevo Escaparate","Se ha creado el nuevo escaparate " + showroom.getName());
                 result = this.createEditModelAndView(showroom);
                 result.addObject("info", "msg.commit.ok");
             } catch ( Throwable oops) {
@@ -168,7 +170,9 @@ public class ShowroomUserController extends AbstractController {
 
         result = new ModelAndView("showroom/edit");
         result.addObject("showroom", model);
-        result.addObject("items", items);
+        Collection<Comment> comments = this.commentService.findByCommentedObjectId(model.getId());
+        result.addObject("item", model);
+        result.addObject("comments", comments);
         result.addObject("requestUri", "showroom/user/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);

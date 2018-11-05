@@ -1,6 +1,7 @@
 
 package controllers;
 
+import domain.Comment;
 import domain.Item;
 import domain.Showroom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import services.CommentService;
 import services.ItemService;
 import services.ShowroomService;
 
@@ -30,7 +32,9 @@ public class ShowroomController extends AbstractController {
 
     @Autowired
     private ItemService itemService;
-    // Constructors -----------------------------------------------------------
+    @Autowired
+    private CommentService commentService;
+// Constructors -----------------------------------------------------------
 
     public ShowroomController() {
         super();
@@ -92,9 +96,11 @@ public class ShowroomController extends AbstractController {
     protected ModelAndView createDisplaytModelAndView(final Showroom model, final String message) {
         final ModelAndView result;
         Collection<Item> items =  itemService.findByShowroom(model);
+        Collection<Comment> comments = this.commentService.findByCommentedObjectId(model.getId());
         result = new ModelAndView("showroom/display");
         result.addObject("showroom", model);
         result.addObject("items", items);
+        result.addObject("comments", comments);
         result.addObject("edition", false);
         result.addObject("creation", false);
         result.addObject("message", message);

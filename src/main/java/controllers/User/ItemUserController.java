@@ -2,6 +2,7 @@
 package controllers.User;
 
 import controllers.AbstractController;
+import domain.Comment;
 import domain.Constant;
 import domain.Item;
 import domain.User;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
-import services.ActorService;
-import services.ChirpService;
-import services.ItemService;
-import services.ShowroomService;
+import services.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,6 +37,8 @@ public class ItemUserController extends AbstractController {
     private ActorService actorService;
     @Autowired
     private ChirpService chirpService;
+    @Autowired
+    private CommentService commentService;
     // Constructors -----------------------------------------------------------
 
     public ItemUserController() {
@@ -141,8 +141,10 @@ public class ItemUserController extends AbstractController {
             result = this.createEditModelAndView(item);
         else
             try {
+                Boolean crearChirpAutomatico = item.getId()==0;
                 item = this.itemService.save(item);
-                this.chirpService.createAutomaticChrip("Artículos", "Nuevo Articulo","Se ha añadido el nuevo artículo "
+                if(crearChirpAutomatico)
+                    this.chirpService.createAutomaticChrip("Artículos", "Nuevo Articulo","Se ha añadido el nuevo artículo "
                         + item.getTitle() + " al escaparate " + item.getShowroom().getName());
                 result = new ModelAndView("redirect:/showroom/user/edit.do?showroomId=" + item.getShowroom().getId());
             } catch ( Throwable oops) {
@@ -197,7 +199,9 @@ public class ItemUserController extends AbstractController {
          ModelAndView result;
 
         result = new ModelAndView("item/edit");
+        Collection<Comment> comments = this.commentService.findByCommentedObjectId(model.getId());
         result.addObject("item", model);
+        result.addObject("comments", comments);
         result.addObject("requestUri", "item/user/create.do");
         result.addObject("edition", true);
         result.addObject("creation", model.getId() == 0);

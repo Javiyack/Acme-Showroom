@@ -58,7 +58,15 @@
         <div class="row">
             <div class="col-100">
                 <legend>
-                    <spring:message code="label.item"/>
+                    <spring:message code="label.item"/>: <jstl:out value="${item.title}"/>
+                    <jstl:if test="${item.id!=0}">
+                    <security:authorize access="isAuthenticated()">
+                        <a href="comment/actor/create.do?objectId=${item.id}"><i
+                                class="fa fa-commenting-o font-awesome w3-xxlarge toRight"></i></a>
+                        <a href="comment/actor/list.do?objectId=${item.id}"><i
+                                class="fa fa-comments-o font-awesome w3-xxlarge toRight w3-margin-right"></i></a>
+                    </security:authorize>
+                </jstl:if>
                 </legend>
             </div>
         </div>
@@ -94,6 +102,7 @@
 
         <div class="row">
             <div class="col-100">
+
                 <hr>
                 <jstl:if test="${!readonly}">
                     <acme:submit name="save" code="label.save"
@@ -119,3 +128,5 @@
     </form:form>
 
 </div>
+
+<%@ include file="/views/comment/list.jsp" %>
