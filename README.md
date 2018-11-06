@@ -1,3 +1,4 @@
 # Acme-Showroom
-Sistemas y Gestión Informatica. Web application for systems and computer management support. 
 Group 10.
+Web application for 2017/2018 [D&T] December summon. 
+
