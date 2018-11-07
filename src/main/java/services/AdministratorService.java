@@ -116,4 +116,19 @@ public class AdministratorService {
 		return admin;
 	}
 
+	public Double findAverageShowroomsPerUser() {
+		return administratorRepository.findAverageShowroomsPerUser();
+	}
+
+	public Integer findMinimunShowroomsPerUser() {
+		return administratorRepository.findMinimunShowroomsPerUser();
+	}
+
+	public Integer findMaximunShowroomsPerUser() {
+		return administratorRepository.findMaximunShowroomsPerUser();
+	}
+
+	public Double findStdevShowroomsPerUser() {
+		return administratorRepository.findStdevShowroomsPerUser();
+	}
 }
