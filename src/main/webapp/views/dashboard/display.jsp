@@ -24,14 +24,14 @@
         <spring:message code="dashboard.administrator"/>
     </legend>
 
-       <%
-            datos = new HashMap <String, String>();
-        %>
-        <jstl:forEach items="${dashboard}" var="board">
+    <%
+        datos = new HashMap <String, String>();
+    %>
+    <jstl:forEach items="${dashboard}" var="board">
         <div class="w3-row-padding w3-margin-bottom">
-        <h3>
-                <jstl:out value="${board.key}"/>
-            </h3>
+            <h5 class="w3-padding">
+                <label><spring:message code="dashboard.${board.key}"/></label>
+            </h5>
             <jstl:forEach items="${board.value}" var="chart">
                 <jstl:set var="chartData" value="["/>
                 <jstl:forEach items="${chart.value}" var="data">
@@ -49,18 +49,17 @@
                 <%
                     datos.put(beanClass.getKey(), beanClass.getValue());
                 %>
-                <div class="w3-container w3-quarter">
+                <div class="w3-container w3-quarter w3-margin-bottom">
                     <div class="w3-card-4" style="width:100%">
-                        <div id="${chart.key}" style="height: 160px; width: 100%;" on></div>
+                        <div id="${chart.key}" style="height: 160px; width: 100%;"></div>
                         <div class="w3-container w3-center w3-padding">
                             <label><spring:message code="dashboard.${chart.key}"/></label>
                         </div>
                     </div>
-                    <br>
                 </div>
             </jstl:forEach>
         </div>
-        </jstl:forEach>
+    </jstl:forEach>
 </div>
 <script>
     window.onload = function () {
@@ -69,7 +68,7 @@
         while (entries.hasNext()) {
             Map.Entry<String, String> entry = entries.next();
             %>
-        newChart(<%=entry.getKey()%>, <%=entry.getValue()%>, "", "light1", "column");
+        newChart(<%=entry.getKey()%>, <%=entry.getValue()%>, "", "light2", "column");
         <%
        }%>
 
@@ -81,7 +80,7 @@
                     text: title
                 },
                 data: [{
-                    type: type,// "column", "dognut"
+                    type: type,// "column", "doughnut", "pie"
                     startAngle: 270,
                     yValueFormatString: "##0.00\"\"",
                     indexLabel: "{label} {y}",

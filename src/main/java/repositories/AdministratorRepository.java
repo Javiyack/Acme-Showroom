@@ -26,19 +26,23 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
     /*	1. The average, the minimum, the maximum, and the standard deviation of the
 			number of showrooms per user. */
     @Query(value = "select avg(usuario.showrooms) " +
-            "from (select count(s.user_id) showrooms from Showroom s group by s.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Double findAverageShowroomsPerUser();
 
     @Query(value = "select max(usuario.showrooms) " +
-            "from (select count(s.user_id) showrooms from Showroom s group by s.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMaximunShowroomsPerUser();
 
     @Query(value = "select min(usuario.showrooms) " +
-            "from (select count(s.user_id) showrooms from Showroom s group by s.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMinimunShowroomsPerUser();
 
     @Query(value = "select sqrt(sum(usuario.showrooms*usuario.showrooms)/count(usuario.showrooms) - avg(usuario.showrooms)*avg(usuario.showrooms)) " +
-            "from (select count(s.user_id) showrooms from Showroom s group by s.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Double findStdevShowroomsPerUser();
 
     @Query("select s.user, count(s.user) from Showroom s group by s.user")
@@ -47,27 +51,23 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
     /*	2. The average, the minimum, the maximum, and the standard deviation of the
 			number of items per user. */
     @Query(value = "select avg(usuario.items) " +
-                    "from (select count(i.id) items " +
-                    "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
-                    "group by u.id) as usuario", nativeQuery = true)
+                    "from (select sum(case when i.showroom_id = s.id and s.user_id= u.id then 1 else 0 end) items " +
+            "from Item i join Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Double findAverageItemsPerUser();
 
     @Query(value = "select max(usuario.items) " +
-            "from (select count(i.id) items " +
-            "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
-            "group by u.id) as usuario", nativeQuery = true)
+            "from (select sum(case when i.showroom_id = s.id and s.user_id= u.id then 1 else 0 end) items " +
+            "from Item i join Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMaximunItemsPerUser();
 
     @Query(value = "select min(usuario.items) " +
-            "from (select count(i.id) items " +
-            "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
-            "group by u.id) as usuario", nativeQuery = true)
+            "from (select sum(case when i.showroom_id = s.id and s.user_id= u.id then 1 else 0 end) items " +
+            "from Item i join Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMinimunItemsPerUser();
 
     @Query(value = "select sqrt(sum(usuario.items*usuario.items)/count(usuario.items) - avg(usuario.items)*avg(usuario.items)) " +
-            "from (select count(i.id) items " +
-            "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
-            "group by u.id) as usuario", nativeQuery = true)
+            "from (select sum(case when i.showroom_id = s.id and s.user_id= u.id then 1 else 0 end) items " +
+            "from Item i join Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Double findStdevItemsPerUser();
 
     @Query("select i.showroom.user, count(i.showroom.user) from Item i group by i.showroom.user")
@@ -76,19 +76,23 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
     /*	3. The average, the minimum, the maximum, and the standard deviation of the
 			number of requests per user. */
     @Query(value = "select avg(usuario.requests) " +
-            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u group by u.id) as usuario", nativeQuery = true)
     Double findAverageRequestsPerUser();
 
     @Query(value = "select max(usuario.requests) " +
-            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMaximunRequestsPerUser();
 
     @Query(value = "select min(usuario.requests) " +
-            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMinimunRequestsPerUser();
 
     @Query(value = "select sqrt(sum(usuario.requests*usuario.requests)/count(usuario.requests) - avg(usuario.requests)*avg(usuario.requests)) " +
-            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u group by u.id) as usuario", nativeQuery = true)
     Double findStdevRequestsPerUser();
 
     @Query("select r.user, count(r.user) from Request r group by r.user")
@@ -97,20 +101,24 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 
     /*	4. The average, the minimum, the maximum, and the standard deviation of the
 			number of rejected Requests per user. */
-    @Query(value = "select avg(usuario.rejectedRequests) " +
-            "from (select count(r.user_id) rejectedRequests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    @Query(value = "select avg(usuario.requests) " +
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u where r.status='REJECTED' group by u.id) as usuario", nativeQuery = true)
     Double findAverageRejectedRequestsPerUser();
 
-    @Query(value = "select max(usuario.rejectedRequests) " +
-            "from (select count(r.user_id) rejectedRequests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    @Query(value = "select max(usuario.requests) " +
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u where r.status='REJECTED' group by u.id) as usuario", nativeQuery = true)
     Integer findMaximunRejectedRequestsPerUser();
 
-    @Query(value = "select min(usuario.rejectedRequests) " +
-            "from (select count(r.user_id) rejectedRequests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    @Query(value = "select min(usuario.requests) " +
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) requests " +
+            "from Request r join User u where r.status='REJECTED' group by u.id) as usuario", nativeQuery = true)
     Integer findMinimunRejectedRequestsPerUser();
 
     @Query(value = "select sqrt(sum(usuario.rejectedRequests*usuario.rejectedRequests)/count(usuario.rejectedRequests) - avg(usuario.rejectedRequests)*avg(usuario.rejectedRequests)) " +
-            "from (select count(r.user_id) rejectedRequests from Request r where r.status='REJECTED' group by r.user_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when r.user_id = u.id then 1 else 0 end) rejectedRequests " +
+            "from Request r join User u where r.status='REJECTED' group by u.id) as usuario", nativeQuery = true)
     Double findStdevRejectedRequestsPerUser();
 
     @Query("select r.user, count(r.user) from Request r where r.status='REJECTED' group by r.user")
@@ -121,19 +129,27 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
     /*	1. The average, the minimum, the maximum, and the standard deviation of the
            number of chirps per actor. */
     @Query(value = "select avg(usuario.chirps) " +
-            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when c.actor_id = u.id then 1 else 0 end) chirps " +
+            "from Chirp c right join User u on c.actor_id=u.id left join Administrator a on c.actor_id=a.id " +
+            "left join Agent ag on c.actor_id=ag.id group by u.id) as usuario", nativeQuery = true)
     Double findAverageChirpsPerUser();
 
     @Query(value = "select max(usuario.chirps) " +
-            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when c.actor_id = u.id then 1 else 0 end) chirps " +
+            "from Chirp c right join User u on c.actor_id=u.id left join Administrator a on c.actor_id=a.id " +
+            "left join Agent ag on c.actor_id=ag.id group by u.id) as usuario", nativeQuery = true)
     Integer findMaximunChirpsPerUser();
 
     @Query(value = "select min(usuario.chirps) " +
-            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when c.actor_id = u.id then 1 else 0 end) chirps " +
+            "from Chirp c right join User u on c.actor_id=u.id left join Administrator a on c.actor_id=a.id " +
+            "left join Agent ag on c.actor_id=ag.id group by u.id) as usuario", nativeQuery = true)
     Integer findMinimunChirpsPerUser();
 
     @Query(value = "select sqrt(sum(usuario.chirps*usuario.chirps)/count(usuario.chirps) - avg(usuario.chirps)*avg(usuario.chirps)) " +
-            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+            "from (select sum(case when c.actor_id = u.id then 1 else 0 end) chirps " +
+            "from Chirp c right join User u on c.actor_id=u.id left join Administrator a on c.actor_id=a.id " +
+            "left join Agent ag on c.actor_id=ag.id group by u.id) as usuario", nativeQuery = true)
     Double findStdevChirpsPerUser();
 
     @Query("select c.actor, count(c.actor) from Chirp c group by c.actor")
@@ -142,23 +158,23 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
     /*	2. The average, the minimum, the maximum, and the standard deviation of the
            number of followers per actor. */
     @Query(value = "select avg(usuario.followers) " +
-            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
-            "as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) followers " +
+            "from Subscription s join User u group by u.id) as usuario", nativeQuery = true)
     Double findAverageFollowersPerUser();
 
     @Query(value = "select max(usuario.followers) " +
-            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
-            "as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMaximunFollowersPerUser();
 
     @Query(value = "select min(usuario.followers) " +
-            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
-            "as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Integer findMinimunFollowersPerUser();
 
     @Query(value = "select sqrt(sum(usuario.followers*usuario.followers)/count(usuario.followers) - avg(usuario.followers)*avg(usuario.followers)) " +
-            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
-            "as usuario ", nativeQuery = true)
+            "from (select sum(case when s.user_id = u.id then 1 else 0 end) showrooms " +
+            "from Showroom s join User u group by u.id) as usuario", nativeQuery = true)
     Double findStdevFollowersPerUser();
 
     @Query("select f.subscribedActor, count(f.subscriber) from Subscription f group by f.subscribedActor")

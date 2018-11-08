@@ -91,7 +91,7 @@ public class DashboardAdministratorController extends AbstractController {
         levelB.put("followedsPerUser", followedsPerUser);
 		/*	3. 	The minimum, the maximum, the average, and the standard deviation of the
 			number of subscriptors per user.*/
-        Map <String, Object> followersPerUser = new HashMap <>();
+      Map <String, Object> followersPerUser = new HashMap <>();
         followersPerUser.put("avg", administratorService.findAverageFollowersPerUser() != null ? administratorService.findAverageFollowersPerUser() : 0);
         followersPerUser.put("min", administratorService.findMinimunFollowersPerUser() != null ? administratorService.findMinimunFollowersPerUser() : 0);
         followersPerUser.put("max", administratorService.findMaximunFollowersPerUser() != null ? administratorService.findMaximunFollowersPerUser() : 0);
@@ -136,6 +136,9 @@ public class DashboardAdministratorController extends AbstractController {
         commentsPerUser.put("stdev", administratorService.findStdevCommentsPerUser() != null ? administratorService.findStdevCommentsPerUser() : 0);
         levelA.put("commentsPerUser", commentsPerUser);
         dashboard.put("levelA", levelA);
+
+
+
         result.addObject("dashboard", dashboard);
         return result;
     }
