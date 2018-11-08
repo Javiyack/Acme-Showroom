@@ -36,10 +36,8 @@ public class DashboardAdministratorController extends AbstractController {
         ModelAndView result = new ModelAndView("dashboard/display");
 
         Map <String, Map <String, Map <String, Object>>> dashboard = new TreeMap <>();
-
         /*  DASHBOARD C */
         Map <String, Map <String, Object>> levelC = new TreeMap <>();
-
 		/*	1. The average, the minimum, the maximum, and the standard deviation of the
 			number of showrooms per user. */
         Map <String, Object> showroomsPerUser = new HashMap <>();
@@ -48,7 +46,6 @@ public class DashboardAdministratorController extends AbstractController {
         showroomsPerUser.put("max", administratorService.findMaximunShowroomsPerUser() != null ? administratorService.findMaximunShowroomsPerUser() : 0);
         showroomsPerUser.put("stdev", administratorService.findStdevShowroomsPerUser() != null ? administratorService.findStdevShowroomsPerUser() : 0);
         levelC.put("showroomsPerUser", showroomsPerUser);
-
 		/*	2. The average, the minimum, the maximum, and the standard deviation of the
 			number of items per showroom.		 */
         Map <String, Object> itemsPerUser = new HashMap <>();
@@ -57,8 +54,6 @@ public class DashboardAdministratorController extends AbstractController {
         itemsPerUser.put("max", administratorService.findMaximunItemsPerUser() != null ? administratorService.findMaximunItemsPerUser() : 0);
         itemsPerUser.put("stdev", administratorService.findStdevItemsPerUser() != null ? administratorService.findStdevItemsPerUser() : 0);
         levelC.put("itemsPerUser", itemsPerUser);
-
-
 		/*	3. The average, the minimum, the maximum, and the standard deviation of the
 			number of requests per showroom.		 */
         Map <String, Object> requestsPerUser = new HashMap <>();
@@ -67,22 +62,17 @@ public class DashboardAdministratorController extends AbstractController {
         requestsPerUser.put("max", administratorService.findMaximunRequestsPerUser() != null ? administratorService.findMaximunRequestsPerUser() : 0);
         requestsPerUser.put("stdev", administratorService.findStdevRequestsPerUser() != null ? administratorService.findStdevRequestsPerUser() : 0);
         levelC.put("requestsPerUser", requestsPerUser);
-
 		/*	4. The average, the minimum, the maximum, and the standard deviation of the
 			number of rejectedRequests per showroom.		 */
         Map <String, Object> rejectedRequestsPerUser = new HashMap <>();
-
         rejectedRequestsPerUser.put("avg", administratorService.findAverageRejectedRequestsPerUser() != null ? administratorService.findAverageRejectedRequestsPerUser() : 0);
         rejectedRequestsPerUser.put("min", administratorService.findMinimunRejectedRequestsPerUser() != null ? administratorService.findMinimunRejectedRequestsPerUser() : 0);
         rejectedRequestsPerUser.put("max", administratorService.findMaximunRejectedRequestsPerUser() != null ? administratorService.findMaximunRejectedRequestsPerUser() : 0);
         rejectedRequestsPerUser.put("stdev", administratorService.findStdevRejectedRequestsPerUser() != null ? administratorService.findStdevRejectedRequestsPerUser() : 0);
         levelC.put("rejectedRequestsPerUser", rejectedRequestsPerUser);
-
         dashboard.put("levelC", levelC);
-
         /* 	DASHBOARD B */
         Map <String, Map <String, Object>> levelB = new TreeMap <>();
-
         /*	1. The average, the minimum, the maximum, and the standard deviation of the
 			number of chirp per showroom.		 */
         Map <String, Object> chirpsPerUser = new HashMap <>();
@@ -91,7 +81,6 @@ public class DashboardAdministratorController extends AbstractController {
         chirpsPerUser.put("max", administratorService.findMaximunChirpsPerUser() != null ? administratorService.findMaximunChirpsPerUser() : 0);
         chirpsPerUser.put("stdev", administratorService.findStdevChirpsPerUser() != null ? administratorService.findStdevChirpsPerUser() : 0);
         levelB.put("chirpsPerUser", chirpsPerUser);
-
 		/*	2. 	The minimum, the maximum, the average, and the standard deviation of the
 			number of users to whom users subscribe.*/
         Map <String, Object> followedsPerUser = new HashMap <>();
@@ -100,7 +89,6 @@ public class DashboardAdministratorController extends AbstractController {
         followedsPerUser.put("max", administratorService.findMaximunFollowedsPerUser() != null ? administratorService.findMaximunFollowedsPerUser() : 0);
         followedsPerUser.put("stdev", administratorService.findStdevFollowedsPerUser() != null ? administratorService.findStdevFollowedsPerUser() : 0);
         levelB.put("followedsPerUser", followedsPerUser);
-
 		/*	3. 	The minimum, the maximum, the average, and the standard deviation of the
 			number of subscriptors per user.*/
         Map <String, Object> followersPerUser = new HashMap <>();
@@ -109,7 +97,6 @@ public class DashboardAdministratorController extends AbstractController {
         followersPerUser.put("max", administratorService.findMaximunFollowersPerUser() != null ? administratorService.findMaximunFollowersPerUser() : 0);
         followersPerUser.put("stdev", administratorService.findStdevFollowersPerUser() != null ? administratorService.findStdevFollowersPerUser() : 0);
         levelB.put("followersPerUser", followersPerUser);
-
         /*	4.	A chart with the number of chirps published grouped by topic.  */
         Map <String, Object> chirpsPerTopic = new HashMap <>();
         Collection <Object> chirpsPT;
@@ -121,12 +108,9 @@ public class DashboardAdministratorController extends AbstractController {
             }
         }
         levelB.put("chirpsPerTopic", chirpsPerTopic);
-
         dashboard.put("levelB", levelB);
-
         /* DASHBOARD A */
         Map <String, Map <String, Object>> levelA = new TreeMap <>();
-
 		/*	1.	The average, the minimum, the maximum, and the standard deviation of the
 			number of comments per showroom.*/
         Map <String, Object> commentsPerShowroom = new HashMap <>();
@@ -135,8 +119,6 @@ public class DashboardAdministratorController extends AbstractController {
         commentsPerShowroom.put("max", administratorService.findMaximunCommentsPerShowroom() != null ? administratorService.findMaximunCommentsPerShowroom() : 0);
         commentsPerShowroom.put("stdev", administratorService.findStdevCommentsPerShowroom() != null ? administratorService.findStdevCommentsPerShowroom() : 0);
         levelA.put("commentsPerShowroom", commentsPerShowroom);
-
-
 		/*	2. 	The average, the minimum, the maximum, and the standard deviation of the
 		number of comments per item.*/
         Map <String, Object> commentsPerItem = new HashMap <>();
@@ -145,8 +127,6 @@ public class DashboardAdministratorController extends AbstractController {
         commentsPerItem.put("max", administratorService.findMaximunCommentsPerItem() != null ? administratorService.findMaximunCommentsPerItem() : 0);
         commentsPerItem.put("stdev", administratorService.findStdevCommentsPerItem() != null ? administratorService.findStdevCommentsPerItem() : 0);
         levelA.put("commentsPerItem", commentsPerItem);
-
-
 		/*	3. 	The average, the minimum, the maximum, and the standard deviation of the
 		number of comments per user */
         Map <String, Object> commentsPerUser = new HashMap <>();
@@ -155,9 +135,7 @@ public class DashboardAdministratorController extends AbstractController {
         commentsPerUser.put("max", administratorService.findMaximunCommentsPerUser() != null ? administratorService.findMaximunCommentsPerUser() : 0);
         commentsPerUser.put("stdev", administratorService.findStdevCommentsPerUser() != null ? administratorService.findStdevCommentsPerUser() : 0);
         levelA.put("commentsPerUser", commentsPerUser);
-
         dashboard.put("levelA", levelA);
-
         result.addObject("dashboard", dashboard);
         return result;
     }
