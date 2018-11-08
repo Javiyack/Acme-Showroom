@@ -10,6 +10,7 @@
 
 package repositories;
 
+import domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import domain.Administrator;
 
 import java.util.Collection;
+import java.util.Map;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Integer> {
@@ -39,18 +41,231 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
             "from (select count(s.user_id) showrooms from Showroom s group by s.user_id) as usuario ", nativeQuery = true)
     Double findStdevShowroomsPerUser();
 
-    @Query("select count(s.user) from Showroom s group by s.user")
-    Collection<Integer> findSCountShowroomsPerUser();
-}
-    /*	1. The average, the minimum, the maximum, and the standard deviation of the
-			number of showrooms per user. */
-  /*   @Query("select avg(cr.benefitsPercentage), " +
-            "sqrt(sum(cr.benefitsPercentage*cr.benefitsPercentage)/count(cr.benefitsPercentage) - avg(cr.benefitsPercentage)*avg(cr.benefitsPercentage)) " +
-            "from CollaborationRequest cr " +
-            "where cr.accepted = false")
-    Integer findAverageShowroomsPerUser();
+    @Query("select s.user, count(s.user) from Showroom s group by s.user")
+    Map<User, Integer> findSCountShowroomsPerUser();
 
-    Double findStdevShowroomsPerUser();*/
+    /*	2. The average, the minimum, the maximum, and the standard deviation of the
+			number of items per user. */
+    @Query(value = "select avg(usuario.items) " +
+                    "from (select count(i.id) items " +
+                    "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
+                    "group by u.id) as usuario", nativeQuery = true)
+    Double findAverageItemsPerUser();
+
+    @Query(value = "select max(usuario.items) " +
+            "from (select count(i.id) items " +
+            "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
+            "group by u.id) as usuario", nativeQuery = true)
+    Integer findMaximunItemsPerUser();
+
+    @Query(value = "select min(usuario.items) " +
+            "from (select count(i.id) items " +
+            "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
+            "group by u.id) as usuario", nativeQuery = true)
+    Integer findMinimunItemsPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.items*usuario.items)/count(usuario.items) - avg(usuario.items)*avg(usuario.items)) " +
+            "from (select count(i.id) items " +
+            "from Item i join Showroom s join User u where i.showroom_id=s.id and s.user_id=u.id " +
+            "group by u.id) as usuario", nativeQuery = true)
+    Double findStdevItemsPerUser();
+
+    @Query("select i.showroom.user, count(i.showroom.user) from Item i group by i.showroom.user")
+    Map<User, Integer> findSCountItemsPerUser();
+
+    /*	3. The average, the minimum, the maximum, and the standard deviation of the
+			number of requests per user. */
+    @Query(value = "select avg(usuario.requests) " +
+            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Double findAverageRequestsPerUser();
+
+    @Query(value = "select max(usuario.requests) " +
+            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Integer findMaximunRequestsPerUser();
+
+    @Query(value = "select min(usuario.requests) " +
+            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Integer findMinimunRequestsPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.requests*usuario.requests)/count(usuario.requests) - avg(usuario.requests)*avg(usuario.requests)) " +
+            "from (select count(r.user_id) requests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Double findStdevRequestsPerUser();
+
+    @Query("select r.user, count(r.user) from Request r group by r.user")
+    Map<User, Integer> findSCountRequestsPerUser();
+
+
+    /*	4. The average, the minimum, the maximum, and the standard deviation of the
+			number of rejected Requests per user. */
+    @Query(value = "select avg(usuario.rejectedRequests) " +
+            "from (select count(r.user_id) rejectedRequests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Double findAverageRejectedRequestsPerUser();
+
+    @Query(value = "select max(usuario.rejectedRequests) " +
+            "from (select count(r.user_id) rejectedRequests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Integer findMaximunRejectedRequestsPerUser();
+
+    @Query(value = "select min(usuario.rejectedRequests) " +
+            "from (select count(r.user_id) rejectedRequests from Request r group by r.user_id) as usuario ", nativeQuery = true)
+    Integer findMinimunRejectedRequestsPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.rejectedRequests*usuario.rejectedRequests)/count(usuario.rejectedRequests) - avg(usuario.rejectedRequests)*avg(usuario.rejectedRequests)) " +
+            "from (select count(r.user_id) rejectedRequests from Request r where r.status='REJECTED' group by r.user_id) as usuario ", nativeQuery = true)
+    Double findStdevRejectedRequestsPerUser();
+
+    @Query("select r.user, count(r.user) from Request r where r.status='REJECTED' group by r.user")
+    Map<User, Integer> findSCountRejectedRequestsPerUser();
+
+
+    /* DashBoard B */
+    /*	1. The average, the minimum, the maximum, and the standard deviation of the
+           number of chirps per actor. */
+    @Query(value = "select avg(usuario.chirps) " +
+            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+    Double findAverageChirpsPerUser();
+
+    @Query(value = "select max(usuario.chirps) " +
+            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+    Integer findMaximunChirpsPerUser();
+
+    @Query(value = "select min(usuario.chirps) " +
+            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+    Integer findMinimunChirpsPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.chirps*usuario.chirps)/count(usuario.chirps) - avg(usuario.chirps)*avg(usuario.chirps)) " +
+            "from (select count(c.actor_id) chirps from Chirp c group by c.actor_id) as usuario ", nativeQuery = true)
+    Double findStdevChirpsPerUser();
+
+    @Query("select c.actor, count(c.actor) from Chirp c group by c.actor")
+    Map<User, Integer> findSCountChirpsPerUser();
+
+    /*	2. The average, the minimum, the maximum, and the standard deviation of the
+           number of followers per actor. */
+    @Query(value = "select avg(usuario.followers) " +
+            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findAverageFollowersPerUser();
+
+    @Query(value = "select max(usuario.followers) " +
+            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMaximunFollowersPerUser();
+
+    @Query(value = "select min(usuario.followers) " +
+            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMinimunFollowersPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.followers*usuario.followers)/count(usuario.followers) - avg(usuario.followers)*avg(usuario.followers)) " +
+            "from (select count(s.subscriber_id) followers from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findStdevFollowersPerUser();
+
+    @Query("select f.subscribedActor, count(f.subscriber) from Subscription f group by f.subscribedActor")
+    Map<User, Integer> findSCountFollowersPerUser();
+
+    /*	3. The average, the minimum, the maximum, and the standard deviation of the
+           number of followeds per actor. */
+    @Query(value = "select avg(usuario.followeds) " +
+            "from (select count(s.subscriber_id) followeds from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findAverageFollowedsPerUser();
+
+    @Query(value = "select max(usuario.followeds) " +
+            "from (select count(s.subscriber_id) followeds from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMaximunFollowedsPerUser();
+
+    @Query(value = "select min(usuario.followeds) " +
+            "from (select count(s.subscriber_id) followeds from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMinimunFollowedsPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.followeds*usuario.followeds)/count(usuario.followeds) - avg(usuario.followeds)*avg(usuario.followeds)) " +
+            "from (select count(s.subscriber_id) followeds from Subscription s group by s.subscribedActor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findStdevFollowedsPerUser();
+
+    @Query("select f.subscribedActor, count(f.subscriber) from Subscription f group by f.subscribedActor")
+    Map<User, Integer> findSCountFollowedsPerUser();
+
+    @Query("select c.topic, count(c.id) from Chirp c group by c.topic")
+    Collection<Object> findChirpsNumberPerTopic();
+
+    @Query(value = "select avg(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findAverageCommentsPerUser();
+
+    @Query(value = "select max(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMaximunCommentsPerUser();
+
+    @Query(value = "select min(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMinimunCommentsPerUser();
+
+    @Query(value = "select sqrt(sum(usuario.comments*usuario.comments)/count(usuario.comments) - avg(usuario.comments)*avg(usuario.comments)) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findStdevCommentsPerUser();
+
+    @Query("select c.actor, count(c.id) from Comment c group by c.actor")
+    Map<User, Integer> findSCountCommentsPerUser();
+
+    @Query(value = "select avg(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findAverageCommentsPerShowroom();
+
+    @Query(value = "select max(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMaximunCommentsPerShowroom();
+
+    @Query(value = "select min(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMinimunCommentsPerShowroom();
+
+    @Query(value = "select sqrt(sum(usuario.comments*usuario.comments)/count(usuario.comments) - avg(usuario.comments)*avg(usuario.comments)) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findStdevCommentsPerShowroom();
+
+    @Query("select c.actor, count(c.id) from Comment c group by c.actor")
+    Map<User, Integer> findSCountCommentsPerShowroom();
+
+    @Query(value = "select avg(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findAverageCommentsPerItem();
+
+    @Query(value = "select max(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMaximunCommentsPerItem();
+
+    @Query(value = "select min(usuario.comments) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Integer findMinimunCommentsPerItem();
+
+    @Query(value = "select sqrt(sum(usuario.comments*usuario.comments)/count(usuario.comments) - avg(usuario.comments)*avg(usuario.comments)) " +
+            "from (select count(c.id) comments from Comment c group by c.actor_id) " +
+            "as usuario ", nativeQuery = true)
+    Double findStdevCommentsPerItem();
+
+    @Query("select c.actor, count(c.id) from Comment c group by c.actor")
+    Map<User, Integer> findSCountCommentsPerItem();
+
+
+
+
+}
+   
 
    /* @Query("select t.administrative.id, t.administrative.userAccount.username, count(t.id) from Tender t group by t.administrative.id, t.administrative.name")
     Collection<Object> numberTenderByUser();

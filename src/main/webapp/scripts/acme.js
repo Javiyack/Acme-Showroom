@@ -153,9 +153,8 @@ function ajaxCheck(element, contextPath) {
 function copyText(from, to) {
     var valor = from.value;
     document.getElementById(to).value = valor;
-
-
 }
+
 
 function ajaxTopicCreate(element, contextPath) {
     var name = element.value;

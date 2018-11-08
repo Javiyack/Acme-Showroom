@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Map;
 
 import domain.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,4 +132,158 @@ public class AdministratorService {
 	public Double findStdevShowroomsPerUser() {
 		return administratorRepository.findStdevShowroomsPerUser();
 	}
+
+	public Double findAverageItemsPerUser() {
+		return administratorRepository.findAverageItemsPerUser();
+	}
+
+	public Integer findMinimunItemsPerUser() {
+		return administratorRepository.findMinimunItemsPerUser();
+	}
+
+	public Integer findMaximunItemsPerUser() {
+		return administratorRepository.findMaximunItemsPerUser();
+	}
+
+	public Double findStdevItemsPerUser() {
+		return administratorRepository.findStdevItemsPerUser();
+	}
+
+	public Double findAverageRequestsPerUser() {
+		return administratorRepository.findAverageRequestsPerUser();
+	}
+
+	public Integer findMinimunRequestsPerUser() {
+		return administratorRepository.findMinimunRequestsPerUser();
+	}
+
+	public Integer findMaximunRequestsPerUser() {
+		return administratorRepository.findMaximunRequestsPerUser();
+	}
+
+	public Double findStdevRequestsPerUser() {
+		return administratorRepository.findStdevRequestsPerUser();
+	}
+
+	public Double findAverageRejectedRequestsPerUser() {
+		return administratorRepository.findAverageRejectedRequestsPerUser();
+	}
+
+	public Integer findMinimunRejectedRequestsPerUser() {
+		return administratorRepository.findMinimunRejectedRequestsPerUser();
+	}
+
+	public Integer findMaximunRejectedRequestsPerUser() {
+		return administratorRepository.findMaximunRejectedRequestsPerUser();
+	}
+
+	public Double findStdevRejectedRequestsPerUser() {
+		return administratorRepository.findStdevRejectedRequestsPerUser();
+	}
+
+	public Double findAverageChirpsPerUser() {
+		return administratorRepository.findAverageChirpsPerUser();
+	}
+
+	public Integer findMinimunChirpsPerUser() {
+		return administratorRepository.findMinimunChirpsPerUser();
+	}
+
+	public Integer findMaximunChirpsPerUser() {
+		return administratorRepository.findMaximunChirpsPerUser();
+	}
+
+	public Double findStdevChirpsPerUser() {
+		return administratorRepository.findStdevChirpsPerUser();
+	}
+
+
+	public Double findAverageFollowersPerUser() {
+		return administratorRepository.findAverageFollowersPerUser();
+	}
+
+	public Integer findMinimunFollowersPerUser() {
+		return administratorRepository.findMinimunFollowersPerUser();
+	}
+
+	public Integer findMaximunFollowersPerUser() {
+		return administratorRepository.findMaximunFollowersPerUser();
+	}
+
+	public Double findStdevFollowersPerUser() {
+		return administratorRepository.findStdevFollowersPerUser();
+	}
+	
+	public Double findAverageFollowedsPerUser() {
+		return administratorRepository.findAverageFollowedsPerUser();
+	}
+
+	public Integer findMinimunFollowedsPerUser() {
+		return administratorRepository.findMinimunFollowedsPerUser();
+	}
+
+	public Integer findMaximunFollowedsPerUser() {
+		return administratorRepository.findMaximunFollowedsPerUser();
+	}
+
+	public Double findStdevFollowedsPerUser() {
+		return administratorRepository.findStdevFollowedsPerUser();
+	}
+
+	public Collection<Object> findChirpsNumberPerTopic() {
+		return administratorRepository.findChirpsNumberPerTopic();
+	}
+
+
+	public Double findAverageCommentsPerShowroom() {
+		return administratorRepository.findAverageCommentsPerShowroom();
+	}
+
+	public Integer findMinimunCommentsPerShowroom() {
+		return administratorRepository.findMinimunCommentsPerShowroom();
+	}
+
+	public Integer findMaximunCommentsPerShowroom() {
+		return administratorRepository.findMaximunCommentsPerShowroom();
+	}
+
+	public Double findStdevCommentsPerShowroom() {
+		return administratorRepository.findStdevCommentsPerShowroom();
+	}
+
+
+	public Double findAverageCommentsPerItem() {
+		return administratorRepository.findAverageCommentsPerItem();
+	}
+
+	public Integer findMinimunCommentsPerItem() {
+		return administratorRepository.findMinimunCommentsPerItem();
+	}
+
+	public Integer findMaximunCommentsPerItem() {
+		return administratorRepository.findMaximunCommentsPerItem();
+	}
+
+	public Double findStdevCommentsPerItem() {
+		return administratorRepository.findStdevCommentsPerItem();
+	}
+
+
+	public Double findAverageCommentsPerUser() {
+		return administratorRepository.findAverageCommentsPerUser();
+	}
+
+	public Integer findMinimunCommentsPerUser() {
+		return administratorRepository.findMinimunCommentsPerUser();
+	}
+
+	public Integer findMaximunCommentsPerUser() {
+		return administratorRepository.findMaximunCommentsPerUser();
+	}
+
+	public Double findStdevCommentsPerUser() {
+		return administratorRepository.findStdevCommentsPerUser();
+	}
+
+
 }
