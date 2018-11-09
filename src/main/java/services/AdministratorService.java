@@ -197,7 +197,7 @@ public class AdministratorService {
 		return administratorRepository.findStdevChirpsPerUser();
 	}
 
-
+/*
 	public Double findAverageFollowersPerUser() {
 		return administratorRepository.findAverageFollowersPerUser();
 	}
@@ -229,7 +229,7 @@ public class AdministratorService {
 	public Double findStdevFollowedsPerUser() {
 		return administratorRepository.findStdevFollowedsPerUser();
 	}
-
+*/
 	public Collection<Object> findChirpsNumberPerTopic() {
 		return administratorRepository.findChirpsNumberPerTopic();
 	}
