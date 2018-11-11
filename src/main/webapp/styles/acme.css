@@ -232,7 +232,7 @@ select {
 	min-width: 100%;
 	min-height: 195px;
 	max-width: 100%;
-	max-height: 850px;
+	max-height: 550px;
 	resize: vertical;
 	border-radius: 3px;
 }
