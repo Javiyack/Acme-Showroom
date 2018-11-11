@@ -22,8 +22,6 @@ public class UserService {
 	private UserRepository userRepository;
 	// Services
 	@Autowired
-	private SubscriptionService subscriptionService;
-	@Autowired
 	private ActorService actorService;
 	@Autowired
 	private UserAccountService userAccountService;
@@ -55,29 +53,10 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public Collection<User> findAllActive() {
-		return userRepository.findAllActive();
-	}
-
 	public User findOne(int userId) {
 		return userRepository.findOne(userId);
 	}
 
-	public Collection<Actor> findActorSubscriptions() {
-		return subscriptionService.findSubscribedActors();
-	}
-
-	public Collection<Actor> findFolloweds() {
-		return subscriptionService.findSubscriptorUsers();
-	}
-
-	public Collection<Actor> findFollowerUsers() {
-		return subscriptionService.findSubscriptorUsers();
-	}
-
-	public Collection<Actor> findFollowers() {
-		return subscriptionService.findSubscriptorUsers();
-	}
 
 	public User reconstruct(UserForm userForm, BindingResult binding) {
 		User user;

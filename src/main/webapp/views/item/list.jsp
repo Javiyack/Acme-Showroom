@@ -78,32 +78,32 @@
     <div style="overflow-x:auto;">
         <display:table pagesize="${pageSize}"
                        class="flat-table flat-table-1 w3-light-grey" name="items"
-                       requestURI="${requestUri}" id="row">
+                       requestURI="${requestUri}" id="row3">
             <jstl:set var="owns"
-                      value="${logedActor.id==row.showroom.user.userAccount.id}"/>
+                      value="${logedActor.id==row3.showroom.user.userAccount.id}"/>
             <jstl:if test="${owns}">
-                <jstl:set var="url" value="item/user/edit.do?itemId=${row.id}"/>
+                <jstl:set var="url" value="item/user/edit.do?itemId=${row3.id}"/>
                 <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
             </jstl:if>
             <jstl:if test="${!owns}">
-                <jstl:set var="url" value="item/display.do?itemId=${row.id}"/>
+                <jstl:set var="url" value="item/display.do?itemId=${row3.id}"/>
                 <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
             </jstl:if>
-            <jstl:if test="${row.available}">
+            <jstl:if test="${row3.available}">
                 <jstl:set var="availableIcon" value="fa fa-check-square-o w3-xlarge"/>
             </jstl:if>
-            <jstl:if test="${!row.available}">
+            <jstl:if test="${!row3.available}">
                 <jstl:set var="availableIcon" value="fa fa-square-o w3-xlarge"/>
             </jstl:if>
             <jstl:if test="${!included}">
-                <acme:column property="${row.showroom.name}" title="label.showroom" rowUrl="${url}"/>
+                <acme:column property="${row3.showroom.name}" title="label.showroom" rowUrl="${url}"/>
             </jstl:if>
-            <acme:column property="${row.SKU}" title="label.SKU" rowUrl="${url}"/>
-            <acme:column property="${row.title}" title="label.name" rowUrl="${url}"/>
-            <acme:column property="${row.description}" title="label.description" rowUrl="${url}"/>
-            <acme:column property="${row.price}" title="label.price" rowUrl="${url}"/>
-            <acme:column property="${row.available}" icon="${availableIcon}" title="label.available" rowUrl="${url}"/>
+            <acme:column property="${row3.SKU}" title="label.SKU" rowUrl="${url}"/>
+            <acme:column property="${row3.title}" title="label.name" rowUrl="${url}"/>
+            <acme:column property="${row3.description}" title="label.description" rowUrl="${url}"/>
+            <acme:column property="${row3.price}" title="label.price" rowUrl="${url}"/>
+            <acme:column property="${row3.available}" icon="${availableIcon}" title="label.available" rowUrl="${url}"/>
             <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
         </display:table>
     </div>

@@ -70,7 +70,6 @@
                    class="flat-table flat-table-1 w3-light-grey" name="comments"
                    requestURI="${requestUri}" id="row">
 
-
         <acme:column property="actor.userAccount.username" title="label.user"/>
         <spring:message code="label.name" var="title"/>
         <display:column property="title" title="${title}" sortable="true"
@@ -78,23 +77,11 @@
         <acme:column property="text" title="label.description"/>
         <acme:column property="moment" title="label.moment" format="moment.format"/>
         <display:column class="${classTd}">
-            <jstl:set var="owns"
-                      value="${rol=='manager' or logedActor.id==row.actor.userAccount.id}"/>
-
-            <jstl:if test="${owns && !closed}">
-                <div>
-                    <a href="comment/actor/edit.do?commentId=${row.id}"> <i
-                            class="fa fa-edit w3-xlarge"></i>
-                    </a>
-                </div>
-            </jstl:if>
-            <jstl:if test="${!owns || closed}">
-                <div>
-                    <a href="comment/actor/display.do?commentId=${row.id}"> <i
-                            class="fa fa-eye w3-xlarge"></i>
-                    </a>
-                </div>
-            </jstl:if>
+            <div>
+                <a href="comment/actor/display.do?commentId=${row.id}"> <i
+                        class="fa fa-eye w3-xlarge"></i>
+                </a>
+            </div>
         </display:column>
 
 

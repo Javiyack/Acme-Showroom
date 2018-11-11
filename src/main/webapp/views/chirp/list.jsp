@@ -56,7 +56,8 @@
                 <acme:column property="${row3.topic}" title="label.topic" rowUrl="${url}" sortable="true"/>
                 <acme:column property="${row3.title}" title="label.title" rowUrl="${url}"/>
                 <acme:column property="${row3.description}" title="label.description" rowUrl="${url}"/>
-                <acme:column property="${row3.moment}" title="label.moment" rowUrl="${url}" sortable="true"/>
+                <spring:message code="format.time" var="format"/>
+                <acme:column property="${row3.moment}" title="label.moment" rowUrl="${url}" sortable="true" format="moment.format"/>
                 <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
 
             </display:table>

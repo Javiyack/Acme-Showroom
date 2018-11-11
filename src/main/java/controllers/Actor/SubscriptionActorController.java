@@ -3,7 +3,6 @@ package controllers.Actor;
 
 import controllers.AbstractController;
 import domain.Actor;
-import domain.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.ChirpService;
-import services.SubscriptionService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -21,16 +19,11 @@ import java.util.Collection;
 @RequestMapping("/subscription/actor")
 public class SubscriptionActorController extends AbstractController {
 
-	// Supporting services -----------------------------------------------------
-	@Autowired
-	private SubscriptionService subscriptionService;
-
+	// Supporting services ----------------------------------------------
 	@Autowired
 	private ActorService actorService;
-
 	@Autowired
 	private ChirpService chirpService;
-
 
 	// Constructors -----------------------------------------------------------
 
@@ -42,7 +35,7 @@ public class SubscriptionActorController extends AbstractController {
 	@RequestMapping(value = "/subscribers/list", method = RequestMethod.GET)
 	public ModelAndView followeds(final Integer pageSize) {
 		ModelAndView result;
-		final Collection<Actor> followers = this.actorService.findSubscribers();
+		final Collection<Actor> followers = this.actorService.findFollowers();
 
 		result = new ModelAndView("actor/list");
 		result.addObject("followers", followers);
@@ -54,8 +47,8 @@ public class SubscriptionActorController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView followers(final Integer pageSize) {
 		ModelAndView result;
-		final Collection<Actor> subscribedActors = this.subscriptionService.findSubscribedActors();
-		final Collection<Subscription> topicSubscriptions = this.subscriptionService.findTopicSubscriptions();
+		final Collection<Actor> subscribedActors = actorService.findFollows();
+		final Collection<String> topicSubscriptions = this.actorService.findTopics();
 		result = new ModelAndView("subscription/actor/list");
 		Collection <String> topics = chirpService.findAllTopics();
 		result.addObject("topics", topics);
@@ -71,7 +64,7 @@ public class SubscriptionActorController extends AbstractController {
 	public ModelAndView subscribe(@RequestParam final int actorId, String redirectUrl) {
 		ModelAndView result;
 		try{
-			this.subscriptionService.follow(actorId);
+			this.actorService.follow(actorId);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
 				return createMessageModelAndView(oops.getLocalizedMessage(), redirectUrl);
@@ -88,7 +81,7 @@ public class SubscriptionActorController extends AbstractController {
 	public ModelAndView subscribe(@RequestParam final String topic) {
 		ModelAndView result;
 		try{
-			this.subscriptionService.subscribe(topic);
+			this.actorService.subscribe(topic);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
 				return createMessageModelAndView(oops.getLocalizedMessage(), "/subscription/actor/list.do");
@@ -110,7 +103,7 @@ public class SubscriptionActorController extends AbstractController {
 			redirectUrl = "/subscription/actor/list.do";
 
 		try{
-			this.subscriptionService.subscribe(req.getParameter("topic"));
+			this.actorService.subscribe(req.getParameter("topic"));
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
 				return createMessageModelAndView(oops.getLocalizedMessage(), redirectUrl);
@@ -126,7 +119,7 @@ public class SubscriptionActorController extends AbstractController {
 	public ModelAndView topicUnsubscribe(@RequestParam final String topic) {
 		ModelAndView result;
 		try{
-			this.subscriptionService.unSubscribe(topic);
+			this.actorService.unSubscribe(topic);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
 				return createMessageModelAndView(oops.getLocalizedMessage(), "/actor/actor/list.do");
@@ -147,7 +140,7 @@ public class SubscriptionActorController extends AbstractController {
 		else
 			redirectUrl = "/subscription/actor/list.do";
 		try{
-			this.subscriptionService.unSubscribe(req.getParameter("topic"));
+			this.actorService.unSubscribe(req.getParameter("topic"));
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
 				return createMessageModelAndView(oops.getLocalizedMessage(), redirectUrl);

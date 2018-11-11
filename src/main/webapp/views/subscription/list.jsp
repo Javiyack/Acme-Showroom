@@ -50,7 +50,7 @@
 
             <acme:column property=" " title="label.chirp.subscription"
                          rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/subscription/actor/list.do"
-                         icon="fa fa-check w3-xlarge w3-text-green"/>
+                         icon="fa fa-check w3-xlarge w3-text-green" style="width: 8em;"/>
         </display:table>
         <legend>
             <spring:message code="label.topics"/>
@@ -78,15 +78,15 @@
         <spring:message code="label.topic" var="label"/>
         <display:column title="${label}">
             <form action="chirp/actor/topic/list.do" method="POST">
-                <input type="hidden" name="topic" value="${row2.topic}">
-                <input type="submit" value="${row2.topic}" class="font-awesome flat">
+                <input type="hidden" name="topic" value="${row2}">
+                <input type="submit" value="${row2}" class="font-awesome flat">
             </form>
 
         </display:column>
         <spring:message code="label.chirp.subscription" var="labelSubscription"/>
-        <display:column title="${labelSubscription}">
+        <display:column title="${labelSubscription}" style="width: 8em;">
             <form action="subscription/actor/topic/unsubscribe.do" method="POST">
-                <input type="hidden" name="topic" value="${row2.topic}">
+                <input type="hidden" name="topic" value="${row2}">
                 <input type="submit" value="&#xf00c;" class="font-awesome flat w3-text-green w3-xlarge">
             </form>
         </display:column>

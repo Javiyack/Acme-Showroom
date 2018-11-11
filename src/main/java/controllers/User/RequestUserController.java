@@ -29,18 +29,12 @@ public class RequestUserController extends AbstractController {
         4. Manage his or her own requests for items, which includes listing and creating them.
     */
     // Supporting services -----------------------------------------------------
-    @Autowired
-    private SubscriptionService subscriptionService;
 
     @Autowired
     private RequestService requestService;
     @Autowired
-    private ItemService itemService;
-    @Autowired
     private ActorService actorService;
 
-    @Autowired
-    private ChirpService chirpService;
 
 
     // Constructors -----------------------------------------------------------

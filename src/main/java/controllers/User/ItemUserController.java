@@ -201,6 +201,7 @@ public class ItemUserController extends AbstractController {
         result = new ModelAndView("item/edit");
         Collection<Comment> comments = this.commentService.findByCommentedObjectId(model.getId());
         result.addObject("item", model);
+        result.addObject("hasRequest", this.itemService.hasRequests(model.getId()));
         result.addObject("comments", comments);
         result.addObject("requestUri", "item/user/create.do");
         result.addObject("edition", true);

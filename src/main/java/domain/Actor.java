@@ -1,11 +1,7 @@
 
 package domain;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -17,6 +13,8 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 import security.UserAccount;
 
+import java.util.Set;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public abstract class Actor extends DomainEntity {
@@ -27,9 +25,10 @@ public abstract class Actor extends DomainEntity {
 	private String 		email;
 	private String 		address;
 	private String 		phone;
+	private Set<String> topics;
 	//Relationships
 	private UserAccount userAccount;
-
+	private Set<Actor> follows;
 
 	@SafeHtml
 	@NotBlank
@@ -62,9 +61,9 @@ public abstract class Actor extends DomainEntity {
 		this.email = email;
 	}
 
-//	@Pattern(regexp = "^([+][1-9]\\d{0,2}[ ]?[(][1-9]\\d{0,2}[)][ ]?\\d{4,32})$|^([+][0-9]{1,3}[ ]\\d{4,32})$|^(\\d{4,32})$")
-	@SafeHtml
-	@Size(min=4,max=32)
+	//@Pattern(regexp = "[0-9+()]{4,32}")
+	@NotBlank
+	@Size(min = 4,max = 32)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -94,5 +93,25 @@ public abstract class Actor extends DomainEntity {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Valid
+	@ManyToMany()
+	public Set <Actor> getFollows() {
+		return follows;
+	}
+
+	public void setFollows(Set <Actor> follows) {
+		this.follows = follows;
+	}
+
+	@ElementCollection
+	@NotNull
+	public Set <String> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(Set <String> topics) {
+		this.topics = topics;
 	}
 }

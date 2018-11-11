@@ -85,4 +85,13 @@ public class ChirpService {
         chirp.setDescription(text);
         return this.save(chirp);
     }
+
+    public Collection <Chirp> findFollowedChirps() {
+        final Actor actor = this.actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        return chirpRepository.findFollowedChirps(actor);
+    }
+
+
+
 }

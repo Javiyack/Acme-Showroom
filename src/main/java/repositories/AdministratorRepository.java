@@ -10,6 +10,7 @@
 
 package repositories;
 
+import domain.Actor;
 import domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -186,7 +187,8 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
             "group by u.id) chirps", nativeQuery = true)
     Integer findMinimunChirpsPerUser();
 
-    @Query(value = "select sqrt(sum(chirps.count*chirps.count)/count(chirps.count) - avg(chirps.count)*avg(chirps.count))  " +
+    @Query(value = "select sqrt(" +
+            "sum(chirps.count*chirps.count)/count(chirps.count) - avg(chirps.count)*avg(chirps.count))  " +
             "from (select u.name, count(c.id) count " +
             "from User u left join Chirp c on c.actor_id=u.id " +
             "group by u.id " +
@@ -201,67 +203,28 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
     Double findStdevChirpsPerUser();
 
     @Query("select c.actor, count(c.actor) from Chirp c group by c.actor")
-    Map<User, Integer> findSCountChirpsPerUser();
+    Map<Actor, Integer> findSCountChirpsPerUser();
 
-    /*	2. The average, the minimum, the maximum, and the standard deviation of the
-           number of followers per actor. */
- /*   @Query(value = "select avg(usuario.followers)  " +
-            "from (select sum(case when s.subscribedActor_id = u.id or s.subscribedActor_id = a.id or s.subscribedActor_id = ag.id  then 1 else 0 end) followers  " +
-            "from Subscription s right join User u on s.subscribedActor_id=u.id left join Administrator a on s.subscribedActor_id=a.id  " +
-            "left join Agent ag on s.subscribedActor_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Double findAverageFollowersPerUser();
-
-    @Query(value = "select max(usuario.followers)  " +
-            "from (select sum(case when s.subscribedActor_id = u.id or s.subscribedActor_id = a.id or s.subscribedActor_id = ag.id  then 1 else 0 end) followers  " +
-            "from Subscription s right join User u on s.subscribedActor_id=u.id left join Administrator a on s.subscribedActor_id=a.id  " +
-            "left join Agent ag on s.subscribedActor_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Integer findMaximunFollowersPerUser();
-
-    @Query(value = "select min(usuario.followers)  " +
-            "from (select sum(case when s.subscribedActor_id = u.id or s.subscribedActor_id = a.id or s.subscribedActor_id = ag.id  then 1 else 0 end) followers  " +
-            "from Subscription s right join User u on s.subscribedActor_id=u.id left join Administrator a on s.subscribedActor_id=a.id  " +
-            "left join Agent ag on s.subscribedActor_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Integer findMinimunFollowersPerUser();
-
-    @Query(value = "select sqrt(sum(usuario.followers*usuario.followers)/count(usuario.followers) - avg(usuario.followers)*avg(usuario.followers))  " +
-            "from (select sum(case when s.subscribedActor_id = u.id or s.subscribedActor_id = a.id or s.subscribedActor_id = ag.id  then 1 else 0 end) followers  " +
-            "from Subscription s right join User u on s.subscribedActor_id=u.id left join Administrator a on s.subscribedActor_id=a.id  " +
-            "left join Agent ag on s.subscribedActor_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Double findStdevFollowersPerUser();
-
-    @Query("select f.subscribedActor, count(f.subscriber) from Subscription f group by f.subscribedActor")
-    Map<User, Integer> findSCountFollowersPerUser();
 
     /*	3. The average, the minimum, the maximum, and the standard deviation of the
            number of followeds per actor. */
- /*   @Query(value = "select avg(usuario.followeds)  " +
-            "from (select sum(case when s.subscriber_id = u.id or s.subscriber_id = a.id or s.subscriber_id = ag.id  then 1 else 0 end) followeds  " +
-            "from Subscription s right join User u on s.subscriber_id=u.id left join Administrator a on s.subscriber_id=a.id  " +
-            "left join Agent ag on s.subscriber_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Double findAverageFollowedsPerUser();
+    @Query("select avg(a.follows.size) from Actor a")
+    Double findAverageFollowsPerUser();
 
-    @Query(value = "select max(usuario.followeds)  " +
-            "from (select sum(case when s.subscriber_id = u.id or s.subscriber_id = a.id or s.subscriber_id = ag.id  then 1 else 0 end) followeds  " +
-            "from Subscription s right join User u on s.subscriber_id=u.id left join Administrator a on s.subscriber_id=a.id  " +
-            "left join Agent ag on s.subscriber_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Integer findMaximunFollowedsPerUser();
+    @Query("select max(a.follows.size) from Actor a")
+    Integer findMaximunFollowsPerUser();
 
-    @Query(value = "select min(usuario.followeds)  " +
-            "from (select sum(case when s.subscriber_id = u.id or s.subscriber_id = a.id or s.subscriber_id = ag.id  then 1 else 0 end) followeds  " +
-            "from Subscription s right join User u on s.subscriber_id=u.id left join Administrator a on s.subscriber_id=a.id  " +
-            "left join Agent ag on s.subscriber_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Integer findMinimunFollowedsPerUser();
+    @Query("select min(a.follows.size) from Actor a")
+    Integer findMinimunFollowsPerUser();
 
-    @Query(value = "select sqrt(sum(usuario.followeds*usuario.followeds)/count(usuario.followeds) - avg(usuario.followeds)*avg(usuario.followeds))  " +
-            "from (select sum(case when s.subscriber_id = u.id or s.subscriber_id = a.id or s.subscriber_id = ag.id  then 1 else 0 end) followeds  " +
-            "from Subscription s right join User u on s.subscriber_id=u.id left join Administrator a on s.subscriber_id=a.id  " +
-            "left join Agent ag on s.subscriber_id=ag.id group by u.id) as usuario", nativeQuery = true)
-    Double findStdevFollowedsPerUser();
+    @Query("select sqrt(sum(a.follows.size*a.follows.size)/count(a.follows.size) - avg(a.follows.size)*avg(a.follows.size))  " +
+            "from Actor a")
+    Double findStdevFollowsPerUser();
 
-    @Query("select f.subscribedActor, count(f.subscriber) from Subscription f group by f.subscribedActor")
-    Map<User, Integer> findSCountFollowedsPerUser();
+    @Query("select a, a.follows.size from Actor a")
+    Map<Actor, Integer> findSCountFollowsPerUser();
 
-*/
+
     @Query("select c.topic, count(c.id) from Chirp c group by c.topic")
     Collection<Object> findChirpsNumberPerTopic();
 

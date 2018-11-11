@@ -83,7 +83,7 @@ public class DashboardAdministratorController extends AbstractController {
         levelB.put("chirpsPerUser", chirpsPerUser);
 		/*	2. 	The minimum, the maximum, the average, and the standard deviation of the
 			number of users to whom users subscribe.*/
- /*       Map <String, Object> followedsPerUser = new HashMap <>();
+        Map <String, Object> followedsPerUser = new HashMap <>();
         followedsPerUser.put("avg", administratorService.findAverageFollowedsPerUser() != null ? administratorService.findAverageFollowedsPerUser() : 0);
         followedsPerUser.put("min", administratorService.findMinimunFollowedsPerUser() != null ? administratorService.findMinimunFollowedsPerUser() : 0);
         followedsPerUser.put("max", administratorService.findMaximunFollowedsPerUser() != null ? administratorService.findMaximunFollowedsPerUser() : 0);
@@ -91,13 +91,13 @@ public class DashboardAdministratorController extends AbstractController {
         levelB.put("followedsPerUser", followedsPerUser);
 		/*	3. 	The minimum, the maximum, the average, and the standard deviation of the
 			number of subscriptors per user.*/
-  /*      Map <String, Object> followersPerUser = new HashMap <>();
+        Map <String, Object> followersPerUser = new HashMap <>();
         followersPerUser.put("avg", administratorService.findAverageFollowersPerUser() != null ? administratorService.findAverageFollowersPerUser() : 0);
         followersPerUser.put("min", administratorService.findMinimunFollowersPerUser() != null ? administratorService.findMinimunFollowersPerUser() : 0);
         followersPerUser.put("max", administratorService.findMaximunFollowersPerUser() != null ? administratorService.findMaximunFollowersPerUser() : 0);
         followersPerUser.put("stdev", administratorService.findStdevFollowersPerUser() != null ? administratorService.findStdevFollowersPerUser() : 0);
         levelB.put("followersPerUser", followersPerUser);
-    */    /*	4.	A chart with the number of chirps published grouped by topic.  */
+        /*	4.	A chart with the number of chirps published grouped by topic.  */
         Map <String, Object> chirpsPerTopic = new HashMap <>();
         Collection <Object> chirpsPT;
         chirpsPT = administratorService.findChirpsNumberPerTopic();// != null ? administratorService.findAverageChirpsPerTopic() : 0;

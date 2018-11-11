@@ -1,10 +1,7 @@
 
 package services;
 
-import domain.Actor;
-import domain.Administrator;
-import domain.Agent;
-import domain.User;
+import domain.*;
 import forms.ActorForm;
 import forms.AdminForm;
 import forms.AgentForm;
@@ -22,9 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -43,9 +38,6 @@ public class ActorService {
     private AgentService agentService;
     @Autowired
     private AdministratorService adminService;
-
-    @Autowired
-    private SubscriptionService subscriptionService;
 
     @Autowired
     private Validator validator;
@@ -96,7 +88,8 @@ public class ActorService {
         Actor result;
 
         if (actor.getId() == 0) {
-
+            actor.setTopics(new TreeSet <String>());
+            actor.setFollows(new TreeSet <Actor>());
         } else {
             Assert.isTrue(actor.equals(this.findByPrincipal()), "not.allowed.action");
         }
@@ -120,15 +113,6 @@ public class ActorService {
 
     // Other business methods -------------------------------------------------
 
-    public UserAccount findUserAccount(final Actor actor) {
-        Assert.notNull(actor);
-
-        UserAccount result;
-
-        result = actor.getUserAccount();
-
-        return result;
-    }
 
     public Actor findByPrincipal() {
         Actor result = null;
@@ -156,42 +140,76 @@ public class ActorService {
         return result;
     }
 
-    public Collection <Actor> findActorSubscriptions() {
-        return subscriptionService.findSubscribedActors();
-    }
 
-    public Collection <Actor> findSubscribers() {
-        return subscriptionService.findSubscriptorUsers();
-    }
-
-    public Collection <Actor> findFollowerUsers() {
-        return subscriptionService.findSubscriptorUsers();
-    }
-
-    public Collection <Actor> findFollowers() {
-        return subscriptionService.findSubscriptorUsers();
-    }
-
-    public Actor reconstructActor(ActorForm actorForm, BindingResult binding) {
-        Actor actor = null;
-
-        switch (actorForm.getAccount().getAuthority()) {
-            case Authority.ADMINISTRATOR:
-                AdminForm adminForm = (AdminForm) actorForm;
-                actor = adminService.reconstruct(adminForm, binding);
-                break;
-            case Authority.USER:
-                UserForm userForm = (UserForm) actorForm;
-                actor = userService.reconstruct(userForm, binding);
-                break;
-            case Authority.AGENT:
-                AgentForm agentForm = (AgentForm) actorForm;
-                actor = agentService.reconstruct(agentForm, binding);
-                break;
-            default:
-                break;
+    public void follow(int userId) {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        int followerId = actor.getId();
+        Actor followed = this.findOne(userId);
+        if(actor.getFollows().contains(followed)){
+            actor.getFollows().remove(followed);
+            this.save(actor);
         }
-        return actor;
+        else{
+            actor.getFollows().add(followed);
+            this.save(actor);
+        }
+    }
+
+    public void subscribe(String topic) {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        topic=topic.trim();
+        if(!topic.isEmpty() && !actor.getTopics().contains(topic)){
+            actor.getTopics().add(topic);
+            this.save(actor);
+        }
+    }
+
+    public void unSubscribe(String topic) {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        actor.getTopics().remove(topic);
+        this.save(actor);
+    }
+
+    public Collection <Actor> findFollowers () {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        return actorRepository.findFollowers(actor.getId());
+    }
+    public Collection <Actor> findFollows () {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        return actor.getFollows();
+    }
+
+    public Collection <String> findTopics () {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        return actor.getTopics();
+    }
+
+    public Collection <String> findAllTopics () {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        return actorRepository.findAllTopics();
+    }
+
+
+
+    public Map<Actor, Integer> findFollowersCountPerUser() {
+        Map<Actor, Integer> result = new HashMap <>();
+        Collection<Actor> actors = this.findAll();
+        for(Actor actor:actors){
+            int count =0;
+            for(Actor follower:actors){
+                if(follower.getFollows().contains(actor))
+                    count++;
+            }
+            result.put(actor,count);
+        }
+        return result;
     }
 
 
@@ -319,7 +337,17 @@ public class ActorService {
 
     }
 
-    public Collection <Administrator> findAllAdministrators() {
-        return adminService.findAll();
+    public Boolean checkIfSubscribedToActor(Actor actor) {
+        final Actor principal = this.findByPrincipal();
+        Assert.notNull(principal, "msg.not.logged.block");
+        Boolean result = principal.getFollows().contains(actor);
+        return result;
+    }
+
+    public Boolean checkIfSubscribedToTopic(Chirp chirp) {
+        final Actor actor = this.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Boolean result = actor.getTopics().contains(chirp.getTopic());
+        return result;
     }
 }

@@ -37,27 +37,6 @@ public class UserController extends AbstractController {
         super();
     }
 
-    // List ------------------------------------------------------------------
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(final Integer pageSize) {
-        ModelAndView result;
-
-        final Collection <User> users;
-        users = this.userService.findAllActive();
-        final Collection <Actor> followedUsers;
-        followedUsers = this.userService.findActorSubscriptions();
-        Map <Actor, Boolean> userIsFollowedMap = new HashMap <>();
-        for (Actor user : users) {
-            userIsFollowedMap.put(user, followedUsers.contains(user));
-        }
-        result = new ModelAndView("actor/list");
-        result.addObject("legend", "label.users");
-        result.addObject("actors", users);
-        result.addObject("userIsFollowedMap", userIsFollowedMap);
-        result.addObject("requestUri", "user/list.do");
-        result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
-        return result;
-    }
 
     // Create ---------------------------------------------------------------
 

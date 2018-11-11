@@ -37,7 +37,7 @@ public class Request extends DomainEntity {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     public Date getMoment() {
         return this.moment;
     }

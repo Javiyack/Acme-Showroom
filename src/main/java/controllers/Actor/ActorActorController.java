@@ -31,11 +31,7 @@ public class ActorActorController extends AbstractController {
     @Autowired
     private ShowroomService showroomService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private ChirpService chirpService;
-    @Autowired
-    private SubscriptionService subscriptionService;
 
     // Constructors -----------------------------------------------------------
 
@@ -49,7 +45,8 @@ public class ActorActorController extends AbstractController {
         ModelAndView result;
 
         final Collection<Actor> users = this.actorService.findAll();
-        final Collection<Actor> actorSubscriptions = this.userService.findActorSubscriptions();
+        final Collection<Actor> actorSubscriptions = this.actorService.findFollows();
+        final Collection<Actor> followers = this.actorService.findFollowers();
         Map<Actor,Boolean> userIsFollowedMap = new HashMap<>();
         for (Actor user:users) {
             userIsFollowedMap.put(user, actorSubscriptions.contains(user));
@@ -57,6 +54,7 @@ public class ActorActorController extends AbstractController {
         result = new ModelAndView("actor/list");
         result.addObject("legend", "label.actors");
         result.addObject("actors", users);
+        result.addObject("followers", followers);
         result.addObject("userIsFollowedMap", userIsFollowedMap);
         result.addObject("requestUri", "actor/actor/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
@@ -75,7 +73,7 @@ public class ActorActorController extends AbstractController {
         result.addObject("actorForm", actor);
         result.addObject("actorAuthority", authority);
         result.addObject("display", true);
-        Boolean subscribedToActor =  this.subscriptionService.checkIfSubscribedToActor(actor);
+        Boolean subscribedToActor =  this.actorService.checkIfSubscribedToActor(actor);
         result.addObject("subscribedToActor", subscribedToActor);
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         Collection <Chirp> chirps = chirpService.findByUserId(actorId);

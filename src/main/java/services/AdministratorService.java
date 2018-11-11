@@ -1,289 +1,368 @@
 
 package services;
 
-import java.util.Collection;
-import java.util.Map;
-
 import domain.Actor;
+import domain.Administrator;
+import domain.TabooWord;
+import forms.AdminForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Administrator;
-import domain.TabooWord;
-import forms.AdminForm;
 import repositories.AdministratorRepository;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @Transactional
 public class AdministratorService {
 
-	// Managed repositories ------------------------------------------------
-	@Autowired
-	private AdministratorRepository administratorRepository;
+    // Managed repositories ------------------------------------------------
+    @Autowired
+    private AdministratorRepository administratorRepository;
 
-	// Supporting services ----------------------------------------------------
-	@Autowired
-	private ActorService actorService;
-	@Autowired
-	private TabooWordService tabooWordService;
-	@Autowired
-	private UserAccountService userAccountService;
-	@Autowired
-	private Validator validator;
-	
+    // Supporting services ----------------------------------------------------
+    @Autowired
+    private ActorService actorService;
+    @Autowired
+    private TabooWordService tabooWordService;
+    @Autowired
+    private UserAccountService userAccountService;
+    @Autowired
+    private Validator validator;
 
-	// Constructor ----------------------------------------------------------
-	public AdministratorService() {
-		super();
-	}
 
-	// Methods CRUD ---------------------------------------------------------
+    // Constructor ----------------------------------------------------------
+    public AdministratorService() {
+        super();
+    }
 
-	public Administrator findOne(final int administratorId) {
-		Administrator result;
+    // Methods CRUD ---------------------------------------------------------
 
-		result = this.administratorRepository.findOne(administratorId);
-		Assert.notNull(result);
+    public Administrator findOne(final int administratorId) {
+        Administrator result;
 
-		return result;
-	}
+        result = this.administratorRepository.findOne(administratorId);
+        Assert.notNull(result);
 
-	public Collection<Administrator> findAll() {
+        return result;
+    }
 
-		Collection<Administrator> result;
+    public Collection <Administrator> findAll() {
 
-		result = this.administratorRepository.findAll();
-		Assert.notNull(result);
+        Collection <Administrator> result;
 
-		return result;
-	}
+        result = this.administratorRepository.findAll();
+        Assert.notNull(result);
 
-	public Administrator findByPrincipal() {
-		Administrator result;
-		UserAccount userAccount;
+        return result;
+    }
 
-		userAccount = LoginService.getPrincipal();
-		Assert.notNull(userAccount);
-		result = (Administrator) this.actorService.findByUserAccount(userAccount);
-		Assert.notNull(result);
+    public Administrator findByPrincipal() {
+        Administrator result;
+        UserAccount userAccount;
 
-		return result;
-	}
+        userAccount = LoginService.getPrincipal();
+        Assert.notNull(userAccount);
+        result = (Administrator) this.actorService.findByUserAccount(userAccount);
+        Assert.notNull(result);
 
-	public Administrator create() {
-		return new Administrator();
+        return result;
+    }
 
-	}
+    public Administrator create() {
+        return new Administrator();
 
-	public void flush() {
-		this.administratorRepository.flush();
+    }
 
-	}
+    public void flush() {
+        this.administratorRepository.flush();
 
-	public boolean checkIsSpam(final String subject, final String body) {
+    }
 
-		Boolean isSpam;
+    public boolean checkIsSpam(final String subject, final String body) {
 
-		if (subject.isEmpty() && body.isEmpty())
-			isSpam = false;
-		else {
+        Boolean isSpam;
 
-			Collection<TabooWord> tabooWords;
-			tabooWords = this.tabooWordService.getTabooWordFromMyMessageSubjectAndBody(subject, body);
+        if (subject.isEmpty() && body.isEmpty())
+            isSpam = false;
+        else {
+
+            Collection <TabooWord> tabooWords;
+            tabooWords = this.tabooWordService.getTabooWordFromMyMessageSubjectAndBody(subject, body);
 
             isSpam = !tabooWords.isEmpty();
 
-		}
+        }
 
-		return isSpam;
-	}
+        return isSpam;
+    }
 
-	public Administrator reconstruct(final AdminForm adminForm, final BindingResult binding) {
-		Administrator admin = null;
-		Actor loggedActor = actorService.findByPrincipal();
-		Assert.notNull(loggedActor, "msg.not.logged.block");
-		Assert.isTrue(loggedActor instanceof Administrator, "msg.not.owned.block");
+    public Administrator reconstruct(final AdminForm adminForm, final BindingResult binding) {
+        Administrator admin = null;
+        Actor loggedActor = actorService.findByPrincipal();
+        Assert.notNull(loggedActor, "msg.not.logged.block");
+        Assert.isTrue(loggedActor instanceof Administrator, "msg.not.owned.block");
 
-		this.validator.validate(adminForm, binding);
-		admin = (Administrator) actorService.reconstruct(adminForm, binding);
-		
-		return admin;
-	}
+        this.validator.validate(adminForm, binding);
+        admin = (Administrator) actorService.reconstruct(adminForm, binding);
 
-	public Double findAverageShowroomsPerUser() {
-		return administratorRepository.findAverageShowroomsPerUser();
-	}
+        return admin;
+    }
 
-	public Integer findMinimunShowroomsPerUser() {
-		return administratorRepository.findMinimunShowroomsPerUser();
-	}
+    public Double findAverageShowroomsPerUser() {
+        return administratorRepository.findAverageShowroomsPerUser();
+    }
 
-	public Integer findMaximunShowroomsPerUser() {
-		return administratorRepository.findMaximunShowroomsPerUser();
-	}
+    public Integer findMinimunShowroomsPerUser() {
+        return administratorRepository.findMinimunShowroomsPerUser();
+    }
 
-	public Double findStdevShowroomsPerUser() {
-		return administratorRepository.findStdevShowroomsPerUser();
-	}
+    public Integer findMaximunShowroomsPerUser() {
+        return administratorRepository.findMaximunShowroomsPerUser();
+    }
 
-	public Double findAverageItemsPerUser() {
-		return administratorRepository.findAverageItemsPerUser();
-	}
+    public Double findStdevShowroomsPerUser() {
+        return administratorRepository.findStdevShowroomsPerUser();
+    }
 
-	public Integer findMinimunItemsPerUser() {
-		return administratorRepository.findMinimunItemsPerUser();
-	}
+    public Double findAverageItemsPerUser() {
+        return administratorRepository.findAverageItemsPerUser();
+    }
 
-	public Integer findMaximunItemsPerUser() {
-		return administratorRepository.findMaximunItemsPerUser();
-	}
+    public Integer findMinimunItemsPerUser() {
+        return administratorRepository.findMinimunItemsPerUser();
+    }
 
-	public Double findStdevItemsPerUser() {
-		return administratorRepository.findStdevItemsPerUser();
-	}
+    public Integer findMaximunItemsPerUser() {
+        return administratorRepository.findMaximunItemsPerUser();
+    }
 
-	public Double findAverageRequestsPerUser() {
-		return administratorRepository.findAverageRequestsPerUser();
-	}
+    public Double findStdevItemsPerUser() {
+        return administratorRepository.findStdevItemsPerUser();
+    }
 
-	public Integer findMinimunRequestsPerUser() {
-		return administratorRepository.findMinimunRequestsPerUser();
-	}
+    public Double findAverageRequestsPerUser() {
+        return administratorRepository.findAverageRequestsPerUser();
+    }
 
-	public Integer findMaximunRequestsPerUser() {
-		return administratorRepository.findMaximunRequestsPerUser();
-	}
+    public Integer findMinimunRequestsPerUser() {
+        return administratorRepository.findMinimunRequestsPerUser();
+    }
 
-	public Double findStdevRequestsPerUser() {
-		return administratorRepository.findStdevRequestsPerUser();
-	}
+    public Integer findMaximunRequestsPerUser() {
+        return administratorRepository.findMaximunRequestsPerUser();
+    }
 
-	public Double findAverageRejectedRequestsPerUser() {
-		return administratorRepository.findAverageRejectedRequestsPerUser();
-	}
+    public Double findStdevRequestsPerUser() {
+        return administratorRepository.findStdevRequestsPerUser();
+    }
 
-	public Integer findMinimunRejectedRequestsPerUser() {
-		return administratorRepository.findMinimunRejectedRequestsPerUser();
-	}
+    public Double findAverageRejectedRequestsPerUser() {
+        return administratorRepository.findAverageRejectedRequestsPerUser();
+    }
 
-	public Integer findMaximunRejectedRequestsPerUser() {
-		return administratorRepository.findMaximunRejectedRequestsPerUser();
-	}
+    public Integer findMinimunRejectedRequestsPerUser() {
+        return administratorRepository.findMinimunRejectedRequestsPerUser();
+    }
 
-	public Double findStdevRejectedRequestsPerUser() {
-		return administratorRepository.findStdevRejectedRequestsPerUser();
-	}
+    public Integer findMaximunRejectedRequestsPerUser() {
+        return administratorRepository.findMaximunRejectedRequestsPerUser();
+    }
 
-	public Double findAverageChirpsPerUser() {
-		return administratorRepository.findAverageChirpsPerUser();
-	}
+    public Double findStdevRejectedRequestsPerUser() {
+        return administratorRepository.findStdevRejectedRequestsPerUser();
+    }
 
-	public Integer findMinimunChirpsPerUser() {
-		return administratorRepository.findMinimunChirpsPerUser();
-	}
+    public Double findAverageChirpsPerUser() {
+        return administratorRepository.findAverageChirpsPerUser();
+    }
 
-	public Integer findMaximunChirpsPerUser() {
-		return administratorRepository.findMaximunChirpsPerUser();
-	}
+    public Integer findMinimunChirpsPerUser() {
+        return administratorRepository.findMinimunChirpsPerUser();
+    }
 
-	public Double findStdevChirpsPerUser() {
-		return administratorRepository.findStdevChirpsPerUser();
-	}
+    public Integer findMaximunChirpsPerUser() {
+        return administratorRepository.findMaximunChirpsPerUser();
+    }
 
-/*
-	public Double findAverageFollowersPerUser() {
-		return administratorRepository.findAverageFollowersPerUser();
-	}
-
-	public Integer findMinimunFollowersPerUser() {
-		return administratorRepository.findMinimunFollowersPerUser();
-	}
-
-	public Integer findMaximunFollowersPerUser() {
-		return administratorRepository.findMaximunFollowersPerUser();
-	}
-
-	public Double findStdevFollowersPerUser() {
-		return administratorRepository.findStdevFollowersPerUser();
-	}
-	
-	public Double findAverageFollowedsPerUser() {
-		return administratorRepository.findAverageFollowedsPerUser();
-	}
-
-	public Integer findMinimunFollowedsPerUser() {
-		return administratorRepository.findMinimunFollowedsPerUser();
-	}
-
-	public Integer findMaximunFollowedsPerUser() {
-		return administratorRepository.findMaximunFollowedsPerUser();
-	}
-
-	public Double findStdevFollowedsPerUser() {
-		return administratorRepository.findStdevFollowedsPerUser();
-	}
-*/
-	public Collection<Object> findChirpsNumberPerTopic() {
-		return administratorRepository.findChirpsNumberPerTopic();
-	}
+    public Double findStdevChirpsPerUser() {
+        return administratorRepository.findStdevChirpsPerUser();
+    }
 
 
-	public Double findAverageCommentsPerShowroom() {
-		return administratorRepository.findAverageCommentsPerShowroom();
-	}
-
-	public Integer findMinimunCommentsPerShowroom() {
-		return administratorRepository.findMinimunCommentsPerShowroom();
-	}
-
-	public Integer findMaximunCommentsPerShowroom() {
-		return administratorRepository.findMaximunCommentsPerShowroom();
-	}
-
-	public Double findStdevCommentsPerShowroom() {
-		return administratorRepository.findStdevCommentsPerShowroom();
-	}
+    public Double findAverageFollowersPerUser() {
+        Double result = this.avg(actorService.findFollowersCountPerUser().values());
+        return result;
+    }
 
 
-	public Double findAverageCommentsPerItem() {
-		return administratorRepository.findAverageCommentsPerItem();
-	}
+    public Integer findMinimunFollowersPerUser() {
+        return this.min(actorService.findFollowersCountPerUser().values());
 
-	public Integer findMinimunCommentsPerItem() {
-		return administratorRepository.findMinimunCommentsPerItem();
-	}
+    }
 
-	public Integer findMaximunCommentsPerItem() {
-		return administratorRepository.findMaximunCommentsPerItem();
-	}
+    public Integer findMaximunFollowersPerUser() {
 
-	public Double findStdevCommentsPerItem() {
-		return administratorRepository.findStdevCommentsPerItem();
-	}
+        return this.max(actorService.findFollowersCountPerUser().values());
+    }
 
+    public Double findStdevFollowersPerUser() {
 
-	public Double findAverageCommentsPerUser() {
-		return administratorRepository.findAverageCommentsPerUser();
-	}
-
-	public Integer findMinimunCommentsPerUser() {
-		return administratorRepository.findMinimunCommentsPerUser();
-	}
-
-	public Integer findMaximunCommentsPerUser() {
-		return administratorRepository.findMaximunCommentsPerUser();
-	}
-
-	public Double findStdevCommentsPerUser() {
-		return administratorRepository.findStdevCommentsPerUser();
-	}
+        return this.stdev(actorService.findFollowersCountPerUser().values());
+    }
 
 
+
+    public Double findAverageFollowedsPerUser() {
+        return administratorRepository.findAverageFollowsPerUser();
+    }
+
+    public Integer findMinimunFollowedsPerUser() {
+        return administratorRepository.findMinimunFollowsPerUser();
+    }
+
+    public Integer findMaximunFollowedsPerUser() {
+        return administratorRepository.findMaximunFollowsPerUser();
+    }
+
+    public Double findStdevFollowedsPerUser() {
+        return administratorRepository.findStdevFollowsPerUser();
+    }
+
+    public Collection <Object> findChirpsNumberPerTopic() {
+        return administratorRepository.findChirpsNumberPerTopic();
+    }
+
+
+    public Double findAverageCommentsPerShowroom() {
+        return administratorRepository.findAverageCommentsPerShowroom();
+    }
+
+    public Integer findMinimunCommentsPerShowroom() {
+        return administratorRepository.findMinimunCommentsPerShowroom();
+    }
+
+    public Integer findMaximunCommentsPerShowroom() {
+        return administratorRepository.findMaximunCommentsPerShowroom();
+    }
+
+    public Double findStdevCommentsPerShowroom() {
+        return administratorRepository.findStdevCommentsPerShowroom();
+    }
+
+
+    public Double findAverageCommentsPerItem() {
+        return administratorRepository.findAverageCommentsPerItem();
+    }
+
+    public Integer findMinimunCommentsPerItem() {
+        return administratorRepository.findMinimunCommentsPerItem();
+    }
+
+    public Integer findMaximunCommentsPerItem() {
+        return administratorRepository.findMaximunCommentsPerItem();
+    }
+
+    public Double findStdevCommentsPerItem() {
+        return administratorRepository.findStdevCommentsPerItem();
+    }
+
+
+    public Double findAverageCommentsPerUser() {
+        return administratorRepository.findAverageCommentsPerUser();
+    }
+
+    public Integer findMinimunCommentsPerUser() {
+        return administratorRepository.findMinimunCommentsPerUser();
+    }
+
+    public Integer findMaximunCommentsPerUser() {
+        return administratorRepository.findMaximunCommentsPerUser();
+    }
+
+    public Double findStdevCommentsPerUser() {
+        return administratorRepository.findStdevCommentsPerUser();
+    }
+
+    // Metodos auxiliares -----------------------------
+
+    private Double avg(Collection <Integer> values) {
+        Double result = 0.;
+        if (!values.isEmpty()) {
+            for (Integer value : values) {
+                result += value;
+            }
+            result = result / values.size();
+        }
+        return result;
+    }
+
+    private Integer min(Collection <Integer> values) {
+        Integer result = 0;
+        if (!values.isEmpty()) {
+            result = values.iterator().next();
+            for (Integer value : values) {
+                result = Math.min(result,value);
+            }
+        }
+        return result;
+    }
+
+    private Integer max(Collection <Integer> values) {
+        Integer result = 0;
+        if (!values.isEmpty()) {
+            result = values.iterator().next();
+            for (Integer value : values) {
+                result = Math.max(result,value);
+            }
+        }
+        return result;
+    }
+
+    private Integer sum(Collection<Integer> values){
+        Integer result = 0;
+        if (!values.isEmpty()) {
+            for (Integer value : values) {
+                result += value;
+            }
+        }
+        return result;
+    }
+
+    private Integer sum2(Collection<Integer> values){
+        Integer result = 0;
+        if (!values.isEmpty()) {
+            for (Integer value : values) {
+                result += value*value;
+            }
+        }
+        return result;
+    }
+
+    private Double stdev(Collection <Integer> values) {
+    /*  Paso 1: calcular la media.
+        Paso 2: calcular el cuadrado de la distancia a la media para cada dato.
+        Paso 3: sumar los valores que resultaron del paso 2.
+        Paso 4: dividir entre el número de datos.
+        Paso 5: sacar la raíz cuadrada.*/
+        Double result = 0.;
+        Double avg = this.avg(values);
+        int N = values.size();
+        if (!values.isEmpty()) {
+            for (Integer value : values) {
+                result += (value - avg)*(value - avg);
+            }
+            result = result/N;
+            result = Math.sqrt(result);
+        }
+        return result;
+    }
 }

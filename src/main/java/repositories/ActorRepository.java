@@ -30,4 +30,10 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
 	@Query("select a from Administrator a")
 	Collection<Administrator> findAllAdministrators();
+
+	@Query("select a2 from Actor a, Actor a2 where a member of a2.follows and a.id=?1")
+	Collection<Actor> findFollowers(int id);
+
+	@Query("select distinct(t) from Actor a join a.topics t")
+	Collection<String> findAllTopics();
 }

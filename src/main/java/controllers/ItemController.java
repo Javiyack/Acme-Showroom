@@ -81,8 +81,10 @@ public class ItemController extends AbstractController {
         try {
             final Item item = this.itemService.findOne(itemId);
             Assert.notNull(item, "msg.not.found.resource");
+
             result = this.createEditModelAndView(item);
             result.addObject("display", true);
+            result.addObject("hasRequest", this.itemService.hasRequests(item.getId()));
         } catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
                 return createMessageModelAndView(oops.getLocalizedMessage(), "/showroom/list.do");

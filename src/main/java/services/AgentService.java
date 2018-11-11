@@ -22,8 +22,6 @@ public class AgentService {
     private AgentRepository agentRepository;
     //Services
     @Autowired
-    private SubscriptionService subscriptionService;
-    @Autowired
     private ActorService actorService;
     @Autowired
 	private UserAccountService userAccountService;

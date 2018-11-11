@@ -23,7 +23,7 @@ public class Chirp extends DomainEntity implements Comparable<Chirp>{
     private String topic;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     public Date getMoment() {
         return this.moment;
     }

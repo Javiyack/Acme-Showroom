@@ -3,7 +3,6 @@ package controllers.Actor;
 
 import controllers.AbstractController;
 import domain.Chirp;
-import domain.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.ChirpService;
-import services.SubscriptionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.TreeSet;
 
 @Controller
 @RequestMapping("/chirp/actor")
@@ -30,8 +27,6 @@ public class ChirpActorController extends AbstractController {
     @Autowired
     private ChirpService chirpService;
 
-    @Autowired
-    private SubscriptionService subscriptionService;
     @Autowired
     private ActorService actorService;
 // Constructors -----------------------------------------------------------
@@ -57,18 +52,7 @@ public class ChirpActorController extends AbstractController {
     @RequestMapping(value = "/stream", method = RequestMethod.GET)
     public ModelAndView stream(final Integer pageSize) {
         ModelAndView result;
-        final Collection <Chirp> chirps = new TreeSet <>();
-        final Collection <Subscription> subscriptions = subscriptionService.findByLogedActor();
-        for (Subscription subscription : subscriptions) {
-            if(subscription.getSubscribedActor()!=null){
-                Collection <Chirp> actorChirps = chirpService.findByUserId(subscription.getSubscribedActor().getId());
-                chirps.addAll(actorChirps);
-            }
-            else if(subscription.getTopic()!=null) {
-                Collection <Chirp> topicChirps = chirpService.findByTopic(subscription.getTopic());
-                chirps.addAll(topicChirps);
-            }
-        }
+        final Collection <Chirp> chirps = chirpService.findFollowedChirps();
         result = new ModelAndView("chirp/actor/stream");
         result.addObject("chirps", chirps);
         result.addObject("requestUri", "chirp/actor/stream.do");
@@ -79,14 +63,7 @@ public class ChirpActorController extends AbstractController {
     @RequestMapping(value = "/stream", method = RequestMethod.POST)
     public ModelAndView stream(HttpServletRequest req) {
         ModelAndView result;
-        final Collection <Chirp> chirps = new TreeSet <>();
-        final Collection <Subscription> follows = subscriptionService.findByLogedActor();
-        for (Subscription followed : follows) {
-            if(followed.getSubscribedActor()!=null)
-                chirps.addAll(chirpService.findByUserId(followed.getSubscribedActor().getId()));
-            else if(followed.getTopic()!=null)
-                chirps.addAll(chirpService.findByTopic(followed.getTopic()));
-        }
+        final Collection <Chirp> chirps = chirpService.findFollowedChirps();
         result = new ModelAndView("chirp/actor/stream");
         result.addObject("chirps", chirps);
         result.addObject("requestUri", "chirp/actor/stream.do");
@@ -127,8 +104,8 @@ public class ChirpActorController extends AbstractController {
             Assert.notNull(chirp, "msg.not.found.resource");
             result = new ModelAndView("chirp/actor/display");
             result.addObject("chirp", chirp);
-            Boolean subscribedToActor =  this.subscriptionService.checkIfSubscribedToActor(chirp.getActor());
-            Boolean subscribedToTopic =  this.subscriptionService.checkIfSubscribedToTopic(chirp);
+            Boolean subscribedToActor =  this.actorService.checkIfSubscribedToActor(chirp.getActor());
+            Boolean subscribedToTopic =  this.actorService.checkIfSubscribedToTopic(chirp);
             result.addObject("subscribedToActor", subscribedToActor);
             result.addObject("subscribedToTopic", subscribedToTopic);
             result.addObject("display", true);

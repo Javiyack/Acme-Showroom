@@ -1,6 +1,7 @@
 
 package repositories;
 
+import domain.Actor;
 import domain.Chirp;
 import domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,9 @@ public interface ChirpRepository extends JpaRepository<Chirp, Integer> {
 
     @Query("select c from Chirp c where c.topic=?1")
     Collection<Chirp> findByTopic(String topic);
+
+    @Query("select c from Chirp c, Actor a where a = ?1 " +
+            "and (c.topic member of a.topics " +
+            "or c.actor member of a.follows)")
+    Collection<Chirp> findFollowedChirps(Actor actor);
 }

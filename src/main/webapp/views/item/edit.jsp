@@ -19,12 +19,7 @@
     <security:authentication property="principal.authorities[0]"
                              var="permiso"/>
     <jstl:set var="rol" value="${fn:toLowerCase(permiso)}"/>
-    <jstl:if test="${rol == 'user' || rol == 'responsable'}">
-        <jstl:set var="accesscontrol" value="external"/>
-    </jstl:if>
-    <jstl:if test="${rol == 'technician' || rol == 'manager'}">
-        <jstl:set var="accesscontrol" value="internal"/>
-    </jstl:if>
+
 </security:authorize>
 
 
@@ -107,7 +102,7 @@
                 <jstl:if test="${!readonly}">
                     <acme:submit name="save" code="label.save"
                                  css="formButton toLeft"/>
-                    <jstl:if test="${item.id!=0}">
+                    <jstl:if test="${item.id!=0 and !hasRequests}">
                         <acme:submit name="delete" code="label.delete"
                                      css="formButton toLeft"/>
                     </jstl:if>
@@ -115,11 +110,14 @@
                 <jstl:if test="${item.id!=0}">
                     <acme:button text="label.user" url="actor/display.do?actorId=${item.showroom.user.id}"/>
                     <acme:button text="label.showroom" url="showroom/display.do?showroomId=${item.showroom.id}"/>
-                    <jstl:if test="${item.available and !owns}">
-                        <spring:message code="label.request" var="title"/>
-                        <acme:button text="label.request" url="request/user/create.do?itemId=${item.id}"
-                                     icon="fa fa fa-shopping-cart font-awesome" title="${title}"/>
-                    </jstl:if>
+                    <security:authorize access="hasRole('USER')">
+                        <jstl:if test="${item.available and !owns}">
+                            <spring:message code="label.request" var="title"/>
+                            <acme:button text="label.request" url="request/user/create.do?itemId=${item.id}"
+                                         icon="fa fa fa-shopping-cart font-awesome" title="${title}"/>
+                        </jstl:if>
+                    </security:authorize>
+
                 </jstl:if>
             </div>
         </div>

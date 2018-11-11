@@ -66,12 +66,12 @@
                 <jstl:if test="${!userIsFollowedMap[row]}">
                     <acme:column property=" " title="label.chirp.subscription" sortable="true"
                                  rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
-                                 icon="fa fa-check w3-xlarge w3-text-gray css-uncheck"/>
+                                 icon="fa fa-check w3-xlarge w3-text-gray css-uncheck" style="width: 8em;"/>
                 </jstl:if>
                 <jstl:if test="${userIsFollowedMap[row]}">
                     <acme:column property=" " title="label.chirp.subscription" sortable="true"
                                  rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
-                                 icon="fa fa-check w3-xlarge w3-text-green"/>
+                                 icon="fa fa-check w3-xlarge w3-text-green" style="width: 8em;"/>
                 </jstl:if>
 
 
@@ -93,15 +93,15 @@
                 <tr>
                     <th><spring:message code="label.user"/></th>
                     <th><spring:message code="label.name"/></th>
-                    <th><spring:message code="label.chirp.subscription"/></th>
+                    <th style="width: 8em;"><spring:message code="label.chirp.subscription"/></th>
                 </tr>
 
                 <jstl:forEach items="${userIsFollowedMap}" var="entry">
                     <jstl:if test="${entry.value}">
-                        <tr onclick="relativeRedir('actor/display.do?actorId=${entry.key.id}')" class="iButton">
-                            <td>${entry.key.userAccount.username}</td>
+                        <tr onclick="relativeRedir('actor/actor/display.do?actorId=${entry.key.id}')" class="iButton">
+                            <td >${entry.key.userAccount.username}</td>
                             <td>${entry.key.surname},${entry.key.name}</td>
-                            <td><a href="subscription/actor/subcribe.do?actorId=${entry.key.id}">
+                            <td style="width: 8em;"><a href="subscription/actor/subscribe.do?actorId=${entry.key.id}&redirectUrl=/actor/actor/list.do">
                                 <i class="fa fa-check w3-xlarge w3-text-green"></i>
                             </a></td>
                         </tr>
@@ -113,7 +113,7 @@
 </jstl:if>
 <jstl:out value="${userIsFollowerMap}"/>
 
-<security:authorize access="hasRole('USER')">
+<security:authorize access="isAuthenticated()">
     <jstl:if test="${followers!=null}">
         <div class="seccion w3-light-grey ">
             <legend>
@@ -133,15 +133,13 @@
                 <display:table pagesize="${pageSize}"
                                class="flat-table flat-table-1 w3-light-grey" name="followers"
                                requestURI="${requestUri}" id="row">
-                    <jstl:set var="activateUrl"
-                              value="actor/administrator/activate.do?actorId=${row.id}&pageSize=${pageSize}"/>
-                    <jstl:set var="url" value="actor/display.do?actorId=${row.id}"/>
+                     <jstl:set var="url" value="actor/actor/display.do?actorId=${row.id}"/>
                     <acme:column property="${row.userAccount.username}"
                                  title="label.user" sortable="true" rowUrl="${url}"/>
                     <acme:column property="${row.surname}, ${row.name}"
                                  title="label.name" sortable="true" rowUrl="${url}"/>
                     <acme:column property=" " title="label.view" sortable="true"
-                                 rowUrl="${url}" icon="fa fa-eye w3-xlarge"/>
+                                 rowUrl="${url}" icon="fa fa-eye w3-xlarge" style="width: 8em;"/>
                 </display:table>
 
             </div>
@@ -153,7 +151,7 @@
 <div class="seccion w3-light-grey">
     <div class="row">
         <div class="col-50">
-            <security:authorize access="hasRole('USER')">
+            <security:authorize access="isAuthenticated()">
                 <acme:button url="/subscription/actor/subscribers/list.do" text="label.subscribers"
                              css="formButton toLeft w3-padding"/>
                 <acme:button url="/subscription/actor/list.do" text="label.subscriptions"

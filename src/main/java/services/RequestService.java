@@ -8,10 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import repositories.RequestRepository;
-import repositories.SubscriptionRepository;
-import repositories.UserRepository;
 
-import java.lang.ref.ReferenceQueue;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -38,11 +35,11 @@ public class RequestService {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
-        Assert.isTrue(!request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.own.request.block");
         Request result = requestRepository.findOne(request.getId());
         if(request.getId()==0){
             Assert.isTrue(request.getUser().equals((User)actor)
                     || request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
+            Assert.isTrue(!request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.own.request.block");
             request.setStatus(Constant.requestStatus.PENDING.toString());
             if(request.getItem().getPrice()>0) {
                 Assert.notNull(request.getCreditCard(), "msg.not.credit.card.block");
@@ -138,5 +135,10 @@ public class RequestService {
         Assert.isTrue(userActor.equals((User)actor) || request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
 
         return request;
+    }
+
+    public Collection <Request> findByItemId(int id) {
+
+        return this.requestRepository.findByItemId(id);
     }
 }

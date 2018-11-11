@@ -78,6 +78,7 @@
             </div>
         </div>
         <hr>
+
         <div class="row">
             <div class="col-50">
                 <h3><spring:message code="label.billing"/></h3>

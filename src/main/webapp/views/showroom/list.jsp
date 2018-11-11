@@ -78,14 +78,36 @@
             </div>
         </div>
     </div>
+    <jstl:set var="owns" value="${actorForm!=null and logedActor.id == actorForm.userAccount.id}"/>
 
-    <jstl:if test="${logedActor != null}">
+    <jstl:if test="${owns}">
         <jstl:if test="${rol == 'user'}">
             <spring:message code="label.new" var="newTitle"/>
             <spring:message code="label.showroom" var="showroomTitle"/>
             <p><i class="fa fa-plus-square w3-xxlarge w3-text-dark-grey w3-hover-text-light-blue iButton w3-padding w3-margin-right"
                        onclick="relativeRedir('showroom/user/create.do');" title="${newTitle} ${showroomTitle}"></i> </p>
         </jstl:if>
+    </jstl:if>
+    <jstl:if test="${actorForm==null and rol eq 'user'}">
+        <hr>
+        <spring:message code="label.new" var="newTitle"/>
+        <spring:message code="label.showroom" var="showroomTitle"/>
+        <div><i class="fa fa-plus-square w3-xxlarge w3-text-dark-grey w3-hover-text-light-blue iButton w3-padding w3-margin-right"
+              onclick="relativeRedir('showroom/user/create.do');" title="${newTitle} ${showroomTitle}"></i>
+        <jstl:if test="${userList}">
+                <a href="showroom/list.do" >
+                    <i class="fa fa fa-filter w3-xxlarge w3-text-green w3-hover-text-light-blue iButton w3-padding w3-margin-right"
+                       title="<spring:message code="label.show.all"/>">
+                    </i></a>
+        </jstl:if>
+        <jstl:if test="${userList==null}">
+            <a href="showroom/user/list.do" >
+                    <i class="fa fa fa-filter w3-xxlarge w3-text-dark-grey w3-hover-text-light-blue iButton w3-padding w3-margin-right"
+                       title="<spring:message code="label.show.mine.only"/>"></i>
+                    </a>
+
+        </jstl:if>
+        </div>
     </jstl:if>
 
 

@@ -46,7 +46,7 @@ public class ShowroomUserController extends AbstractController {
 
     // List ------------------------------------------------------------------
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ModelAndView list(Integer pageSize) {
+    public ModelAndView list(Integer pageSize, String word) {
         ModelAndView result;
         Collection<Showroom> showrooms;
         result = new ModelAndView("showroom/list");
@@ -60,7 +60,8 @@ public class ShowroomUserController extends AbstractController {
             }
         }
         result.addObject("showrooms", showrooms);
-        result.addObject("requestUri", "showroom/user/list.do");
+        result.addObject("userList", true);
+        result.addObject("word", word);result.addObject("requestUri", "showroom/user/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
@@ -171,7 +172,7 @@ public class ShowroomUserController extends AbstractController {
         result = new ModelAndView("showroom/edit");
         result.addObject("showroom", model);
         Collection<Comment> comments = this.commentService.findByCommentedObjectId(model.getId());
-        result.addObject("item", model);
+        result.addObject("items", items);
         result.addObject("comments", comments);
         result.addObject("requestUri", "showroom/user/create.do");
         result.addObject("edition", true);

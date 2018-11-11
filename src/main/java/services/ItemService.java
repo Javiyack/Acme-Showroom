@@ -1,10 +1,7 @@
 
 package services;
 
-import domain.Actor;
-import domain.Item;
-import domain.Showroom;
-import domain.User;
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +25,7 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
-    private ShowroomService showroomService;
+    private RequestService requestService;
 
 
     // CRUD Methods
@@ -54,7 +51,7 @@ public class ItemService {
         result += (("" + calendar.get(Calendar.DAY_OF_MONTH)).length() == 2) ? calendar.get(Calendar.DAY_OF_MONTH)
                 : "0" + calendar.get(Calendar.DAY_OF_MONTH);
         result += "-";
-        String uppercaseLetters = "ABCEFGHYJKLMNÑOPQRSTUVWXYZ";
+        String uppercaseLetters = "ABCEFGHYJKLMNOPQRSTUVWXYZ";
         Random rnd = new Random();
         for (int i = 0; i < 4; i++) {
             result += uppercaseLetters.charAt(rnd.nextInt(26));
@@ -111,16 +108,21 @@ public class ItemService {
     }
 
     public void delete(Item item) {
-        itemRepository.delete(item);
+        Assert.notNull(item, "msg.not.found.resource");
+        this.delete(item.getId());
     }
 
     public void delete(int itemId) {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Assert.isTrue(actor instanceof User, "msg.not.owned.block");
+        Assert.isTrue(!hasRequests(itemId), "msg.item.has.requests.block");
         itemRepository.delete(itemId);
     }
-    public void deleteInBatch(Collection<Item> items) {
-        itemRepository.deleteInBatch(items);
+    public boolean hasRequests(Integer itemId){
+        Collection<Request> requests = requestService.findByItemId(itemId);
+        return !requests.isEmpty();
     }
-
     public Collection<Item> findByShowroom(Showroom showroom) {
         return this.findByShowroomId(showroom.getId());
     }

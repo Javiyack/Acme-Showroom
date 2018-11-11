@@ -112,8 +112,11 @@ public class CommentActorController extends AbstractController {
             result = this.createEditModelAndView(comment);
         else
             try {
-                this.commentService.save(comment);
-                result = new ModelAndView("redirect:/showroom/list.do");
+                comment = this.commentService.save(comment);
+                result = new ModelAndView("comment/display");
+                result.addObject("comment", comment);
+                result.addObject("display", true);
+                result.addObject("info", "msg.commit.ok");
             } catch (final Throwable oops) {
                 if (oops.getCause().getCause() != null
                         && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
