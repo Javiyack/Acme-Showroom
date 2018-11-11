@@ -30,15 +30,15 @@
 		<value>/views/user/messages</value>
 		<value>/views/agent/messages</value>
 
-		<value>/views/folder/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/configuration/messages</value>
+		<value>/views/dashboard/messages</value>
 		<value>/views/tabooWord/messages</value>
-		<value>/views/file/messages</value>
 		<value>/views/showroom/messages</value>
 		<value>/views/item/messages</value>
 		<value>/views/chirp/messages</value>
 		<value>/views/subscription/messages</value>
+		<value>/views/request/messages</value>
 		<value>/views/comment/messages</value>
 
 

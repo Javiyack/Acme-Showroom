@@ -43,13 +43,13 @@
       <base-name>messages</base-name>
     </custom-resource-bundle>
     <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/src/main/webapp/views/actor/messages.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/webapp/views/actor/messages_es.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/webapp/views/messages.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/webapp/views/messages_es.properties" />
       <base-name>messages</base-name>
     </custom-resource-bundle>
     <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/src/main/webapp/views/messages.properties" />
-      <file value="file://$PROJECT_DIR$/src/main/webapp/views/messages_es.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/webapp/views/actor/messages.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/webapp/views/actor/messages_es.properties" />
       <base-name>messages</base-name>
     </custom-resource-bundle>
   </component>

@@ -7,9 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -20,57 +17,34 @@ import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 @Access(AccessType.PROPERTY)
 public class Configuration extends DomainEntity {
 
-	private String	companyName;
-	private String	passKey;
+	private String systemTitle;
 	private String	logo;
-	private String	defaultCurrency;
-	private Collection<String> folderNames;
-	private Collection<String> difficultyLevels;
+	private Collection<String> tabooWords;
+	private Collection<String> positiveAuditWords;
+	private Collection<String> negativeAuditWords;
+	private Collection<String> stoppingPositiveAuditWords;
+	private Collection<String> stoppingNegativeAuditWords;
 	private String	welcomeMessageEs;
 	private String	welcomeMessageEn;
-	private double	iva;
-	private double	hourPrice;
-
-
-
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getDefaultCurrency() {
-		return defaultCurrency;
-	}
-
-	public void setDefaultCurrency(String currency) {
-		this.defaultCurrency = currency;
-	}
 
 	@ElementCollection
 	@NotNull
-	public Collection<String> getFolderNames() {
-		return folderNames;
+	public Collection<String> getTabooWords() {
+		return tabooWords;
 	}
 
-	public void setFolderNames(Collection<String> folderNames) {
-		this.folderNames = folderNames;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getPassKey() {
-		return passKey;
-	}
-
-	public void setPassKey(String passKey) {
-		this.passKey = passKey;
+	public void setTabooWords(Collection<String> tabooWords) {
+		this.tabooWords = tabooWords;
 	}
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getCompanyName() {
-		return this.companyName;
+	public String getSystemTitle() {
+		return this.systemTitle;
 	}
 
-	public void setCompanyName(final String companyName) {
-		this.companyName = companyName;
+	public void setSystemTitle(final String systemTitle) {
+		this.systemTitle = systemTitle;
 	}
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -105,35 +79,45 @@ public class Configuration extends DomainEntity {
 		this.logo = logo;
 	}
 
-	@Min(0)
-	@Max(100)
+
+	@ElementCollection
 	@NotNull
-	public double getIva() {
-		return iva;
+	public Collection<String> getPositiveAuditWords() {
+		return positiveAuditWords;
 	}
 
-	public void setIva(double iva) {
-		this.iva = iva;
-	}
-
-	@Min(0)
-	@Max(1000)
-	@NotNull
-	public double getHourPrice() {
-		return hourPrice;
-	}
-
-	public void setHourPrice(double hourPrice) {
-		this.hourPrice = hourPrice;
+	public void setPositiveAuditWords(Collection<String> positiveAuditWords) {
+		this.positiveAuditWords = positiveAuditWords;
 	}
 
 	@ElementCollection
 	@NotNull
-	public Collection<String> getDifficultyLevels() {
-		return difficultyLevels;
+	public Collection <String> getNegativeAuditWords() {
+		return negativeAuditWords;
 	}
 
-	public void setDifficultyLevels(Collection<String> difficultyLevels) {
-		this.difficultyLevels = difficultyLevels;
+	public void setNegativeAuditWords(Collection <String> negativeAuditWords) {
+		this.negativeAuditWords = negativeAuditWords;
+	}
+
+	@ElementCollection
+	@NotNull
+	public Collection <String> getStoppingNegativeAuditWords() {
+		return stoppingNegativeAuditWords;
+	}
+
+	public void setStoppingNegativeAuditWords(Collection <String> stoppingNegativeAuditWords) {
+		this.stoppingNegativeAuditWords = stoppingNegativeAuditWords;
+	}
+
+
+	@ElementCollection
+	@NotNull
+	public Collection <String> getStoppingPositiveAuditWords() {
+		return stoppingPositiveAuditWords;
+	}
+
+	public void setStoppingPositiveAuditWords(Collection <String> stoppingPositiveAuditWords) {
+		this.stoppingPositiveAuditWords = stoppingPositiveAuditWords;
 	}
 }

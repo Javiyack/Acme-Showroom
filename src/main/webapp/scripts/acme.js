@@ -172,9 +172,24 @@ function ajaxTopicCreate(element, contextPath) {
     });
 }
 
+function asynchSearch(contextPath, path, target) {
+    url = contextPath + path;
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function (msg) {
+            document.getElementById(target).innerText = msg;
+        },
+        error: function (e) {
+            alert(url + ": " + e);
+
+        }
+    });
+}
+
 function ajaxSearch(element, contextPath) {
     id = element.value;
-    url = contextPath + "/jquery/hostCheck.do";
+    url = contextPath + "/asynchronous/hostCheck.do";
     $.ajax({
         type: "POST",
         url: url,

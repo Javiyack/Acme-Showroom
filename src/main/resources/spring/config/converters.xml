@@ -23,9 +23,7 @@
 		<bean class="converters.AdministratorToStringConverter" />
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.UserAccountToString" />
-		<bean class="converters.UserToStringConverter" />		
-		<bean class="converters.MessageToStringConverter" />
-		<bean class="converters.FolderToStringConverter" />
+		<bean class="converters.UserToStringConverter" />
 		<bean class="converters.ConfigurationToStringConverter" />
 		<bean class="converters.TabooWordToStringConverter" />
 		<bean class="converters.ShowroomToStringConverter" />
@@ -37,9 +35,7 @@
 		<bean class="converters.StringToAdministratorConverter" />
 		<bean class="converters.StringToAuthorityConverter" />
 		<bean class="converters.StringToUserAccount" />
-		<bean class="converters.StringToUserConverter" />			
-		<bean class="converters.StringToMessageConverter" />	
-		<bean class="converters.StringToFolderConverter" />
+		<bean class="converters.StringToUserConverter" />
 		<bean class="converters.StringToConfigurationConverter" />
 		<bean class="converters.StringToTabooWordConverter" />
 		<bean class="converters.StringToShowroomConverter" />

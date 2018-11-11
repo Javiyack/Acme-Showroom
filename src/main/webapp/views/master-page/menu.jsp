@@ -87,12 +87,8 @@
             <security:authorize access="isAuthenticated()">
                 <a href="${rol}/edit.do"><i
                         class="fa fa-user w3-bar-item w3-large"></i></a>
-                <a href="folder/list.do"><i
-                        class="fa fa-envelope w3-bar-item w3-large"></i></a>
 
             </security:authorize>
-            <a href="preferences/actor/edit.do"><i
-                    class="fa fa-cog w3-bar-item w3-large"></i></a>
         </div>
     </div>
     <hr>
@@ -193,10 +189,7 @@
             </div>
         </security:authorize>
         <security:authorize access="hasRole('AGENT')">
-            <a href="inn/agent/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-home fa-fw"></i>  <spring:message code="label.inn"/>
-            </a>
+
         </security:authorize>
         <br> <br>
     </div>

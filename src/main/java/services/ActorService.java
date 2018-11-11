@@ -42,9 +42,6 @@ public class ActorService {
     @Autowired
     private Validator validator;
 
-    @Autowired
-    private FolderService folderService;
-
     // Constructors -----------------------------------------------------------
     public ActorService() {
         super();
@@ -95,9 +92,6 @@ public class ActorService {
         }
         result = this.actorRepository.save(actor);
         this.flush();
-        if (actor.getId() == 0) {
-            this.folderService.createSystemFolders(result);
-        }
 
         return result;
     }

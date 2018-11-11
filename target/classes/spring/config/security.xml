@@ -25,18 +25,95 @@
 	<security:http auto-config="true" use-expressions="true">
 
 		<!-- Permit All -->
-		
-		<security:intercept-url pattern="/**"
-			access="permitAll" />
-		<security:intercept-url pattern="/**/**"
-			access="permitAll" />
-		<security:intercept-url pattern="/**/**/**"
-			access="permitAll" />
-		
+
+		<security:intercept-url pattern="/"
+								access="permitAll" />
+		<security:intercept-url pattern="/asynchronous/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/asynchronous/**/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/asynchronous/**/**/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/favicon.ico"
+								access="permitAll" />
+		<security:intercept-url pattern="/images/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/scripts/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/styles/**"
+								access="permitAll" />
+		<security:intercept-url
+				pattern="/views/misc/index.jsp" access="permitAll" />
+		<security:intercept-url
+				pattern="/security/login.do" access="permitAll" />
+		<security:intercept-url
+				pattern="/security/loginFailure.do" access="permitAll" />
+		<security:intercept-url
+				pattern="/welcome/index.do" access="permitAll" />
+		<security:intercept-url pattern="/term/**"
+								access="permitAll()" />
+		<security:intercept-url pattern="/showroom/list.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/showroom/display.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/item/list.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/item/display.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/user/create.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/user/display.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/agent/create.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/actor/display.do"
+								access="permitAll()" />
+		<!-- Annonymous -->
+
+
+		<!-- isAuthenticated -->
+		<security:intercept-url pattern="/actor/actor/**"
+								access="isAuthenticated()" />
+		<security:intercept-url pattern="/chirp/actor/**"
+								access="isAuthenticated()" />
+		<security:intercept-url pattern="/comment/actor/**"
+								access="isAuthenticated()" />
+		<security:intercept-url pattern="/subscription/**"
+								access="isAuthenticated()" />
+
+		<!-- User -->
+		<security:intercept-url pattern="/user/edit.do"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/user/list.do"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/showroom/user/**"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/item/user/**"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/request/user/**"
+								access="hasRole('USER')" />
+
+		<!-- Agent -->
+		<security:intercept-url pattern="/agent/edit.do"
+								access="hasRole('AGENT')" />
+		<security:intercept-url pattern="/agent/list.do"
+								access="hasRole('AGENT')" />
 		<!-- Admin -->
 		<security:intercept-url
-			pattern="/admin/administrator/**"
-			access="hasRole('ADMINISTRATOR')" />	
+				pattern="/configuration/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/dashboard/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/tabooWord/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/admin/**"
+				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/admin/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url
 			pattern="/agent/administrator/**"
 			access="hasRole('ADMINISTRATOR')" />	

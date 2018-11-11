@@ -98,33 +98,9 @@ public class ConfigurationService {
 
 	}
 
-	public Double findHourPrice() {
-		Double result;
-
-		result = this.configurationRepository.findHourPrice();
-
-		return result;
-	}
-
-	public Double findIVA() {
-		Double result;
-
-		result = this.configurationRepository.findIVA();
-
-		return result;
-	}
-
-	public String findPassKey() {
-		String result;
-
-		result = this.configurationRepository.findPassKey();
-
-		return result;
-	}
-
-	public List<String> findFolderNames() {
+	public List<String> findTabooWords() {
 		Configuration cfg = configurationRepository.findCfg();
 		System.out.println();
-		return (List<String>) cfg.getFolderNames();
+		return (List<String>) cfg.getTabooWords();
 	}
 }

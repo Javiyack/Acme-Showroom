@@ -28,6 +28,12 @@
 
 		<security:intercept-url pattern="/"
 								access="permitAll" />
+		<security:intercept-url pattern="/asynchronous/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/asynchronous/**/**"
+								access="permitAll" />
+		<security:intercept-url pattern="/asynchronous/**/**/**"
+								access="permitAll" />
 		<security:intercept-url pattern="/favicon.ico"
 								access="permitAll" />
 		<security:intercept-url pattern="/images/**"
@@ -72,13 +78,7 @@
 								access="isAuthenticated()" />
 		<security:intercept-url pattern="/comment/actor/**"
 								access="isAuthenticated()" />
-		<security:intercept-url pattern="/folder/**"
-								access="isAuthenticated()" />
-		<security:intercept-url pattern="/message/**"
-								access="isAuthenticated()" />
 		<security:intercept-url pattern="/subscription/**"
-								access="isAuthenticated()" />
-		<security:intercept-url pattern="/asynchronous/**"
 								access="isAuthenticated()" />
 
 		<!-- User -->
