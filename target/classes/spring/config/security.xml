@@ -45,7 +45,8 @@
 		<security:intercept-url
 				pattern="/views/misc/index.jsp" access="permitAll" />
 		<security:intercept-url
-				pattern="/security/login.do" access="permitAll" />
+				pattern="/security/login.do" access="permitAll" requires-channel="https"/>
+		<security:intercept-url pattern="/j_spring_security_check*" requires-channel="https"/>
 		<security:intercept-url
 				pattern="/security/loginFailure.do" access="permitAll" />
 		<security:intercept-url
@@ -61,11 +62,11 @@
 		<security:intercept-url pattern="/item/display.do"
 								access="permitAll()" />
 		<security:intercept-url pattern="/user/create.do"
-								access="permitAll()" />
+								access="permitAll()" requires-channel="https"/>
 		<security:intercept-url pattern="/user/display.do"
 								access="permitAll()" />
 		<security:intercept-url pattern="/agent/create.do"
-								access="permitAll()" />
+								access="permitAll()" requires-channel="https"/>
 		<security:intercept-url pattern="/actor/display.do"
 								access="permitAll()" />
 		<!-- Annonymous -->
@@ -83,7 +84,7 @@
 
 		<!-- User -->
 		<security:intercept-url pattern="/user/edit.do"
-								access="hasRole('USER')" />
+								access="hasRole('USER')" requires-channel="https"/>
 		<security:intercept-url pattern="/user/list.do"
 								access="hasRole('USER')" />
 		<security:intercept-url pattern="/showroom/user/**"
@@ -92,10 +93,15 @@
 								access="hasRole('USER')" />
 		<security:intercept-url pattern="/request/user/**"
 								access="hasRole('USER')" />
+		<security:intercept-url pattern="/request/user/create.do"
+								access="hasRole('USER')" requires-channel="https"/>
+		<security:intercept-url pattern="/request/user/edit.do"
+								access="hasRole('USER')" requires-channel="https"/>
+
 
 		<!-- Agent -->
 		<security:intercept-url pattern="/agent/edit.do"
-								access="hasRole('AGENT')" />
+								access="hasRole('AGENT')" requires-channel="https"/>
 		<security:intercept-url pattern="/agent/list.do"
 								access="hasRole('AGENT')" />
 		<!-- Admin -->
@@ -115,9 +121,15 @@
 				pattern="/admin/administrator/**"
 				access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url
-			pattern="/agent/administrator/**"
-			access="hasRole('ADMINISTRATOR')" />	
-		
+				pattern="/agent/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/agent/administrator/create*"
+				access="hasRole('ADMINISTRATOR')" requires-channel="https"/>
+		<security:intercept-url
+				pattern="/admin/administrator/create*"
+				access="hasRole('ADMINISTRATOR')" requires-channel="https"/>
+
 		<!-- Login Logout -->
 		
 		<security:form-login
@@ -127,7 +139,7 @@
 			
 		<security:logout logout-success-url="/"
 			invalidate-session="true" />
-			
+		<security:session-management session-fixation-protection="none"/>
 			
 	</security:http>
 </beans>

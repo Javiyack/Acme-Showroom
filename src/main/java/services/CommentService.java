@@ -17,15 +17,17 @@ import java.util.Date;
 @Service
 @Transactional
 public class CommentService {
+
     //Repositories
     @Autowired
     private CommentRepository commentRepository;
+
     //Services
     @Autowired
     private ActorService actorService;
-
     @Autowired
     private Validator validator;
+
     //Constructor
     public CommentService() {
         super();
@@ -47,10 +49,6 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Collection<Comment> findAll() {
-        return commentRepository.findAll();
-    }
-
     public Comment findOne(int followId) {
         return commentRepository.findOne(followId);
     }
@@ -58,13 +56,6 @@ public class CommentService {
 
     public Collection <Comment> findByCommentedObjectId(Integer objectId) {
         return commentRepository.findByCommentedObjectId(objectId);    }
-
-    public Collection<Comment> findByActor(Integer actorId) {
-        return commentRepository.findByActor(actorId);
-    }
-    public Collection<Comment> findByActorAndObject(Integer actorId, Integer objectId) {
-        return commentRepository.findByActorAndObject(actorId, objectId);
-    }
 
     public Comment recontruct(Comment comment, BindingResult binding ) {
         Actor actor = actorService.findByPrincipal();

@@ -3,7 +3,6 @@ package services;
 
 import domain.Actor;
 import domain.Administrator;
-import domain.TabooWord;
 import forms.AdminForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,6 @@ import security.UserAccount;
 import security.UserAccountService;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -31,10 +28,6 @@ public class AdministratorService {
     // Supporting services ----------------------------------------------------
     @Autowired
     private ActorService actorService;
-    @Autowired
-    private TabooWordService tabooWordService;
-    @Autowired
-    private UserAccountService userAccountService;
     @Autowired
     private Validator validator;
 
@@ -55,16 +48,6 @@ public class AdministratorService {
         return result;
     }
 
-    public Collection <Administrator> findAll() {
-
-        Collection <Administrator> result;
-
-        result = this.administratorRepository.findAll();
-        Assert.notNull(result);
-
-        return result;
-    }
-
     public Administrator findByPrincipal() {
         Administrator result;
         UserAccount userAccount;
@@ -80,29 +63,6 @@ public class AdministratorService {
     public Administrator create() {
         return new Administrator();
 
-    }
-
-    public void flush() {
-        this.administratorRepository.flush();
-
-    }
-
-    public boolean checkIsSpam(final String subject, final String body) {
-
-        Boolean isSpam;
-
-        if (subject.isEmpty() && body.isEmpty())
-            isSpam = false;
-        else {
-
-            Collection <TabooWord> tabooWords;
-            tabooWords = this.tabooWordService.getTabooWordFromMyMessageSubjectAndBody(subject, body);
-
-            isSpam = !tabooWords.isEmpty();
-
-        }
-
-        return isSpam;
     }
 
     public Administrator reconstruct(final AdminForm adminForm, final BindingResult binding) {
@@ -322,26 +282,6 @@ public class AdministratorService {
             result = values.iterator().next();
             for (Integer value : values) {
                 result = Math.max(result,value);
-            }
-        }
-        return result;
-    }
-
-    private Integer sum(Collection<Integer> values){
-        Integer result = 0;
-        if (!values.isEmpty()) {
-            for (Integer value : values) {
-                result += value;
-            }
-        }
-        return result;
-    }
-
-    private Integer sum2(Collection<Integer> values){
-        Integer result = 0;
-        if (!values.isEmpty()) {
-            for (Integer value : values) {
-                result += value*value;
             }
         }
         return result;

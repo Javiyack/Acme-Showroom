@@ -17,13 +17,12 @@ import java.util.Random;
 public class ItemService {
 
     // Managed repository -----------------------------------------------------
-
+    @Autowired
+    private ItemRepository itemRepository;
 
     // Supporting services
     @Autowired
     private ActorService actorService;
-    @Autowired
-    private ItemRepository itemRepository;
     @Autowired
     private RequestService requestService;
 

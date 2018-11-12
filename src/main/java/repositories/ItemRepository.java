@@ -1,8 +1,6 @@
 package repositories;
 
-import domain.Folder;
 import domain.Item;
-import domain.Showroom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

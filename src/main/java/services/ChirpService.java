@@ -14,9 +14,11 @@ import java.util.Date;
 @Service
 @Transactional
 public class ChirpService {
+
     //Repositories
     @Autowired
     private ChirpRepository chirpRepository;
+
     //Services
     @Autowired
     private ActorService actorService;

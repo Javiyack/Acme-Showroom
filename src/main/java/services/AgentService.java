@@ -23,8 +23,6 @@ public class AgentService {
     //Services
     @Autowired
     private ActorService actorService;
-    @Autowired
-	private UserAccountService userAccountService;
 
 	@Autowired
 	private Validator validator;

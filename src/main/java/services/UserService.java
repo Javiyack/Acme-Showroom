@@ -23,8 +23,6 @@ public class UserService {
 	// Services
 	@Autowired
 	private ActorService actorService;
-	@Autowired
-	private UserAccountService userAccountService;
 
 	@Autowired
 	private Validator validator;
@@ -47,10 +45,6 @@ public class UserService {
 	public User save(User user) {
 		return userRepository.save(user);
 
-	}
-
-	public Collection<User> findAll() {
-		return userRepository.findAll();
 	}
 
 	public User findOne(int userId) {

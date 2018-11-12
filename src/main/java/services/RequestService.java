@@ -24,8 +24,6 @@ public class RequestService {
     private ActorService actorService;
     @Autowired
     private ItemService itemService;
-    @Autowired
-    private ShowroomService showroomService;
 
     @Autowired
     private Validator validator;

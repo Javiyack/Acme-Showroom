@@ -49,11 +49,11 @@ public class SampleTest extends AbstractTest {
 	public void sampleDriver() {
 		final Object testingData[][] = {
 			{
-				"userAccount1", 4, null
+				"userAccountUser1", 19, null
 			}, {
-				"userAccount2", 5, null
+				"userAccountUser2", 20, null
 			}, {
-				"userAccount3", 6, null
+				"userAccountUser3", 21, null
 			}, {
 				"non-existent", 0, AssertionError.class
 			}
