@@ -1,0 +1,6 @@
+
+*.war
+*.class
+*.class
+target/*
+target/*/*
