@@ -1,18 +1,18 @@
 package services;
 
-import domain.Actor;
-import domain.Comment;
-import domain.User;
+import java.util.Collection;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-import repositories.CommentRepository;
 
-import java.util.Collection;
-import java.util.Date;
+import domain.Actor;
+import domain.Comment;
+import repositories.CommentRepository;
 
 @Service
 @Transactional

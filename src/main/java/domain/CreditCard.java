@@ -1,14 +1,13 @@
 package domain;
 
-import org.hibernate.validator.constraints.CreditCardNumber;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.CreditCardNumber;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 @Embeddable
 @Access(AccessType.PROPERTY)

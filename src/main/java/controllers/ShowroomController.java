@@ -1,25 +1,24 @@
 
 package controllers;
 
-import domain.Comment;
-import domain.Item;
-import domain.Showroom;
+import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import domain.Comment;
+import domain.Item;
+import domain.Showroom;
 import services.CommentService;
 import services.ItemService;
 import services.ShowroomService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.Collection;
 
 @Controller
 @RequestMapping("/showroom")

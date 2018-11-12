@@ -1,20 +1,20 @@
 
 package controllers;
 
-import domain.Actor;
-import domain.Showroom;
-import forms.ActorForm;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import domain.Actor;
+import domain.Showroom;
+import forms.ActorForm;
 import security.Authority;
 import services.ActorService;
 import services.ShowroomService;
-import services.UserService;
-
-import java.util.Collection;
 
 @Controller
 @RequestMapping("/actor")
@@ -26,9 +26,6 @@ public class ActorController extends AbstractController {
     private ActorService actorService;
     @Autowired
     private ShowroomService showroomService;
-    @Autowired
-    private UserService userService;
-
 
     // Constructors -----------------------------------------------------------
 

@@ -1,10 +1,6 @@
 
 package controllers.administrator;
 
-import java.util.Collection;
-
-import domain.Administrator;
-import forms.AdminForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,7 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Administrator;
 import forms.ActorForm;
+import forms.AdminForm;
 import security.Authority;
 import services.ActorService;
 import services.AdministratorService;

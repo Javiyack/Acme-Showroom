@@ -1,25 +1,22 @@
 
 package controllers;
 
-import domain.*;
+import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import services.ActorService;
+
+import domain.Comment;
+import domain.Item;
 import services.CommentService;
 import services.ItemService;
-import services.ShowroomService;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Controller
 @RequestMapping("/item")

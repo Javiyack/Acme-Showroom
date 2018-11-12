@@ -1,21 +1,21 @@
 
 package services;
 
-import domain.Actor;
-import domain.Administrator;
-import forms.AdminForm;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+
+import domain.Actor;
+import domain.Administrator;
+import forms.AdminForm;
 import repositories.AdministratorRepository;
 import security.LoginService;
 import security.UserAccount;
-import security.UserAccountService;
-
-import java.util.Collection;
 
 @Service
 @Transactional
@@ -291,8 +291,8 @@ public class AdministratorService {
     /*  Paso 1: calcular la media.
         Paso 2: calcular el cuadrado de la distancia a la media para cada dato.
         Paso 3: sumar los valores que resultaron del paso 2.
-        Paso 4: dividir entre el número de datos.
-        Paso 5: sacar la raíz cuadrada.*/
+        Paso 4: dividir entre el nï¿½mero de datos.
+        Paso 5: sacar la raï¿½z cuadrada.*/
         Double result = 0.;
         Double avg = this.avg(values);
         int N = values.size();

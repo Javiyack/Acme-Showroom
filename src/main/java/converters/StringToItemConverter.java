@@ -1,14 +1,13 @@
 package converters;
 
-import domain.Item;
-import domain.Showroom;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import domain.Item;
 import repositories.ItemRepository;
-import repositories.ShowroomRepository;
 
 @Component
 @Transactional

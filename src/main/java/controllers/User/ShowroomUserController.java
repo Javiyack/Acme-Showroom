@@ -1,13 +1,10 @@
 
 package controllers.User;
 
-import controllers.AbstractController;
-import controllers.ShowroomController;
-import controllers.UserController;
-import domain.Comment;
-import domain.Item;
-import domain.Showroom;
-import domain.User;
+import java.util.Collection;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -16,10 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import services.*;
 
-import javax.validation.Valid;
-import java.util.Collection;
+import controllers.AbstractController;
+import domain.Comment;
+import domain.Item;
+import domain.Showroom;
+import services.ActorService;
+import services.ChirpService;
+import services.CommentService;
+import services.ItemService;
+import services.ShowroomService;
 
 @Controller
 @RequestMapping("/showroom/user")

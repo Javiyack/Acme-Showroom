@@ -1,11 +1,11 @@
 
 package controllers.User;
 
-import controllers.AbstractController;
-import domain.Comment;
-import domain.Constant;
-import domain.Item;
-import domain.User;
+import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import services.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import controllers.AbstractController;
+import domain.Comment;
+import domain.Item;
+import services.ActorService;
+import services.ChirpService;
+import services.CommentService;
+import services.ItemService;
+import services.ShowroomService;
 
 @Controller
 @RequestMapping("/item/user")
@@ -144,7 +145,7 @@ public class ItemUserController extends AbstractController {
                 Boolean crearChirpAutomatico = item.getId()==0;
                 item = this.itemService.save(item);
                 if(crearChirpAutomatico)
-                    this.chirpService.createAutomaticChrip("Artículos", "Nuevo Articulo","Se ha añadido el nuevo artículo "
+                    this.chirpService.createAutomaticChrip("Artï¿½culos", "Nuevo Articulo","Se ha aï¿½adido el nuevo artï¿½culo "
                         + item.getTitle() + " al escaparate " + item.getShowroom().getName());
                 result = new ModelAndView("redirect:/showroom/user/edit.do?showroomId=" + item.getShowroom().getId());
             } catch ( Throwable oops) {

@@ -87,7 +87,7 @@ public class Authority implements GrantedAuthority {
 		Map<String, Authority> result;
 		Authority authority;
 
-		result = new HashMap();
+		result = new HashMap<String, Authority>();
 
 		authority = new Authority();
 		authority.setAuthority(Authority.ADMINISTRATOR);
