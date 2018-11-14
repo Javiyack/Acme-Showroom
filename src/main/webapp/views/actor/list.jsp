@@ -39,41 +39,35 @@
                 </form:form>
             </jstl:if>
             <display:table pagesize="${pageSize}"
-                           class="flat-table flat-table-1 w3-light-grey" name="actors"
+                           class="flat-table0 flat-table-1 w3-light-grey" name="actors"
                            requestURI="${requestUri}" id="row">
-                <jstl:set var="activateUrl"
-                          value="actor/administrator/activate.do?actorId=${row.id}&pageSize=${pageSize}"/>
                 <jstl:set var="url" value="actor/actor/display.do?actorId=${row.id}"/>
-                <acme:column property="${row.userAccount.username}"
-                             title="label.user" sortable="true" rowUrl="${url}" css="iButton"/>
-                <acme:column property="${row.surname}, ${row.name}"
-                             title="label.name" sortable="true" rowUrl="${url}"/>
+                <acme:urlColumn value="${row.userAccount.username}"
+                                title="label.user" sortable="true" href="${url}" css="iButton"/>
+                <acme:urlColumn value="${row.surname}, ${row.name}"
+                                title="label.name" sortable="true" href="${url}" css="iButton"/>
                 <jstl:if test="${legend eq 'label.users'}">
-                    <acme:column property="birthdate" title="label.birthdate"
-                                 sortable="true" format="date.format"/>
-                    <acme:column property="genere" title="label.genere" sortable="true"/>
+                    <acme:urlColumn value="${row.birthdate}, ${row.genere}" title="label.birthdate"
+                                    sortable="true" href="${url}" css="iButton"/>
                 </jstl:if>
                 <jstl:if
                         test="${legend eq 'label.agents' or legend eq 'label.auditors'}">
-                    <acme:column property="company" title="label.company"
-                                 sortable="true"/>
+                    <acme:urlColumn value="company" title="label.company" href="${url}"
+                                    sortable="true" css="iButton"/>
                 </jstl:if>
-                <jstl:if
-                        test="${legend eq 'label.all.accounts'}">
-                    <acme:column property="userAccount.authorities.iterator.next" title="label.authority"
-                                 sortable="true"/>
+                <jstl:if test="${legend eq 'label.actors'}">
+                    <acme:urlColumn value="${row.userAccount.authorities[0]}" href="${url}"
+                                    title="label.authority" sortable="true" css="iButton"/>
                 </jstl:if>
                 <jstl:if test="${!userIsFollowedMap[row]}">
-                    <acme:column property=" " title="label.chirp.subscription" sortable="true"
-                                 rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
-                                 icon="fa fa-check w3-xlarge w3-text-gray css-uncheck" style="width: 8em;"/>
+                    <jstl:set var="icon" value="fa fa-check w3-xlarge w3-text-gray css-uncheck"/>
                 </jstl:if>
                 <jstl:if test="${userIsFollowedMap[row]}">
-                    <acme:column property=" " title="label.chirp.subscription" sortable="true"
-                                 rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
-                                 icon="fa fa-check w3-xlarge w3-text-green" style="width: 8em;"/>
+                    <jstl:set var="icon" value="fa fa-check w3-xlarge w3-text-orange"/>
                 </jstl:if>
-
+                <acme:urlColumn value="" title="label.chirp.subscription" sortable="true"
+                                href="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/actor/actor/list.do"
+                                icon="${icon}" css="iButton" style="width: 8em;"/>
 
             </display:table>
         </div>
@@ -89,7 +83,7 @@
         <div style="overflow-x: auto;">
 
 
-            <table class="flat-table flat-table-1 w3-light-grey">
+            <table class="flat-table0 flat-table-1 w3-light-grey">
                 <tr>
                     <th><spring:message code="label.user"/></th>
                     <th><spring:message code="label.name"/></th>
@@ -98,11 +92,12 @@
 
                 <jstl:forEach items="${userIsFollowedMap}" var="entry">
                     <jstl:if test="${entry.value}">
-                        <tr onclick="relativeRedir('actor/actor/display.do?actorId=${entry.key.id}')" class="iButton">
-                            <td >${entry.key.userAccount.username}</td>
-                            <td>${entry.key.surname},${entry.key.name}</td>
-                            <td style="width: 8em;"><a href="subscription/actor/subscribe.do?actorId=${entry.key.id}&redirectUrl=/actor/actor/list.do">
-                                <i class="fa fa-check w3-xlarge w3-text-green"></i>
+                        <tr onclick="relativeRedir('actor/actor/display.do?actorId=${entry.key.id}')" class="iButton" style="text-decoration: blink;">
+                            <td style="height: 100%;margin: 0px;padding: 0.7em 1em 0.7em 0.5em; text-decoration: none !important;"><i>${entry.key.userAccount.username}</i></td>
+                            <td style="height: 100%;margin: 0px;padding: 0.7em 1em 0.7em 0.5em; text-decoration: none !important;"><i>${entry.key.surname},${entry.key.name}</i></td>
+                            <td style="height: 100%;margin: 0px;padding: 0.7em 1em 0.7em 0.5em; text-decoration: none !important;width: 8em;"><a
+                                    href="subscription/actor/subscribe.do?actorId=${entry.key.id}&redirectUrl=/actor/actor/list.do">
+                                <i class="fa fa-check w3-xlarge w3-text-orange"></i>
                             </a></td>
                         </tr>
                     </jstl:if>
@@ -131,15 +126,15 @@
                     </form:form>
                 </jstl:if>
                 <display:table pagesize="${pageSize}"
-                               class="flat-table flat-table-1 w3-light-grey" name="followers"
+                               class="flat-table0 flat-table-1 w3-light-grey" name="followers"
                                requestURI="${requestUri}" id="row">
-                     <jstl:set var="url" value="actor/actor/display.do?actorId=${row.id}"/>
-                    <acme:column property="${row.userAccount.username}"
-                                 title="label.user" sortable="true" rowUrl="${url}"/>
-                    <acme:column property="${row.surname}, ${row.name}"
-                                 title="label.name" sortable="true" rowUrl="${url}"/>
-                    <acme:column property=" " title="label.view" sortable="true"
-                                 rowUrl="${url}" icon="fa fa-eye w3-xlarge" style="width: 8em;"/>
+                    <jstl:set var="url" value="actor/actor/display.do?actorId=${row.id}"/>
+                    <acme:urlColumn value="${row.userAccount.username}"
+                                 title="label.user" sortable="true" href="${url}" css="iButton"/>
+                    <acme:urlColumn value="${row.surname}, ${row.name}"
+                                 title="label.name" sortable="true" href="${url}" css="iButton"/>
+                    <acme:urlColumn value=" " title="label.view" sortable="true"
+                                    href="${url}" icon="fa fa-eye w3-xlarge" style="width: 8em;" css="iButton"/>
                 </display:table>
 
             </div>

@@ -55,10 +55,10 @@ public class SampleTest extends AbstractTest {
 			}, {
 				"userAccountUser3", 21, null
 			}, {
-				"non-existent", 0, AssertionError.class
+				"non-existent", 0, NumberFormatException.class
 			}
 		};
-
+// comments here
 		for (int i = 0; i < testingData.length; i++)
 			this.sampleTemplate((String) testingData[i][0], (int) testingData[i][1], (Class<?>) testingData[i][2]);
 	}

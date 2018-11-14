@@ -77,7 +77,7 @@
     </jstl:if>
     <div style="overflow-x:auto;">
         <display:table pagesize="${pageSize}"
-                       class="flat-table flat-table-1 w3-light-grey" name="items"
+                       class="flat-table0 flat-table-1 w3-light-grey" name="items"
                        requestURI="${requestUri}" id="row3">
             <jstl:set var="owns"
                       value="${logedActor.id==row3.showroom.user.userAccount.id}"/>
@@ -97,25 +97,25 @@
                 <jstl:set var="availableIcon" value="fa fa-square-o w3-xlarge"/>
             </jstl:if>
             <jstl:if test="${!included}">
-                <acme:column property="${row3.showroom.name}" title="label.showroom" rowUrl="${url}"/>
+                <acme:urlColumn value="${row3.showroom.name}" title="label.showroom" href="${url}" css="iButton"/>
             </jstl:if>
-            <acme:column property="${row3.SKU}" title="label.SKU" rowUrl="${url}"/>
-            <acme:column property="${row3.title}" title="label.name" rowUrl="${url}"/>
-            <acme:column property="${row3.description}" title="label.description" rowUrl="${url}"/>
-            <acme:column property="${row3.price}" title="label.price" rowUrl="${url}"/>
-            <acme:column property="${row3.available}" icon="${availableIcon}" title="label.available" rowUrl="${url}"/>
-            <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
+            <acme:urlColumn value="${row3.SKU}" title="label.SKU" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${row3.title}" title="label.name" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${row3.description}" title="label.description" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${row3.price}" title="label.price" href="${url}" css="iButton"/>
+            <acme:urlColumn value="" icon="${availableIcon}" title="label.available" href="${url}" css="iButton" style="text-alig"/>
+            <acme:urlColumn value="" title="label.none" icon="${icono}" href="${url}" css="iButton" style="text-align:center;"/>
         </display:table>
     </div>
     <jstl:if test="${showroom!=null and rol eq 'user' and logedActor eq showroom.user.userAccount}">
 
-        <spring:message var="msg" code="msg.save.first"/>
+        <spring:message var="msgSaveFirst" code="msg.save.first"/>
         <jstl:set var="url" value="/item/user/create.do?showroomId=${showroom.id}"></jstl:set>
         <spring:message code="label.new" var="newTitle"/>
         <spring:message code="label.item" var="itemTitle"/>
         <p>
             <i class="fa fa-plus-square w3-text-dark-grey w3-hover-text-light-blue w3-xxlarge toRight w3-padding iButton"
-               onclick="showConditionalAlert('${msg}','${showroom.id}','${url}');" title="${newTitle} ${itemTitle}"></i>
+               onclick="showConditionalAlert('${msgSaveFirst}','${showroom.id}','${url}');" title="${newTitle} ${itemTitle}"></i>
         </p>
     </jstl:if>
     <jstl:if test="${showroom==null and rol eq 'user'}">
@@ -123,7 +123,7 @@
         <jstl:if test="${userList and rol eq 'user'}">
             <p>
                 <a href="item/list.do" >
-                    <i class="fa fa fa-filter w3-xxlarge w3-text-green"
+                    <i class="fa fa fa-filter w3-xxlarge w3-text-orange"
                        title="<spring:message code="label.show.all"/>">
                 </i> <spring:message code="label.show.all"/></a>
             </p>

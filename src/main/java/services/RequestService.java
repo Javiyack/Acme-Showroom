@@ -27,40 +27,36 @@ public class RequestService {
 
     @Autowired
     private Validator validator;
+
     // CRUD  -----------------------------------------------------
-    public Request save(Request request){
+    public Request save(Request request) {
         Assert.isTrue(request.getItem().getAvailable(), "msg.not.available.item.block");
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
         Request result = requestRepository.findOne(request.getId());
-        if(request.getId()==0){
-            Assert.isTrue(request.getUser().equals((User)actor)
-                    || request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
-            Assert.isTrue(!request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.own.request.block");
+        if (request.getId() == 0) {
+            Assert.isTrue(request.getUser().equals((User) actor)
+                    || request.getItem().getShowroom().getUser().equals((User) actor), "msg.not.owned.block");
+            Assert.isTrue(!request.getItem().getShowroom().getUser().equals((User) actor), "msg.not.own.request.block");
             request.setStatus(Constant.requestStatus.PENDING.toString());
-            if(request.getItem().getPrice()>0) {
+            if (request.getItem().getPrice() > 0) {
                 Assert.notNull(request.getCreditCard(), "msg.not.credit.card.block");
                 Calendar fechaLimite = Calendar.getInstance();
                 Calendar expirationDate = Calendar.getInstance();
-                System.out.println(expirationDate.getTime());
-                expirationDate.set(Integer.parseInt(20+request.getCreditCard().getExpirationYear()),
-                        Integer.parseInt(request.getCreditCard().getExpirationMonth())-1,1);
-                System.out.println("Hoy: " + fechaLimite.getTime());
-                System.out.println("Expiration: " + expirationDate.getTime());
+                expirationDate.set(Integer.parseInt(20 + request.getCreditCard().getExpirationYear()),
+                        Integer.parseInt(request.getCreditCard().getExpirationMonth()) - 1, 1);
                 Assert.isTrue(expirationDate.after(fechaLimite), "msg.credit.card.expired.block");
-                fechaLimite.add(Calendar.DATE,30);
-                System.out.println("Fecha limite: " + fechaLimite.getTime());
-                System.out.println("Expiration: " + expirationDate.getTime());
+                fechaLimite.add(Calendar.DATE, 30);
                 Assert.isTrue(expirationDate.after(fechaLimite), "msg.credit.card.close.to.expire.block");
             }
             return requestRepository.save(request);
-        }else{
-            Assert.isTrue(result.getUser().equals((User)actor)
-                    || result.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
+        } else {
+            Assert.isTrue(result.getUser().equals((User) actor)
+                    || result.getItem().getShowroom().getUser().equals((User) actor), "msg.not.owned.block");
             String status = result.getStatus();
             result.setStatus(request.getStatus());
-            if(!status.equals(Constant.requestStatus.PENDING.toString())) // Aqui impedimos el cambio de estado una vez aceptado o rechazado
+            if (!status.equals(Constant.requestStatus.PENDING.toString())) // Aqui impedimos el cambio de estado una vez aceptado o rechazado
                 result.setStatus(status);
             return requestRepository.save(result);
 
@@ -76,25 +72,26 @@ public class RequestService {
         Item item = itemService.findOne(itemId);
         Assert.isTrue(item.getAvailable(), "msg.not.available.item.block");
         Request request = new Request();
-        request.setUser((User)actor);
+        request.setUser((User) actor);
         request.setMoment(new Date());
         request.setItem(item);
         request.setStatus(Constant.requestStatus.PENDING.toString());
         return request;
     }
-    public Collection<Request> findCreatedRequests() {
+
+    public Collection <Request> findCreatedRequests() {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
         return this.requestRepository.findByUser(actor.getId());
     }
 
-    public Collection<Request> findRecivedRequests() {
+    public Collection <Request> findRecivedRequests() {
 
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
-        return this.requestRepository.findRecivedRequests(actor.getId());
+        return this.requestRepository.findReceivedRequests(actor.getId());
     }
 
     public Request findOne(int requestId) {
@@ -102,7 +99,7 @@ public class RequestService {
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof User, "msg.not.user.block");
         Request result = requestRepository.findOne(requestId);
-        Assert.isTrue(result.getUser().equals((User)actor) || result.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
+        Assert.isTrue(result.getUser().equals((User) actor) || result.getItem().getShowroom().getUser().equals((User) actor), "msg.not.owned.block");
         return result;
     }
 
@@ -116,7 +113,7 @@ public class RequestService {
         Assert.notNull(userActor, "msg.not.logged.block");
         Assert.isTrue(userActor instanceof User, "msg.not.user.block");
         request.setUser((User) userActor);
-        if(item.getPrice()>0)
+        if (item.getPrice() > 0)
             this.validator.validate(request, binding);
         else {
             CreditCard cd = new domain.CreditCard();
@@ -130,7 +127,7 @@ public class RequestService {
             this.validator.validate(request, binding);
             request.setCreditCard(null);
         }
-        Assert.isTrue(userActor.equals((User)actor) || request.getItem().getShowroom().getUser().equals((User)actor), "msg.not.owned.block");
+        Assert.isTrue(userActor.equals((User) actor) || request.getItem().getShowroom().getUser().equals((User) actor), "msg.not.owned.block");
 
         return request;
     }

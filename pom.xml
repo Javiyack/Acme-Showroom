@@ -55,6 +55,18 @@
 				</configuration>
 			</plugin>
 
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-install</id>
+						<phase>none</phase>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- Population -->
 
 			<plugin>
@@ -82,7 +94,7 @@
 				<version>2.1</version>
 				<configuration>
 					<server>tomcat-development-server</server>
-					<port>8080</port>
+					<port>8050</port>
 					<path>/${project.artifactId}</path>
 				</configuration>
 			</plugin>

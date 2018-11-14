@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    markOpenLink();
     // Get the Sidebar
     var mySidebar = document.getElementById("mySidebar");
 
@@ -518,7 +519,9 @@ function showConditionalAlert(msg, id, url) {
 
         relativeRedir(url);
     } else {
-        alert(msg);
+        if (confirm(msg)) {
+            relativeRedir(url);
+        }
     }
 
 }

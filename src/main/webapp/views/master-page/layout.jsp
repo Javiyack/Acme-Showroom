@@ -39,6 +39,9 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css'
+      integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 <link rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -64,7 +67,7 @@
 
 <title><tiles:insertAttribute name="title" ignore="true"/></title>
 
-<body ondragover="return false;" class="w3-flat-wet-asphalt">
+<body ondragover="return false;" class="w3-flat-wet-asphalt" onload="">
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="menu"/>
 

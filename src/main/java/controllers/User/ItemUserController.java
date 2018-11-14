@@ -145,7 +145,7 @@ public class ItemUserController extends AbstractController {
                 Boolean crearChirpAutomatico = item.getId()==0;
                 item = this.itemService.save(item);
                 if(crearChirpAutomatico)
-                    this.chirpService.createAutomaticChrip("Artï¿½culos", "Nuevo Articulo","Se ha aï¿½adido el nuevo artï¿½culo "
+                    this.chirpService.createAutomaticChrip("Artículos", "Nuevo Artículo","Se ha añadido el nuevo artículo "
                         + item.getTitle() + " al escaparate " + item.getShowroom().getName());
                 result = new ModelAndView("redirect:/showroom/user/edit.do?showroomId=" + item.getShowroom().getId());
             } catch ( Throwable oops) {

@@ -55,23 +55,23 @@
         <div class="col-100">
             <div style="overflow-x:auto;">
                 <display:table pagesize="${pageSize}"
-                               class="flat-table flat-table-1 w3-light-grey" name="showrooms"
+                               class="flat-table0 flat-table-1 w3-light-grey" name="showrooms"
                                requestURI="${requestUri}" id="row">
                     <jstl:set var="owns" value="${logedActor.id == row.user.userAccount.id}"/>
                     <jstl:set value="showroom/display.do?showroomId=${row.id}" var="rowUrl"/>
                     <jstl:if test="${owns}">
                         <jstl:set value="showroom/user/edit.do?showroomId=${row.id}" var="rowUrl"/>
                     </jstl:if>
-                    <acme:column property="${row.name}" title="label.name" sortable="true" rowUrl="${rowUrl}"/>
-                    <acme:column property="${row.description}" title="label.description" sortable="true"
-                                 rowUrl="${rowUrl}"/>
+                    <acme:urlColumn value="${row.name}" title="label.name" sortable="true" href="${rowUrl}" css="iButton"/>
+                    <acme:urlColumn value="${row.description}" title="label.description" sortable="true"
+                                    href="${rowUrl}" css="iButton"/>
                     <jstl:if test="${owns}">
-                        <acme:column property=" " title="label.none" sortable="true"
-                                     icon="fa fa-edit w3-xlarge" rowUrl="${rowUrl}"/>
+                        <acme:urlColumn value=" " title="label.none" sortable="true"
+                                     icon="fa fa-edit w3-xlarge" href="${rowUrl}" css="iButton"/>
                     </jstl:if>
                     <jstl:if test="${!owns}">
-                        <acme:column property=" " title="label.none" sortable="true"
-                                     icon="fa fa-eye w3-xlarge" rowUrl="${rowUrl}"/>
+                        <acme:urlColumn value=" " title="label.none" sortable="true"
+                                     icon="fa fa-eye w3-xlarge" href="${rowUrl}" css="iButton"/>
                     </jstl:if>
 
                 </display:table>
@@ -96,7 +96,7 @@
               onclick="relativeRedir('showroom/user/create.do');" title="${newTitle} ${showroomTitle}"></i>
         <jstl:if test="${userList}">
                 <a href="showroom/list.do" >
-                    <i class="fa fa fa-filter w3-xxlarge w3-text-green w3-hover-text-light-blue iButton w3-padding w3-margin-right"
+                    <i class="fa fa fa-filter w3-xxlarge w3-text-orange w3-hover-text-light-blue iButton w3-padding w3-margin-right"
                        title="<spring:message code="label.show.all"/>">
                     </i></a>
         </jstl:if>

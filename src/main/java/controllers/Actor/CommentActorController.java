@@ -118,11 +118,11 @@ public class CommentActorController extends AbstractController {
                 result.addObject("display", true);
                 result.addObject("info", "msg.commit.ok");
             } catch (final Throwable oops) {
-                if (oops.getCause().getCause() != null
-                        && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-                    result = this.createEditModelAndView(comment, "msg.duplicate.username");
-                else
+                if (oops.getMessage().startsWith("msg.")) {
+                    return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+                } else {
                     result = this.createEditModelAndView(comment, "msg.commit.error");
+                }
             }
         return result;
     }

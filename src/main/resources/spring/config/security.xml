@@ -30,10 +30,6 @@
 								access="permitAll" />
 		<security:intercept-url pattern="/asynchronous/**"
 								access="permitAll" />
-		<security:intercept-url pattern="/asynchronous/**/**"
-								access="permitAll" />
-		<security:intercept-url pattern="/asynchronous/**/**/**"
-								access="permitAll" />
 		<security:intercept-url pattern="/favicon.ico"
 								access="permitAll" />
 		<security:intercept-url pattern="/images/**"
@@ -44,8 +40,6 @@
 								access="permitAll" />
 		<security:intercept-url
 				pattern="/views/misc/index.jsp" access="permitAll" />
-		<security:intercept-url
-				pattern="/security/login.do" access="permitAll" />
 		<security:intercept-url
 				pattern="/security/loginFailure.do" access="permitAll" />
 		<security:intercept-url
@@ -60,19 +54,16 @@
 								access="permitAll()" />
 		<security:intercept-url pattern="/item/display.do"
 								access="permitAll()" />
-		<security:intercept-url pattern="/user/create.do"
-								access="permitAll()" />
 		<security:intercept-url pattern="/user/display.do"
-								access="permitAll()" />
-		<security:intercept-url pattern="/agent/create.do"
 								access="permitAll()" />
 		<security:intercept-url pattern="/actor/display.do"
 								access="permitAll()" />
-		<!-- Annonymous -->
 
 
 		<!-- isAuthenticated -->
 		<security:intercept-url pattern="/actor/actor/**"
+								access="isAuthenticated()" />
+		<security:intercept-url pattern="/actor/actor/**/**"
 								access="isAuthenticated()" />
 		<security:intercept-url pattern="/chirp/actor/**"
 								access="isAuthenticated()" />
@@ -81,9 +72,8 @@
 		<security:intercept-url pattern="/subscription/**"
 								access="isAuthenticated()" />
 
+
 		<!-- User -->
-		<security:intercept-url pattern="/user/edit.do"
-								access="hasRole('USER')" />
 		<security:intercept-url pattern="/user/list.do"
 								access="hasRole('USER')" />
 		<security:intercept-url pattern="/showroom/user/**"
@@ -91,11 +81,11 @@
 		<security:intercept-url pattern="/item/user/**"
 								access="hasRole('USER')" />
 		<security:intercept-url pattern="/request/user/**"
-								access="hasRole('USER')" />
+								access="hasRole('USER')"/>
+		<security:intercept-url pattern="/request/user/**/**"
+								access="hasRole('USER')"/>
 
 		<!-- Agent -->
-		<security:intercept-url pattern="/agent/edit.do"
-								access="hasRole('AGENT')" />
 		<security:intercept-url pattern="/agent/list.do"
 								access="hasRole('AGENT')" />
 		<!-- Admin -->
@@ -117,7 +107,32 @@
 		<security:intercept-url
 				pattern="/agent/administrator/**"
 				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/welcome/comingsoon/**"
+				access="hasRole('ADMINISTRATOR')" />
 
+		<!-- HTTPS -->
+
+		<security:intercept-url pattern="/security/login.do"
+								access="permitAll" />
+		<security:intercept-url pattern="/request/user/create.do"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/request/user/edit.do"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/user/create.do"
+								access="permitAll()"/>
+		<security:intercept-url pattern="/user/edit.do"
+								access="hasRole('USER')" />
+		<security:intercept-url pattern="/agent/create.do"
+								access="permitAll()" />
+		<security:intercept-url pattern="/agent/edit.do"
+								access="hasRole('AGENT')" />
+		<security:intercept-url pattern="/admin/administrator/crate.do"
+								access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/auditor/administrator/create.do"
+								access="hasRole('ADMINISTRATOR')" />
+								
+		<!-- GLOBAL -->
 		<!-- Login Logout -->
 
 		<security:form-login
@@ -127,7 +142,6 @@
 
 		<security:logout logout-success-url="/"
 						 invalidate-session="true" />
-
 
 	</security:http>
 </beans>

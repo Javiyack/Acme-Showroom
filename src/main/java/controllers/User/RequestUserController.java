@@ -53,7 +53,7 @@ public class RequestUserController extends AbstractController {
         result.addObject("requests", requests);
         result.addObject("requestUri", "request/user/created/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
-        result.addObject("legend", "label.request.created");
+        result.addObject("legend", "created");
         return result;
     }
 
@@ -67,7 +67,7 @@ public class RequestUserController extends AbstractController {
         result.addObject("requests", requests);
         result.addObject("requestUri", "request/user/received/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
-        result.addObject("legend", "label.request.received");
+        result.addObject("legend", "received");
         return result;
     }
 

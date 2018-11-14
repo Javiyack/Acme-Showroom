@@ -78,8 +78,8 @@
     <bean id="administrator1" class="domain.Administrator">
         <property name="name" value="Javier"/>
         <property name="surname" value="Llach"/>
-        <property name="email" value="javillach@gmail.com"/>
-        <property name="phone" value="658357522"/>
+        <property name="email" value="javierll@gmail.com"/>
+        <property name="phone" value="666777888"/>
         <property name="address" value="C/ Beatriz de Suabia 76."/>
         <property name="userAccount" ref="userAccountAdmin"/>
         <property name="follows">
@@ -167,7 +167,7 @@
     </bean>
     <bean id="showroom2" class="domain.Showroom">
         <property name="name" value="SimBarBa"/>
-        <property name="description" value="Articulos de peluqueria y cosmetica"/>
+        <property name="description" value="Artículos de peluqueria y cosmetica"/>
         <property name="logo" value="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png"/>
         <property name="user" ref="user1"/>
     </bean>

@@ -45,4 +45,14 @@ public class WelcomeController extends AbstractController {
 
 		return result;
 	}
+	// Index ------------------------------------------------------------------
+
+	@RequestMapping(value = "/comingsoon")
+	public ModelAndView comingSoon() {
+		ModelAndView result;
+
+		result = new ModelAndView("welcome/comingsoon");
+
+		return result;
+	}
 }

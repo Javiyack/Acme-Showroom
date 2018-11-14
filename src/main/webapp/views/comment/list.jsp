@@ -67,24 +67,17 @@
     </jstl:if>
 
     <display:table pagesize="${pageSize}"
-                   class="flat-table flat-table-1 w3-light-grey" name="comments"
+                   class="flat-table0 flat-table-1 w3-light-grey" name="comments"
                    requestURI="${requestUri}" id="row">
 
-        <acme:column property="actor.userAccount.username" title="label.user"/>
-        <spring:message code="label.name" var="title"/>
-        <display:column property="title" title="${title}" sortable="true"
-                        class="${classTd}"/>
-        <acme:column property="text" title="label.description"/>
-        <acme:column property="moment" title="label.moment" format="moment.format"/>
-        <display:column class="${classTd}">
-            <div>
-                <a href="comment/actor/display.do?commentId=${row.id}"> <i
-                        class="fa fa-eye w3-xlarge"></i>
-                </a>
-            </div>
-        </display:column>
-
-
+        <acme:urlColumn value="${row.actor.userAccount.username}" title="label.user"/>
+        <acme:urlColumn value="${row.title}" title="label.title" sortable="true"/>
+        <acme:urlColumn value="${row.text}" title="label.description"/>
+        <spring:message code="moment.pattern" var="intercionalizedPattern"/>
+        <fmt:formatDate value="${row.moment}" pattern="${intercionalizedPattern}" var="intercionalizedMoment"/>
+        <acme:urlColumn value="${intercionalizedMoment}" title="label.moment" href="${url}" css="iButton"/>
+        <acme:urlColumn value="" title="label.none" href="comment/actor/display.do?commentId=${row.id}"
+                        icon="fa fa-eye w3-xlarge"/>
     </display:table>
 
     <br/>

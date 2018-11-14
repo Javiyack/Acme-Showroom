@@ -42,15 +42,16 @@
         </legend>
 
         <display:table pagesize="${pageSize}"
-                       class="flat-table flat-table-1 w3-light-grey" name="subscribedActors"
+                       class="flat-table0 flat-table-1 w3-light-grey" name="subscribedActors"
                        requestURI="${requestUri}" id="row">
             <jstl:set var="url" value="chirp/actor/list.do?subscriptionId=${row.id}"/>
-            <acme:column property="${row.userAccount.username}" title="actor.username" sortable="true" rowUrl="${url}"/>
-            <acme:column property="${row.surname}, ${row.name}" title="label.name" sortable="true" rowUrl="${url}"/>
-
-            <acme:column property=" " title="label.chirp.subscription"
-                         rowUrl="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/subscription/actor/list.do"
-                         icon="fa fa-check w3-xlarge w3-text-green" style="width: 8em;"/>
+            <acme:urlColumn value="${row.userAccount.username}" title="actor.username"
+                            sortable="true" href="${url}" css="iButton" tooltip="Ver sus chirps"/>
+            <acme:urlColumn value="${row.surname}, ${row.name}" title="label.name"
+                            sortable="true" href="${url}" css="iButton" tooltip="Ver sus chirps"/>
+            <acme:urlColumn value=" " title="label.chirp.subscription" icon="fa fa-check w3-xlarge w3-text-orange"
+                            style="width: 8em;" tooltip="Ver sus chirps" css="iButton"
+                            href="subscription/actor/subscribe.do?actorId=${row.id}&redirectUrl=/subscription/actor/list.do"/>
         </display:table>
         <legend>
             <spring:message code="label.topics"/>
@@ -73,7 +74,7 @@
 
 
     <display:table pagesize="${pageSize}"
-                   class="flat-table flat-table-1 w3-light-grey" name="topicSubscriptions"
+                   class="flat-table0 flat-table-1 w3-light-grey" name="topicSubscriptions"
                    requestURI="${requestUri}" id="row2">
         <spring:message code="label.topic" var="label"/>
         <display:column title="${label}">
@@ -81,13 +82,12 @@
                 <input type="hidden" name="topic" value="${row2}">
                 <input type="submit" value="${row2}" class="font-awesome flat">
             </form>
-
         </display:column>
         <spring:message code="label.chirp.subscription" var="labelSubscription"/>
-        <display:column title="${labelSubscription}" style="width: 8em;">
+        <display:column title="${labelSubscription}" class="iButton" style="width: 8em;">
             <form action="subscription/actor/topic/unsubscribe.do" method="POST">
                 <input type="hidden" name="topic" value="${row2}">
-                <input type="submit" value="&#xf00c;" class="font-awesome flat w3-text-green w3-xlarge">
+                <input type="submit" value="&#xf00c;" class="font-awesome flat w3-text-orange w3-xlarge">
             </form>
         </display:column>
 

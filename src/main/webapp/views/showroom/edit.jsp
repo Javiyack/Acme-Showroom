@@ -49,11 +49,16 @@
                 <div class="col-100">
                     <legend>
                         <spring:message code="label.showroom"/>: <jstl:out value="${showroom.name}"/>
-                        <jstl:if test="${item.id!=0}">
-                            <a href="comment/actor/create.do?objectId=${showroom.id}"><i
-                                    class="fa fa-commenting-o font-awesome w3-xxlarge toRight"></i></a>
-                            <a href="comment/actor/list.do?objectId=${showroom.id}"><i
-                                    class="fa fa-comments-o font-awesome w3-xxlarge toRight w3-margin-right"></i></a>
+                        <jstl:if test="${showroom.id!=0}">
+                            <spring:message var="msgSaveFirst" code="msg.save.first"/>
+                            <jstl:set var="url" value="/comment/actor/create.do?objectId=${showroom.id}"/>
+                            <spring:message code="label.new" var="newTitle"/>
+                            <spring:message code="label.comment" var="itemTitle"/>
+                            <a><i class="fa fa-commenting-o font-awesome w3-xxlarge toRight"
+                                  onclick="showConditionalAlert('${msgSaveFirst}','${showroom.id}','${url}');"
+                                  title="${newTitle} ${itemTitle}"></i></a>
+                            <a href="comment/actor/list.do?objectId=${showroom.id}">
+                                <i class="fa fa-comments-o font-awesome w3-xxlarge toRight w3-margin-right"></i></a>
                         </jstl:if>
                     </legend>
                     <div class="row">

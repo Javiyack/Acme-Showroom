@@ -39,22 +39,17 @@
             <security:authorize access="isAnonymous()">
                 <a href="security/login.do" class=""><i
                         class="fa fa-sign-in w3-margin w3-xxlarge"></i></a>
-
-
             </security:authorize>
         </div>
         <div class="w3-col s8 w3-bar">
             <span> <spring:message code="welcome.greeting.msg"/>${colom}<strong>${username}</strong></span><br>
-
-
             <security:authorize access="isAnonymous()">
                 <!-- Trigger/Open The Modal -->
-                <a id="myBtn"><i class="fa fa-user-plus w3-bar-item w3-large"></i></a>
-
+                <a id="myBtn" name="menuItem"><i class="fa fa-user-plus w3-bar-item w3-xlarge"></i></a>
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
                     <!-- Modal content -->
-                    <div class="modal-content seccion" style="width: 25%;">
+                    <div class="modal-content seccion" style="width: 35%;">
                         <div class="modal-header w3-light-gray">
                             <span class="close fa fa-times font-awesome w3-text-black w3-hover-text-red"></span>
                             <h3 class="w3-text-dark-gray w3-padding"><spring:message code="label.authority"/></h3>
@@ -83,74 +78,87 @@
                     </div>
                 </div>
             </security:authorize>
-
             <security:authorize access="isAuthenticated()">
-                <a href="${rol}/edit.do"><i
-                        class="fa fa-user w3-bar-item w3-large"></i></a>
-
+                <a href="${rol}/edit.do" name="menuItem"><i
+                        class="fa fa-user w3-bar-item w3-xlarge"></i></a>
             </security:authorize>
         </div>
     </div>
     <hr>
     <div class="w3-bar-block button-bar" id="myDIV" style="padding-bottom: 60px">
 
-        <a href="showroom/list.do"
-           class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                class="fa fa-shopping-bag fa-fw"></i>  <spring:message
+        <a href="showroom/list.do" name="menuItem"
+           class="w3-bar-item w3-button w3-padding w3-xlarge" id="showrooms">
+            <i class="fa fa-shopping-bag fa-fw w3-margin-right"></i> <spring:message
                 code="label.showrooms"/>
         </a>
-        <a href="item/list.do"
-           class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                class="fa fa-diamond fa-fw"></i>  <spring:message
+        <a href="item/list.do" name="menuItem"
+           class="w3-bar-item w3-button w3-padding w3-xlarge"id="items"> <i
+                class="fa fa-diamond fa-fw w3-margin-right"></i> <spring:message
                 code="label.items"/>
         </a>
+
         <security:authorize access="isAuthenticated()">
-            <a href="actor/actor/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-users fa-fw"></i>  <spring:message code="label.users"/>
+            <a href="actor/actor/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"> <i
+                    class="fa fa-users fa-fw w3-margin-right"></i> <spring:message code="label.users"/>
             </a>
-            <a href="subscription/actor/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-heart-o fa-fw"></i>  <spring:message
+            <a href="subscription/actor/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="subscriptions"> <i
+                    class="fa fa-heart-o fa-fw w3-margin-right"></i> <spring:message
                     code="label.subscriptions"/>
             </a>
-            <a href="chirp/actor/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-podcast fa-fw"></i>  <spring:message code="label.my.chirps"/>
+            <a id="chirps" class="w3-bar-item w3-button w3-padding w3-xlarge" onclick="myAccordionFunc('chirpsAcc')" name="menuItem">
+                <i class="fa fa-bell-o fa-fw w3-margin-right"></i> <spring:message code="label.chirps"/>
             </a>
-            <a href="chirp/actor/stream.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-bell-o fa-fw"></i>  <spring:message code="label.my.subscribed.chirps"/>
-            </a>
+            <div id="chirpsAcc" class="w3-hide w3-card sombra">
+                <a href="chirp/actor/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-blue w3-text-white"
+                   style="padding-left: 2em !important;"> <i
+                        class="fa fa-edit fa-fw w3-margin-right"></i> <spring:message code="label.my.chirps"/>
+                </a>
+                <a href="chirp/actor/stream.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-blue w3-text-white"
+                   style="padding-left: 2em !important;"> <i
+                        class="fa fa-eye fa-fw w3-margin-right"></i> <spring:message code="label.my.subscribed.chirps"/>
+                </a>
+            </div>
         </security:authorize>
 
         <security:authorize access="hasRole('USER')">
-            <a href="request/user/created/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-shopping-cart fa-fw"></i>  <spring:message code="label.requests"/>
+            <a id="requests" class="w3-bar-item w3-button w3-padding w3-xlarge" onclick="myAccordionFunc('requestsAcc')" name="menuItem">
+                <i class="fa fa fa-bank fa-fw w3-margin-right"></i> <spring:message code="label.requests"/>
             </a>
-            <a href="request/user/received/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-euro fa-fw"></i>  <spring:message code="label.sales"/>
-            </a>
+            <div id="requestsAcc" class="w3-hide w3-card sombra">
+                <a href="request/user/created/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-blue w3-text-white"
+                   style="padding-left: 2em !important;"> <i
+                        class="fa fa-shopping-cart fa-fw w3-margin-right"></i> <spring:message code="label.requests"/>
+                </a>
+                <a href="request/user/received/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-blue w3-text-white"
+                   style="padding-left: 2em !important;"> <i
+                        class="fas fa-piggy-bank fa-fw w3-margin-right"></i> <spring:message code="label.sales"/>
+                </a>
+            </div>
 
         </security:authorize>
         <security:authorize access="hasRole('ADMINISTRATOR')">
-            <a href="dashboard/administrator/display.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-dashboard fa-fw"></i>  <spring:message
+            <a href="dashboard/administrator/display.do" id="dashboard"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" name="menuItem"> <i
+                    class="fa fa-dashboard fa-fw w3-margin-right"></i> <spring:message
                     code="master.page.dashboard"/>
             </a>
             <!-- Trigger/Open The Modal -->
 
-            <a id="myBtn" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-user-plus fa-fw"></i>  <spring:message
+            <a id="myBtn" class="w3-bar-item w3-button w3-padding w3-xlarge" name="menuItem"> <i
+                    class="fa fa-user-plus fa-fw w3-margin-right"></i> <spring:message
                     code="label.new.actor"/>
             </a>
             <!-- The Modal -->
             <div id="myModal" class="modal">
                 <!-- Modal content -->
-                <div class="modal-content" style="width: 25%;">
+                <div class="modal-content" style="width: 40%;">
                     <div class="modal-header w3-dark-gray">
                         <span class="close fa fa-times font-awesome w3-hover-text-red"></span>
                         <h3 class="w3-padding"><spring:message code="label.authority"/></h3>
@@ -159,15 +167,15 @@
                         <div class="w3-row">
                             <div class="w3-container w3-half">
                                 <i class="fa fa-user-plus w3-bar-item w3-large iButton
-                                       w3-padding w3-margin-right font-awesome w3-hover-text-orange"
-                                   onclick="relativeRedir('/user/create.do');">
+                                       w3-padding w3-margin-left w3-margin-right font-awesome w3-hover-text-orange"
+                                   onclick="relativeRedir('/admin/administrator/create.do');">
                                     <spring:message code="actor.authority.ADMINISTRATOR"/>
                                 </i>
                             </div>
                             <div class="w3-container w3-half">
                                 <i class="fa fa-user-plus w3-bar-item w3-large iButton
-                                    w3-padding w3-margin-right font-awesome w3-hover-text-orange"
-                                   onclick="relativeRedir('/agent/create.do');">
+                                    w3-padding w3-margin-left font-awesome w3-hover-text-orange"
+                                   onclick="relativeRedir('/welcome/comingsoon.do');">
                                     <spring:message code="actor.authority.AUDITOR"/>
                                 </i>
                             </div>
@@ -256,4 +264,72 @@
             modal.style.display = "none";
         }
     };
+
+    function openAccordion(element) {
+        element.className += " w3-show";
+        element.previousElementSibling.className += " w3-text-orange";
+
+    }
+
+    function closeAccordion(element) {
+        element.className = element.className.replace(" w3-show", "");
+        element.previousElementSibling.className =
+            element.previousElementSibling.className.replace(" w3-orange", "");
+        element.previousElementSibling.className =
+            element.previousElementSibling.className.replace(" w3-text-orange", "");
+        markOpenLink();
+    }
+
+    function unselectAll() {
+        elementos = document.getElementsByName('menuItem');
+        elementos.forEach(unSelect);
+
+    }
+    function unSelect(item, index){
+        if(item.id.includes('Acc')){
+            closeAccordion(item);
+        }
+        item.className = item.className.replace(" w3-orange", "");
+    }
+    function select(item){
+        if(item.id.includes('Acc')){
+            openAccordion(item);
+            item.previousElementSibling.className += " w3-orange";
+            item.previousElementSibling.className += " w3-text-black";
+        }else{
+            item.className += " w3-orange";
+        }
+    }
+
+    function myAccordionFunc(elementId) {
+        var x = document.getElementById(elementId);
+        if (x.className.indexOf("w3-show") == -1) {
+           openAccordion(x);
+        } else {
+           closeAccordion(x);
+        }
+    }
+
+    function markOpenLink() {
+        unselectAll();
+        var pathname = '';
+        pathname += window.location.pathname;
+        if (pathname.includes('showroom')) {
+            select(document.getElementById('showrooms'));
+        } else if (pathname.includes('item')) {
+            select(document.getElementById('items'));
+        } else if (pathname.includes('chirp')) {
+            select(document.getElementById('chirpsAcc'));
+        } else if (pathname.includes('request')) {
+            select(document.getElementById('requestsAcc'));
+        } else if (pathname.includes('subscription')) {
+            select(document.getElementById('subscriptions'));
+        } else if (pathname.includes('actor/actor')) {
+            select(document.getElementById('actors'));
+        } else if (pathname.includes('dashboard')) {
+            select(document.getElementById('dashboard'));
+        }
+    }
+
+
 </script>

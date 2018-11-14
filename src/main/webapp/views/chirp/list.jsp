@@ -44,21 +44,22 @@
     <div style="overflow-x:auto;">
 
             <display:table pagesize="${pageSize}"
-                           class="flat-table flat-table-1 w3-light-grey" name="chirps"
+                           class="flat-table0 flat-table-1 w3-light-grey" name="chirps"
                            requestURI="${requestUri}" id="row3">
 
                 <jstl:set var="url" value="chirp/actor/display.do?chirpId=${row3.id}"/>
                 <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
 
 
-                <acme:column property="${row3.actor.userAccount.username}" title="label.user" rowUrl="${url}"
-                             sortable="true"/>
-                <acme:column property="${row3.topic}" title="label.topic" rowUrl="${url}" sortable="true"/>
-                <acme:column property="${row3.title}" title="label.title" rowUrl="${url}"/>
-                <acme:column property="${row3.description}" title="label.description" rowUrl="${url}"/>
-                <spring:message code="format.time" var="format"/>
-                <acme:column property="${row3.moment}" title="label.moment" rowUrl="${url}" sortable="true" format="moment.format"/>
-                <acme:column property="" title="label.none" icon="${icono}" rowUrl="${url}"/>
+                <acme:urlColumn value="${row3.actor.userAccount.username}" title="label.user" href="${url}"
+                             sortable="true" css="iButton"/>
+                <acme:urlColumn value="${row3.topic}" title="label.topic" href="${url}" sortable="true" css="iButton"/>
+                <acme:urlColumn value="${row3.title}" title="label.title" href="${url}" css="iButton"/>
+                <acme:urlColumn value="${row3.description}" title="label.description" href="${url}" css="iButton"/>
+                <spring:message code="moment.pattern" var="intercionalizedPattern"/>
+                <fmt:formatDate value="${row3.moment}" pattern="${intercionalizedPattern}" var="intercionalizedMoment"/>
+                <acme:urlColumn value="${intercionalizedMoment}" title="label.moment" href="${url}" sortable="true" css="iButton" />
+                <acme:urlColumn value="" title="label.none" icon="${icono}" href="${url}" css="iButton"/>
 
             </display:table>
         </div>
