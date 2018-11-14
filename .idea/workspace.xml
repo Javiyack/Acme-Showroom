@@ -7,82 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9808a998-94f3-40d5-9ede-cc0fb530cc2f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/basicColumn.tag" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/urlColumn.tag" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/welcome/comingsoon.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/resourceBundles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/resourceBundles.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/Actor/CommentActorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/Actor/CommentActorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/User/ItemUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/User/ItemUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/User/RequestUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/User/RequestUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/WelcomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controllers/WelcomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repositories/RequestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repositories/RequestRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/services/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RequestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Entities.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Entities.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/PopulateDatabase.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/PopulateDatabase.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spring/config/i18n-l10n.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/config/i18n-l10n.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spring/config/security.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/config/security.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spring/config/tiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/config/tiles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/scripts/acme.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/acme.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/flatTable.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/flatTable.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/actor/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/actor/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/admin/edit.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/admin/list.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/admin/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/admin/messages_es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/admin/tiles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/admin/tiles_es.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/agent/edit.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/agent/list.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/agent/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/agent/messages_es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/agent/tiles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/agent/tiles_es.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/auditor/edit.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/auditor/list.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/auditor/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/auditor/messages_es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/auditor/tiles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/auditor/tiles_es.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/chirp/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/chirp/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/chirp/tiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/chirp/tiles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/chirp/tiles_es.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/chirp/tiles_es.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/comment/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/comment/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/dashboard/tiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/dashboard/tiles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/item/edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/item/edit.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/item/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/item/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/master-page/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/master-page/header.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/master-page/layout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/master-page/layout.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/master-page/menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/master-page/menu.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/create.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/display.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/list.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/messages_es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/move.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/tiles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/message/tiles_es.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/messages.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/messages_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/messages_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/request/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/request/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/showroom/edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/showroom/edit.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/showroom/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/showroom/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/subscription/list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/subscription/list.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user/edit.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user/list.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user/messages.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user/messages_es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user/tiles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/user/tiles_es.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/welcome/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/welcome/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/welcome/tiles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/welcome/tiles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/welcome/tiles_es.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/welcome/tiles_es.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/sample/SampleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/sample/SampleTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -127,8 +52,8 @@
       <file leaf-file-name="CommentActorController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/controllers/Actor/CommentActorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="121" selection-start-line="121" selection-end-line="121" />
+            <state relative-caret-position="209">
+              <caret line="116" column="53" lean-forward="true" selection-start-line="116" selection-start-column="53" selection-end-line="116" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -602,12 +527,20 @@
       <workItem from="1541992961066" duration="17249000" />
       <workItem from="1542138889423" duration="3286000" />
       <workItem from="1542148769652" duration="46109000" />
-      <workItem from="1542201856181" duration="8341000" />
+      <workItem from="1542201856181" duration="8867000" />
     </task>
+    <task id="LOCAL-00001" summary="Repasado hasta nivel A. Faltan tests">
+      <created>1542216264287</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1542216264287</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74985000" />
+    <option name="totallyTimeSpent" value="75511000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -633,14 +566,14 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3932961" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3932961" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32960895" />
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32960895" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="bottom" id="Java Enterprise" order="7" weight="0.32960895" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32960895" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.32960895" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3642458" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.32960895" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32960895" />
@@ -673,6 +606,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Repasado hasta nivel A. Faltan tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Repasado hasta nivel A. Faltan tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1047,8 +984,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/controllers/Actor/CommentActorController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        <state relative-caret-position="209">
+          <caret line="116" column="53" lean-forward="true" selection-start-line="116" selection-start-column="53" selection-end-line="116" selection-end-column="53" />
         </state>
       </provider>
     </entry>
