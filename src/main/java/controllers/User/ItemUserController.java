@@ -1,11 +1,9 @@
 
 package controllers.User;
 
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import controllers.AbstractController;
+import domain.Comment;
+import domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -14,15 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import services.*;
 
-import controllers.AbstractController;
-import domain.Comment;
-import domain.Item;
-import services.ActorService;
-import services.ChirpService;
-import services.CommentService;
-import services.ItemService;
-import services.ShowroomService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/item/user")
@@ -57,6 +51,9 @@ public class ItemUserController extends AbstractController {
                 items = this.itemService.findByShowroomId(showroomId);
             }else{
                 items = this.itemService.findByLogedActor();
+                result.addObject("userList", true);
+                result.addObject("username", actorService.findByPrincipal().getUserAccount().getUsername());
+                result.addObject("userId", actorService.findByPrincipal().getId());
             }
         } catch (Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
@@ -66,7 +63,6 @@ public class ItemUserController extends AbstractController {
             }
         }
         result.addObject("items", items);
-        result.addObject("userList", true);
         result.addObject("word", word);
         result.addObject("requestUri", "item/user/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
@@ -83,8 +79,11 @@ public class ItemUserController extends AbstractController {
             result.addObject("showroomId", req.getParameter("showroomId"));
             result.addObject("showroomName", req.getParameter("showroomName"));
         }
-        else
+        else {
             items = this.itemService.findByKeyWordAndLogedActor(req.getParameter("word").trim());
+            result.addObject("username", actorService.findByPrincipal().getUserAccount().getUsername());
+            result.addObject("userId", actorService.findByPrincipal().getId());
+        }
         result.addObject("items", items);
         result.addObject("requestUri", "item/list.do");
         result.addObject("word", req.getParameter("word"));

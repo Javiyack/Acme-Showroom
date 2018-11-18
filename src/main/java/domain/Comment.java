@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.format.annotation.DateTimeFormat;
+import utilities.URLCollection;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -77,8 +78,9 @@ public class Comment extends DomainEntity {
     }
 
     @ElementCollection
-    @NotNull
-    public Collection<String> getPictures() {
+	@NotNull
+	@URLCollection
+	 public Collection<String> getPictures() {
         return pictures;
     }
 

@@ -25,11 +25,11 @@
 
 <%@ attribute name="value" required="true" %>
 <%@ attribute name="title" required="true" %>
+<%@ attribute name="href" required="true" %>
 
 <%@ attribute name="sortable" required="false" %>
 <%@ attribute name="css" required="false" %>
 <%@ attribute name="style" required="false" %>
-<%@ attribute name="href" required="false" %>
 <%@ attribute name="icon" required="false" %>
 <%@ attribute name="tooltip" required="false" %>
 
@@ -40,10 +40,10 @@
 
 <display:column title="${intercionalizedTitle}"
                 sortable="${sortable}" class="${css}" style="${style}">
-    <div style="height: 100%;margin: 0px;padding: 0.7em 1em 0.7em 0.5em;${style}"
-         onclick="relativeRedir('${href}');" title="${tooltip}">
-        <i class="${icon}" style="text-align:center;"> <jstl:out value="${value}"/></i>
-    </div>
+        <div style="height: 100%;margin: 0px;padding: 0.7em 1em 0.7em 0.5em;${style}"
+             onclick="relativeRedir('${href}');" title="${tooltip}">
+            <i class="${icon}" style="text-align:center;"> <jstl:out value="${value}"/></i>
+        </div>
 </display:column>
 
 

@@ -1,13 +1,10 @@
 
 package services;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
+import domain.*;
+import forms.ActorForm;
+import forms.AgentForm;
+import forms.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,20 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Administrator;
-import domain.Agent;
-import domain.Chirp;
-import domain.User;
-import forms.ActorForm;
-import forms.AgentForm;
-import forms.UserForm;
 import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+
+import java.util.*;
 
 @Service
 @Transactional
@@ -256,7 +246,7 @@ public class ActorService {
                 actor.setPhone(actorForm.getPhone());
                 actor.setAddress(actorForm.getAddress());
             }
-            // Si ha cambiado algï¿½n parï¿½metro del Authority (Usuario, password)
+            // Si ha cambiado algún parámetro del Authority (Usuario, password)
             // Si ha cambiado el nombre de usuario
             if (!actorForm.getAccount().getUsername().equals(actor.getUserAccount().getUsername())) {
                 if (!actorForm.getAccount().getNewPassword().isEmpty()) {
@@ -265,8 +255,8 @@ public class ActorService {
                     Assert.isTrue(
                             actorForm.getAccount().getNewPassword().equals(actorForm.getAccount().getConfirmPassword()),
                             "msg.userAccount.repeatPassword.mismatch");
-                    // Cambia la contraseï¿½a
-                    // Comprueba la contraseï¿½a y la cambia si todo ha ido bien
+                    // Cambia la contraseña
+                    // Comprueba la contraseña y la cambia si todo ha ido bien
                     Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
                     Assert.isTrue(checkLength(actorForm.getAccount().getNewPassword()), "msg.password.length");
                     actor.getUserAccount()
@@ -276,7 +266,7 @@ public class ActorService {
                     actorForm.getAccount().setConfirmPassword(null);
                     // Valida el la cuenta de usuario
                     this.validator.validate(actorForm.getAccount(), binding);
-                    // Comprueba la contraseï¿½a
+                    // Comprueba la contraseña
                     Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
 
                 }
@@ -291,7 +281,7 @@ public class ActorService {
                                 actorForm.getAccount().getNewPassword()
                                         .equals(actorForm.getAccount().getConfirmPassword()),
                                 "msg.userAccount.repeatPassword.mismatch");
-                        // Comprueba la contraseï¿½a
+                        // Comprueba la contraseña
                         Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
                         Assert.isTrue(checkLength(actorForm.getAccount().getNewPassword()), "msg.password.length");
                         actor.getUserAccount()
@@ -299,12 +289,12 @@ public class ActorService {
                     } else {
                         actorForm.getAccount().setNewPassword("XXXXX");
                         actorForm.getAccount().setConfirmPassword("XXXXX");
-                        // Comprueba la contraseï¿½a
+                        // Comprueba la contraseña
                         Assert.isTrue(formPass.equals(actor.getUserAccount().getPassword()), "msg.wrong.password");
                     }
 
                 } else {
-                    // Como no ha cambiado ni usuario ni escrito contraseï¿½a seteamos temporalmente
+                    // Como no ha cambiado ni usuario ni escrito contraseña seteamos temporalmente
                     // el username y passwords para pasar la validacion de userAccount
                     // Valida El formulario
                     actorForm.getAccount().setPassword("XXXXX");

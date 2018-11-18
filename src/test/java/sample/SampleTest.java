@@ -10,15 +10,14 @@
 
 package sample;
 
-import javax.transaction.Transactional;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
-
 import utilities.AbstractTest;
+
+import javax.transaction.Transactional;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"

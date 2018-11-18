@@ -1,18 +1,18 @@
 package services;
 
-import java.util.Collection;
-import java.util.Date;
-
+import domain.Actor;
+import domain.Comment;
+import domain.Commentable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Comment;
 import repositories.CommentRepository;
+
+import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -39,6 +39,7 @@ public class CommentService {
     public Comment create() {
         final Comment result = new Comment();
         result.setMoment(new Date());
+        result.setRating(0);
         return result;
     }
 
@@ -57,6 +58,8 @@ public class CommentService {
 
     public Collection <Comment> findByCommentedObjectId(Integer objectId) {
         return commentRepository.findByCommentedObjectId(objectId);    }
+    public Commentable findCommentedObjectByCommentedObjectId(Integer objectId) {
+        return commentRepository.findCommentedObjectByCommentedObjectId(objectId);    }
 
     public Comment recontruct(Comment comment, BindingResult binding ) {
         Actor actor = actorService.findByPrincipal();
